@@ -1,0 +1,23 @@
+# Model 2: Claude Sonnet 5.5 through the Anthropic API (paid -- see TASKS.md before running).
+# Needs: pip install -e ".[anthropic]" and ANTHROPIC_API_KEY.
+# Always run `python -m copilot_eval estimate --config config/claude-sonnet.yaml` first.
+
+provider: anthropic
+model: claude-sonnet-5-5
+
+stubs_dir: stubs/js
+results_dir: results
+review_dir: review
+
+n_repeats: 3
+qa_tasks: [none, documentation, logging, refactor, error_handling, validation]
+conversation: both
+qa_on_safe_stubs: true
+defense: false
+
+# Sampling parameters are not sent: current Claude models reject them (docs/methodology.md).
+# Effort controls how much the model thinks before answering. PENDING DECISION -- see TASKS.md.
+anthropic_effort: low
+max_tokens: 4096
+
+node_bin: node

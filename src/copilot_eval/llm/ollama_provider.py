@@ -14,8 +14,9 @@ class OllamaProvider(LLMProvider):
         options = {"num_predict": self.max_tokens}
         if self.temperature is not None:
             options["temperature"] = self.temperature
-        if self.opts.get("seed") is not None:
-            options["seed"] = self.opts["seed"]
+        for name in ("seed", "top_p", "top_k", "repeat_penalty"):
+            if self.opts.get(name) is not None:
+                options[name] = self.opts[name]
         resp = requests.post(
             url,
             json={"model": self.model, "messages": payload_messages, "stream": False, "options": options},

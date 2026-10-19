@@ -1,14 +1,14 @@
 # Methodology notes
 
-Running notes for the report's methodology section. Each entry records a design
-decision and why it was made, so the write-up can cite it directly.
+Running notes for the report's methodology section. The dated history of each
+decision, with the alternatives considered, is in [decision-log.md](decision-log.md).
 
 ## Models
 
 Two target models:
 
-1. **A free, open-weights model run locally through Ollama.** Model: _TBD (see TASKS.md)._
-2. **A Claude model through the Anthropic API.** Model: _TBD (see TASKS.md)._
+1. **A free, open-weights model run locally through Ollama.** Model: _Qwen coder model, exact size pending (see TASKS.md)._
+2. **Claude Sonnet 5.5** (`claude-sonnet-5-5`) through the Anthropic API.
 
 Each model performs all three roles in a trial: baseline reviewer, QA editor, and re-evaluating reviewer.
 
@@ -18,14 +18,19 @@ The proposal repeats each query a small number of times "at a fixed temperature"
 separate the effect of the QA edit from ordinary sampling variance. The two providers
 differ here, and the difference is deliberate:
 
-- **Ollama (open-weights model):** temperature is fixed to the value in
-  `config/experiment.yaml` (`temperature`) for every call. The random seed is
-  `seed + repeat`, so each repeat is a different, reproducible sample. Reusing one
-  seed would make every repeat identical and the variance estimate meaningless.
+- **Ollama (open-weights model):** sampling uses the model publisher's recommended
+  settings, held fixed for every call (for Qwen2.5-Coder-7B-Instruct: temperature 0.7,
+  top_p 0.8, top_k 20, repetition penalty 1.1, from its `generation_config.json`).
+  The random seed is `seed + repeat`, so each repeat is a different, reproducible sample.
+  Temperature 0 or a single fixed seed would make every repeat identical and the
+  variance estimate meaningless.
 - **Claude (Anthropic API):** current Claude models **reject** the `temperature`,
   `top_p` and `top_k` parameters (the API returns an error if they are sent). We therefore
   use the model's **default sampling configuration** and do not send sampling parameters.
   Thinking is adaptive (the model's default), with effort set by `anthropic_effort` in the config.
+
+Both choices follow one principle: **each model is evaluated with the sampling it is
+meant to be deployed with.**
 
 Consequences for the analysis:
 
@@ -37,10 +42,11 @@ Consequences for the analysis:
 
 ## Conversation context
 
-_Decision pending (see TASKS.md, open decision #2)._ Supported modes:
-`continuous` (baseline, QA edit and re-evaluation in one conversation), `fresh` (each step
-in a new conversation), and `both` (the QA edit is made in the continuous conversation, then
-the same edited code is re-evaluated twice: once in that conversation and once in a fresh one).
+**`both`.** The QA edit is made in the same conversation as the baseline verdict. The edited
+code is then re-evaluated twice: once **in that conversation** (primary result; the model can
+see its earlier verdict) and once in a **fresh conversation** (paired comparison; only the code).
+Comparing the two on the identical edit separates the effect of the code change from the effect
+of the conversation history. Rationale and alternatives: [decision-log.md](decision-log.md).
 
 ## Outcome definitions
 

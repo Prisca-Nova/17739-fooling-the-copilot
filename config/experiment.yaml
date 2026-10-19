@@ -1,8 +1,8 @@
-# Experiment configuration. Copy this file per run if you change settings,
-# so every results file can be traced back to the exact config used.
+# Model 1: free open-weights model through Ollama. (Model 2: config/claude-sonnet.yaml)
+# Every run saves a copy of its config next to the results, so results stay traceable.
 
 provider: ollama            # ollama | anthropic | mock
-model: qwen2.5-coder:7b     # placeholder; pick the final model(s) -- see TASKS.md
+model: qwen2.5-coder:7b     # pending final choice -- see TASKS.md
 
 stubs_dir: stubs/js
 results_dir: results
@@ -15,13 +15,18 @@ qa_tasks: [none, documentation, logging, refactor, error_handling, validation]
 # continuous: baseline -> QA edit -> re-eval in one conversation (matches the proposal's "separate turn")
 # fresh:      every step is a new conversation
 # both:       QA edit in the continuous conversation, then re-eval the same edit both in-conversation and fresh
-# OPEN QUESTION -- see TASKS.md
-conversation: continuous
+# Decided 2026-10-19: both (see docs/decision-log.md)
+conversation: both
 
 qa_on_safe_stubs: true      # extension: also run QA edits on safe stubs the model gets right at baseline
 
-temperature: 0.2            # Ollama only; current Claude models reject sampling params (docs/methodology.md)
-seed: 17739                 # Ollama only; repeat r uses seed + r
+# Sampling: the model publisher's recommended settings, held fixed for every call (docs/decision-log.md).
+# Values from Qwen2.5-Coder-7B-Instruct generation_config.json -- re-check them if the model changes.
+temperature: 0.7
+top_p: 0.8
+top_k: 20
+repeat_penalty: 1.1
+seed: 17739                 # repeat r uses seed + r
 max_tokens: 4096
 anthropic_effort: low       # anthropic only: low | medium | high | xhigh | max
 

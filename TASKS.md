@@ -16,7 +16,9 @@ presentation · **Nov 28** final report, code and data release.
 - [ ] Both: clone the repo, create a venv, `pip install -e ".[dev]"`, run `pytest` and `node verifier/check_stubs.js` (P, E)
 - [x] Install Ollama (P's laptop, v0.40.5)
 - [ ] Pull the free model and run `python -m copilot_eval run --limit 2` end to end (P, E)
-- [ ] Pick the exact free model and Claude model (see **Decisions → Still open**) (E, P)
+- [ ] Pick the exact free model (see **Decisions → Still open**) (E, P)
+- [ ] **Ask the instructor whether the course can cover Anthropic API usage** before any paid run (P, E)
+- [x] Eileen invited to the GitHub repo (accept the invite: Kabi12Blessing)
 - [ ] Create an Anthropic Console account; decide on a spending limit before adding credits (E, P)
 
 ## Phase 1: Stub set (Oct 19–23, critical path) (P lead, E support)
@@ -48,8 +50,8 @@ presentation · **Nov 28** final report, code and data release.
 
 - [ ] Review and finalize the wording in `src/copilot_eval/prompts.py` (detection, 5 QA tasks, defense)
   - QA prompts must carry **no security intent**
-- [ ] Decide on the conversation mode: `continuous` / `fresh` / `both` (see **Decisions → Still open**)
-- [ ] Decide on `n_repeats` and the Ollama temperature value (see **Decisions → Still open**)
+- [x] Conversation mode: `both` (docs/decision-log.md)
+- [x] Ollama sampling: publisher's recommended settings, fixed (docs/decision-log.md)
 - [ ] Check the verdict-parse rate on the pilot (target: ~0 `unparsed`)
 - [ ] **Prompt freeze**: tag the commit (`git tag prompts-v1`) before any results that will be reported
 
@@ -95,7 +97,9 @@ presentation · **Nov 28** final report, code and data release.
 
 ### Decided (2026-10-19)
 
-- **Models:** two models: first a free open-weights model via Ollama, then a Claude model via the Anthropic API.
+- **Models:** two models: first a free open-weights model via Ollama, then **Claude Sonnet 5.5** via the Anthropic API (after asking the instructor about credits).
+- **Conversation mode:** `both`: continuous re-evaluation as the primary result, fresh re-evaluation of the same edit as a paired comparison.
+- **Ollama sampling:** the publisher's recommended settings (Qwen2.5-Coder: T=0.7, top_p 0.8, top_k 20, rep. penalty 1.1), fixed; seed = 17739 + repeat.
 - **Sampling:** fixed temperature + per-repeat seed for Ollama; Claude uses default sampling because current Claude models reject sampling parameters. Documented in `docs/methodology.md`, and must be stated in the report's methodology.
 - **Unverifiable edits:** always identified and written to `review/<run>/unverifiable/` with a checklist for manual review.
 - **QA edits on safe stubs:** yes, as an extension (`qa_on_safe_stubs: true`).
@@ -103,6 +107,7 @@ presentation · **Nov 28** final report, code and data release.
 
 ### Still open
 
-1. **Exact models:** which Ollama model, and which Claude model (cost differs ~20× between Haiku and Opus).
-2. **Conversation mode:** `continuous`, `fresh`, or `both`. Record the choice and its rationale in `docs/methodology.md`.
-3. **Ollama temperature value** and `n_repeats`.
+1. **Free model size:** `qwen2.5-coder:7b` (4.7 GB, faster) vs `qwen3-coder:30b` (19 GB, mostly CPU, slower).
+2. **Sonnet effort level** (`anthropic_effort`): `low` (cheaper) vs the model default (as-deployed, more thinking tokens).
+
+All decisions, with alternatives and reasons, are logged in `docs/decision-log.md`.

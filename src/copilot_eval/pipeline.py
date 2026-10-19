@@ -60,7 +60,8 @@ class Runner:
         self.cfg = cfg
         self.llm = provider or get_provider(
             cfg.provider, cfg.model, max_tokens=cfg.max_tokens, temperature=cfg.temperature,
-            seed=cfg.seed, ollama_url=cfg.ollama_url, anthropic_effort=cfg.anthropic_effort,
+            seed=cfg.seed, top_p=cfg.top_p, top_k=cfg.top_k, repeat_penalty=cfg.repeat_penalty,
+            ollama_url=cfg.ollama_url, anthropic_effort=cfg.anthropic_effort,
         )
         self.review = review
 

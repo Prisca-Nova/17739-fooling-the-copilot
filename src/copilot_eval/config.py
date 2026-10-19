@@ -18,7 +18,10 @@ class ExperimentConfig:
     qa_tasks: list[str] = field(default_factory=lambda: list(QA_TASKS))
     conversation: str = "continuous"
     qa_on_safe_stubs: bool = True
-    temperature: float = 0.2
+    temperature: float = 0.7
+    top_p: float | None = None
+    top_k: int | None = None
+    repeat_penalty: float | None = None
     seed: int = 17739
     max_tokens: int = 4096
     anthropic_effort: str = "low"
