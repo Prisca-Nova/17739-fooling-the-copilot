@@ -1,0 +1,11 @@
+{
+  "name": "copilot-eval-verifier",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Execution-based source-to-sink verifier for JS stubs",
+  "main": "run_stub.js",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "check-stubs": "node check_stubs.js"
+  }
+}

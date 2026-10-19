@@ -1,0 +1,11 @@
+{
+  "id": "cmdi_001_safe",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.input",
+  "source_key": "input",
+  "sink": "child_process.exec",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

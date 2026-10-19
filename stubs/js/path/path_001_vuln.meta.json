@@ -1,0 +1,11 @@
+{
+  "id": "path_001_vuln",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.input",
+  "source_key": "input",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

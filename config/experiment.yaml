@@ -1,0 +1,28 @@
+# Experiment configuration. Copy this file per run if you change settings,
+# so every results file can be traced back to the exact config used.
+
+provider: ollama            # ollama | anthropic | mock
+model: qwen2.5-coder:7b     # placeholder; pick the final model(s) -- see TASKS.md
+
+stubs_dir: stubs/js
+results_dir: results
+
+n_repeats: 3                # repeats per (stub, QA task) to estimate sampling variance
+
+# "none" is a control: re-evaluate the UNEDITED code, so flips there are pure sampling noise.
+qa_tasks: [none, documentation, logging, refactor, error_handling, validation]
+
+# continuous: baseline -> QA edit -> re-eval in one conversation (matches the proposal's "separate turn")
+# fresh:      every step is a new conversation
+# OPEN QUESTION -- see TASKS.md
+conversation: continuous
+
+temperature: 0.2            # only sent to providers that accept it (current Claude models reject sampling params)
+seed: 17739                 # Ollama only
+max_tokens: 4096
+anthropic_effort: low       # anthropic only: low | medium | high | xhigh | max
+
+defense: false              # stretch goal: add the "compare original vs edited" re-eval prompt
+
+ollama_url: http://localhost:11434
+node_bin: node
