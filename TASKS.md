@@ -6,30 +6,30 @@ proposal's division of work: **P** = Prisca, **E** = Eileen (lead first, support
 Key dates: **Oct 25** check-in (baseline + partial QA results) · **Nov 15** final
 presentation · **Nov 28** final report, code and data release.
 
-> Status as of 2026-10-19: the repo scaffold (harness, verifier, 6 example stubs, tests) is done.
-> The stub set (planned for Oct 2–11) is still at 6 of 60–100, so Phase 1 is the critical path for the Oct 25 check-in.
+> Status as of 2026-10-19: scaffold, verifier, and the first full stub set (60 stubs) are done; Ollama is installed.
+> Next on the critical path: **human review of the 60 stubs**, then the first pilot run with the free model.
 
 ---
 
 ## Phase 0: Setup (Oct 19–20)
 
 - [ ] Both: clone the repo, create a venv, `pip install -e ".[dev]"`, run `pytest` and `node verifier/check_stubs.js` (P, E)
-- [ ] Install Ollama and pull one free code model; run `python -m copilot_eval run --limit 2` end to end (P, E)
-- [ ] Decide on the target models (see **Open decisions #1**) (E, P)
+- [x] Install Ollama (P's laptop, v0.40.5)
+- [ ] Pull the free model and run `python -m copilot_eval run --limit 2` end to end (P, E)
+- [ ] Pick the exact free model and Claude model (see **Decisions → Still open**) (E, P)
 - [ ] Create an Anthropic Console account; decide on a spending limit before adding credits (E, P)
 
 ## Phase 1: Stub set (Oct 19–23, critical path) (P lead, E support)
 
-- [ ] Read `stubs/README.md` (the stub contract) and agree on any changes to it
-- [ ] Target: **30–50 vuln/safe pairs = 60–100 stubs**, balanced across classes (~10–17 pairs each)
-  - [ ] XSS: vary sinks (`res.send`, `res.write`, template strings, HTML built in helpers)
-  - [ ] Command injection: vary sinks (`exec`, `execSync`, `spawn(..., {shell: true})`)
-  - [ ] Path traversal: vary sinks (`readFileSync`, `readFile`, `createReadStream`, `res.sendFile`)
-- [ ] Vary the **source** (`query`, `body`, `params`, `headers`) and **sanitizer style** (escaping, allowlist regex, `path.resolve` + prefix check, early return)
-- [ ] Vary structure a little (helper functions, async handlers, callbacks) while keeping each stub short
-- [ ] Keep comments and identifiers label-neutral (no "safe", "sanitize", "vuln", "xss")
-- [ ] `node verifier/check_stubs.js`: every stub PASSes
-- [ ] Cross-review: each person reviews the other's stubs for label correctness and leakage
+- [x] Stub contract written (`stubs/README.md`)
+- [x] **60 stubs = 10 vuln/safe pairs per class** in `stubs/js/` (varied sources, sinks, sanitizers, sync/async/callback structure)
+- [x] `node verifier/check_stubs.js`: 60/60 PASS; scan for label-leaking words: clean
+- [ ] **Human review of all 60 stubs** (P and E split them, then swap a sample). For each pair check:
+  - the `vuln` version is really exploitable and the `safe` version is really safe (not just against our payload)
+  - the two versions differ only by the sanitizer
+  - nothing in names/comments hints at the label
+  - the code looks like something a developer would plausibly write
+- [ ] Optional: grow to ~100 stubs (≈17 pairs per class) if time allows after the check-in
 
 ## Phase 2: Harness and verifier hardening (Oct 19–24) (P lead, E support)
 
@@ -37,7 +37,10 @@ presentation · **Nov 28** final report, code and data release.
 - [x] Pipeline: baseline → QA edit → re-eval → verify, resumable JSONL output
 - [x] Provider backends: `ollama`, `anthropic`, `mock`; metrics; tests
 - [ ] Run a pilot with a real model on the 6 example stubs; read every QA edit by hand
-- [ ] Collect verifier failure cases from the pilot (e.g. edits that `require('validator')`, Express-only APIs) and decide how to handle each (see **Open decisions #4**)
+- [x] Unverifiable edits are written to `review/<run>/unverifiable/` with a `CHECKLIST.md`
+- [x] Refusals are written to `review/<run>/refusals/`
+- [x] QA edits on safe stubs (extension)
+- [ ] Collect verifier failure cases from the pilot (e.g. Express-only APIs) and add mocks where it makes sense
 - [ ] Add verifier tests for every new edge case found
 - [ ] (Optional) add a benign-input run to confirm edited code still behaves normally
 
@@ -45,8 +48,8 @@ presentation · **Nov 28** final report, code and data release.
 
 - [ ] Review and finalize the wording in `src/copilot_eval/prompts.py` (detection, 5 QA tasks, defense)
   - QA prompts must carry **no security intent**
-- [ ] Decide on the conversation mode: `continuous` vs `fresh` (**Open decisions #2**)
-- [ ] Decide on `n_repeats` and the sampling settings (**Open decisions #3**)
+- [ ] Decide on the conversation mode: `continuous` / `fresh` / `both` (see **Decisions → Still open**)
+- [ ] Decide on `n_repeats` and the Ollama temperature value (see **Decisions → Still open**)
 - [ ] Check the verdict-parse rate on the pilot (target: ~0 `unparsed`)
 - [ ] **Prompt freeze**: tag the commit (`git tag prompts-v1`) before any results that will be reported
 
@@ -55,7 +58,7 @@ presentation · **Nov 28** final report, code and data release.
 - [ ] Run the baseline on **all** stubs with the first target model; report precision/recall
 - [ ] Run all QA tasks on **one class** (suggest XSS)
 - [ ] `python -m copilot_eval metrics ...`, then paste the tables into the check-in slides
-- [ ] Spot-check every `genuine_miss` and `unverifiable` record by hand (both)
+- [ ] Spot-check every `genuine_miss` by hand; work through `review/<run>/CHECKLIST.md` (both)
 
 ## Phase 5: Full evaluation (Oct 26 – Nov 7) (E lead, P support)
 
@@ -88,11 +91,18 @@ presentation · **Nov 28** final report, code and data release.
 
 ---
 
-## Open decisions
+## Decisions
 
-1. **Target models.** The proposal says "one or two". Plan: start with a free local model (Ollama), then add one Claude model through the Anthropic API. Which ones?
-2. **Conversation mode.** The proposal says the QA task and re-evaluation happen "in a separate turn", which reads like one ongoing conversation (`continuous`). The alternative is a fresh conversation per step (`fresh`). These measure different things: does the model contradict itself while it can see its own earlier verdict, versus does an unprimed reviewer miss it. Both are implemented; pick the primary one, and maybe report the other.
-3. **"Fixed temperature".** The proposal repeats queries at a fixed temperature. Ollama models accept `temperature`/`seed`, but **current Claude models reject sampling parameters**, so Claude runs use the model's default sampling. The `none` control condition measures sampling noise either way. Mention this in the methodology.
-4. **QA edits the verifier can't run.** E.g. "add input validation" that pulls in an npm package. Options: (a) say "use only built-in modules" in the QA prompt; (b) mark these `unverifiable` and review them by hand; (c) mock common packages. Currently (b).
-5. **QA edits on safe stubs.** The proposal only edits code the model flagged as vulnerable. Editing safe stubs too would measure whether QA edits push the model to false positives. Optional extension.
-6. **Refusals (Anthropic).** Security prompts may sometimes be declined. The harness records `stop_reason` and does **not** silently fall back to a different model, so every verdict comes from the model under test.
+### Decided (2026-10-19)
+
+- **Models:** two models: first a free open-weights model via Ollama, then a Claude model via the Anthropic API.
+- **Sampling:** fixed temperature + per-repeat seed for Ollama; Claude uses default sampling because current Claude models reject sampling parameters. Documented in `docs/methodology.md`, and must be stated in the report's methodology.
+- **Unverifiable edits:** always identified and written to `review/<run>/unverifiable/` with a checklist for manual review.
+- **QA edits on safe stubs:** yes, as an extension (`qa_on_safe_stubs: true`).
+- **Refusals:** recorded as data (no fallback to another model) and tracked in `review/<run>/refusals/`.
+
+### Still open
+
+1. **Exact models:** which Ollama model, and which Claude model (cost differs ~20× between Haiku and Opus).
+2. **Conversation mode:** `continuous`, `fresh`, or `both`. Record the choice and its rationale in `docs/methodology.md`.
+3. **Ollama temperature value** and `n_repeats`.

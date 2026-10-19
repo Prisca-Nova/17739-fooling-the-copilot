@@ -1,0 +1,11 @@
+{
+  "id": "example_xss_vuln",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.input",
+  "source_key": "input",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

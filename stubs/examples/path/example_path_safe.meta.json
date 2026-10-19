@@ -1,0 +1,11 @@
+{
+  "id": "example_path_safe",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.input",
+  "source_key": "input",
+  "sink": "fs.readFileSync",
+  "sanitizer": "path.resolve + prefix check",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

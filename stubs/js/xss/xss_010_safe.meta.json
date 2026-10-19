@@ -1,0 +1,11 @@
+{
+  "id": "xss_010_safe",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "params.lang",
+  "source_key": "lang",
+  "sink": "res.send",
+  "sanitizer": "lookup table",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

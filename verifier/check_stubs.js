@@ -5,12 +5,15 @@ const fs = require('fs');
 const path = require('path');
 const { verify } = require('./run_stub');
 
-const root = path.resolve(__dirname, '..', 'stubs', 'js');
+// Usage: node check_stubs.js [stub dirs...]   (default: stubs/examples and stubs/js)
+const roots = process.argv.length > 2
+  ? process.argv.slice(2).map((d) => path.resolve(d))
+  : ['examples', 'js'].map((d) => path.resolve(__dirname, '..', 'stubs', d));
 
 async function main() {
   let failures = 0;
   let count = 0;
-  for (const cls of fs.readdirSync(root)) {
+  for (const root of roots.filter((r) => fs.existsSync(r))) for (const cls of fs.readdirSync(root)) {
     const dir = path.join(root, cls);
     if (!fs.statSync(dir).isDirectory()) continue;
     for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.meta.json'))) {

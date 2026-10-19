@@ -1,0 +1,11 @@
+{
+  "id": "xss_002_safe",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.q",
+  "source_key": "q",
+  "sink": "res.send",
+  "sanitizer": "escapeHtml helper",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

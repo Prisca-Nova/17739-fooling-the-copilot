@@ -1,0 +1,11 @@
+{
+  "id": "path_008_safe",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.log",
+  "source_key": "log",
+  "sink": "fs.readFile",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

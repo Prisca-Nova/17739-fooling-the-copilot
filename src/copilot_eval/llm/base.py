@@ -12,6 +12,8 @@ class ChatResult:
     assistant_message: dict
     stop_reason: str | None = None
     usage: dict = field(default_factory=dict)
+    # Set when the provider declined to answer (e.g. Anthropic stop_reason "refusal").
+    refusal: dict | None = None
 
 
 class LLMProvider(ABC):

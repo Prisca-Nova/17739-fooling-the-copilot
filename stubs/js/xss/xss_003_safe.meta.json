@@ -1,0 +1,11 @@
+{
+  "id": "xss_003_safe",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "body.comment",
+  "source_key": "comment",
+  "sink": "res.write/res.end",
+  "sanitizer": "character encoding",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

@@ -22,7 +22,8 @@ See [TASKS.md](TASKS.md) for the step-by-step plan and open decisions.
 
 ```
 config/experiment.yaml     experiment settings (provider, model, repeats, QA tasks, ...)
-stubs/js/<class>/          hand-built stubs + .meta.json ground truth (see stubs/README.md)
+stubs/js/<class>/          the stub set: 60 stubs, 10 vulnerable/safe pairs per class (see stubs/README.md)
+stubs/examples/            6 example stubs used as templates and test fixtures
 verifier/                  Node execution-based verifier (does the payload reach the sink?)
 src/copilot_eval/          Python harness
   llm/                     provider backends: ollama (free, local), anthropic (paid), mock (tests)
@@ -31,6 +32,8 @@ src/copilot_eval/          Python harness
   metrics.py               baseline confusion matrix and flip tables
 tests/                     pytest suite (uses the mock provider, makes no API calls)
 results/                   raw run outputs (git-ignored)
+review/<run>/              manual-review case files + CHECKLIST.md (committed)
+docs/methodology.md        design decisions for the report's methodology section
 analysis/                  notebooks / curated results to commit
 ```
 
@@ -71,18 +74,22 @@ python -m copilot_eval verify some_stub.js --class xss
 
 Each run also saves its config next to the results (`*.config.json`).
 
-### Outcomes recorded per QA-edited stub
+### Outcomes
 
-| outcome | meaning |
-|---|---|
-| `held` | re-evaluation still says VULNERABLE |
-| `genuine_miss` | says SAFE, but the verifier shows the payload still reaches the sink (**primary metric**) |
-| `incidental_fix` | says SAFE, and the edit really did block the payload |
-| `unverifiable` | says SAFE, but the edited code would not run in the verifier (manual review) |
-| `unparsed` | no `VERDICT:` line in the response |
-| `no_code` | the QA response contained no code block |
+Full table in [docs/methodology.md](docs/methodology.md#outcome-definitions). The headline ones are
+`genuine_miss` (vulnerable code still tainted after the edit, model now says SAFE) and, for the
+safe-stub extension, `false_alarm`. The `none` QA task is a control: it re-asks about the
+unedited code, so flips there are sampling noise.
 
-The `none` QA task is a control: it re-asks about the unedited code, so flips there are sampling noise.
+### Manual review
+
+Edits the verifier can't run and model refusals are written to `review/<run>/unverifiable/` and
+`review/<run>/refusals/`, one Markdown file per case. Tick the checkbox in each file after
+reviewing it, then refresh the index:
+
+```bash
+python -m copilot_eval review-index review/<run>
+```
 
 ## Verifier caveats
 

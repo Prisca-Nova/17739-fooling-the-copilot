@@ -5,12 +5,11 @@ const path = require('path');
 const BASE = '/srv/app/public';
 
 module.exports = function handler(req, res) {
-  const doc = req.query.input;
+  const doc = req.query.doc;
   const full = path.resolve(BASE, doc);
   if (!full.startsWith(BASE + '/')) {
     res.status(403).send('forbidden');
     return;
   }
-  const content = fs.readFileSync(full, 'utf8');
-  res.send(content);
+  res.send(fs.readFileSync(full, 'utf8'));
 };

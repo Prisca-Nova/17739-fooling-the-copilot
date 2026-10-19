@@ -7,6 +7,7 @@ from pathlib import Path
 from .config import load_config
 from .metrics import summarize
 from .pipeline import estimate_calls, run_experiment
+from .review import write_index
 from .stubs import load_stubs
 from .verify import verify_code
 
@@ -26,6 +27,9 @@ def main(argv=None):
     p_met = sub.add_parser("metrics", help="summarize a results JSONL file")
     p_met.add_argument("results", type=Path)
 
+    p_rev = sub.add_parser("review-index", help="refresh CHECKLIST.md for a run's review folder")
+    p_rev.add_argument("run_dir", type=Path)
+
     p_ver = sub.add_parser("verify", help="run the execution verifier on one file")
     p_ver.add_argument("file", type=Path)
     p_ver.add_argument("--class", dest="vuln_class", required=True, choices=["xss", "cmdi", "path"])
@@ -41,6 +45,9 @@ def main(argv=None):
         print(f"{len(stubs)} stubs, at most {estimate_calls(cfg, stubs)} model calls")
     elif args.command == "metrics":
         print(summarize(args.results))
+    elif args.command == "review-index":
+        index = write_index(args.run_dir)
+        print(index or "no review cases in this folder")
     elif args.command == "verify":
         print(json.dumps(verify_code(args.file.read_text(encoding="utf-8"), args.vuln_class), indent=2))
 

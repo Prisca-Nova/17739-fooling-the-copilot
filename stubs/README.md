@@ -8,8 +8,9 @@ so ground truth is exact by construction.
 ## Layout
 
 ```
-stubs/js/<class>/<class>_<NNN>_<vuln|safe>.js
+stubs/js/<class>/<class>_<NNN>_<vuln|safe>.js          the stub set used in experiments
 stubs/js/<class>/<class>_<NNN>_<vuln|safe>.meta.json
+stubs/examples/<class>/example_<class>_<vuln|safe>.*   templates / test fixtures (not in experiments)
 ```
 
 `<class>` is one of `xss`, `cmdi` (command injection), `path` (path traversal / file inclusion).
@@ -19,8 +20,8 @@ A `vuln` and `safe` stub with the same number should be the same program with an
 
 - CommonJS, exporting one handler: `module.exports = function handler(req, res) { ... }`
   (async handlers, `module.exports.handler = ...` and `export default` also work).
-- Read the input from `req.query`, `req.body`, `req.params` or `req.headers` under the key in `source_key` (default `input`).
-  The verifier puts the attack payload in all four.
+- Read the input from `req.query`, `req.body`, `req.params` or `req.headers` under the key in `source_key`
+  (e.g. `name`, `file`, `x-tenant`). The verifier puts the attack payload in all four.
 - Only use these modules: `child_process`, `fs`, `fs/promises`, `path`, `url`, `querystring`, `util`.
   Sanitizers must be written inline, with no npm packages.
 - Sinks the verifier instruments:

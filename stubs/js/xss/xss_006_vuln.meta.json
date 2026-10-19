@@ -1,0 +1,11 @@
+{
+  "id": "xss_006_vuln",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.msg",
+  "source_key": "msg",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

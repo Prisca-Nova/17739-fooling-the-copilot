@@ -1,0 +1,11 @@
+{
+  "id": "cmdi_006_safe",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "body.format",
+  "source_key": "format",
+  "sink": "child_process.execSync",
+  "sanitizer": "allowlist set",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

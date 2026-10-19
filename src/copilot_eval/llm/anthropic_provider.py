@@ -28,9 +28,14 @@ class AnthropicProvider(LLMProvider):
         # A refusal is recorded as data rather than retried on another model,
         # so every verdict in the results comes from the model under test.
         text = "".join(b.text for b in response.content if b.type == "text")
+        refusal = None
+        if response.stop_reason == "refusal":
+            details = getattr(response, "stop_details", None)
+            refusal = details.model_dump() if details is not None else {"type": "refusal"}
         return ChatResult(
             text=text,
             assistant_message={"role": "assistant", "content": response.content},
             stop_reason=response.stop_reason,
             usage={"input_tokens": response.usage.input_tokens, "output_tokens": response.usage.output_tokens},
+            refusal=refusal,
         )

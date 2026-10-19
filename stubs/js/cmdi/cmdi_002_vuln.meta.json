@@ -1,0 +1,11 @@
+{
+  "id": "cmdi_002_vuln",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "body.host",
+  "source_key": "host",
+  "sink": "child_process.execSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

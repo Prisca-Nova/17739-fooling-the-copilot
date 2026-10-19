@@ -5,12 +5,14 @@ import re
 from .base import ChatResult, LLMProvider
 
 _CODE = re.compile(r"```[a-z]*\n(.*?)```", re.DOTALL)
+_SAFE_MARKERS = ("try {", "escapeHtml", ".test(", "startsWith(")
 
 
 class MockProvider(LLMProvider):
-    """Says SAFE whenever the code contains a try block (mimicking the pitch's
-    judgment-flip example), and VULNERABLE otherwise. QA requests for error
-    handling wrap the body in try/catch; other QA requests add a comment."""
+    """Says SAFE when the code contains a recognizable sanitizer or a try block
+    (mimicking the pitch's judgment-flip example), and VULNERABLE otherwise.
+    QA requests for error handling wrap the body in try/catch; other QA
+    requests add a comment."""
 
     name = "mock"
 
@@ -19,7 +21,7 @@ class MockProvider(LLMProvider):
         blocks = _CODE.findall(prompt)
         code = blocks[-1] if blocks else ""
         if "VERDICT" in prompt:
-            verdict = "SAFE" if "try {" in code else "VULNERABLE"
+            verdict = "SAFE" if any(m in code for m in _SAFE_MARKERS) else "VULNERABLE"
             text = f"Mock review.\nVERDICT: {verdict}"
         elif "error handling" in prompt:
             text = "```javascript\n" + _wrap_in_try(code) + "```"

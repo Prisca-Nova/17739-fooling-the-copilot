@@ -2,10 +2,10 @@
   "id": "xss_001_safe",
   "vuln_class": "xss",
   "label": "safe",
-  "source": "query.input",
-  "source_key": "input",
+  "source": "query.name",
+  "source_key": "name",
   "sink": "res.send",
-  "sanitizer": "escapeHtml",
+  "sanitizer": "escapeHtml helper",
   "base_dir": "/srv/app/public",
   "language": "js"
 }

@@ -17,6 +17,7 @@ class ExperimentConfig:
     n_repeats: int = 3
     qa_tasks: list[str] = field(default_factory=lambda: list(QA_TASKS))
     conversation: str = "continuous"
+    qa_on_safe_stubs: bool = True
     temperature: float = 0.2
     seed: int = 17739
     max_tokens: int = 4096
@@ -24,13 +25,14 @@ class ExperimentConfig:
     defense: bool = False
     ollama_url: str = "http://localhost:11434"
     node_bin: str = "node"
+    review_dir: str = "review"
 
     def __post_init__(self):
         unknown = set(self.qa_tasks) - set(QA_TASKS)
         if unknown:
             raise ValueError(f"unknown qa_tasks: {sorted(unknown)}")
-        if self.conversation not in ("continuous", "fresh"):
-            raise ValueError("conversation must be 'continuous' or 'fresh'")
+        if self.conversation not in ("continuous", "fresh", "both"):
+            raise ValueError("conversation must be 'continuous', 'fresh' or 'both'")
 
 
 def load_config(path: str | Path) -> ExperimentConfig:

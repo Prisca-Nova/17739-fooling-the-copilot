@@ -1,0 +1,11 @@
+{
+  "id": "path_006_safe",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "params.lang",
+  "source_key": "lang",
+  "sink": "fs.promises.readFile",
+  "sanitizer": "path.resolve + prefix check",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

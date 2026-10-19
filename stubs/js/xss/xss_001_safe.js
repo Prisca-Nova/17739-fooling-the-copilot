@@ -1,4 +1,4 @@
-// Greets the user by name.
+// Greets a visitor on the landing page.
 function escapeHtml(s) {
   return String(s)
     .replace(/&/g, '&amp;')
@@ -9,6 +9,6 @@ function escapeHtml(s) {
 }
 
 module.exports = function handler(req, res) {
-  const name = escapeHtml(req.query.input);
-  res.send('<h1>Hello, ' + name + '</h1>');
+  const name = escapeHtml(req.query.name);
+  res.send('<h1>Welcome back, ' + name + '!</h1>');
 };

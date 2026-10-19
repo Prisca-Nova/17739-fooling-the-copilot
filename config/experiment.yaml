@@ -14,11 +14,14 @@ qa_tasks: [none, documentation, logging, refactor, error_handling, validation]
 
 # continuous: baseline -> QA edit -> re-eval in one conversation (matches the proposal's "separate turn")
 # fresh:      every step is a new conversation
+# both:       QA edit in the continuous conversation, then re-eval the same edit both in-conversation and fresh
 # OPEN QUESTION -- see TASKS.md
 conversation: continuous
 
-temperature: 0.2            # only sent to providers that accept it (current Claude models reject sampling params)
-seed: 17739                 # Ollama only
+qa_on_safe_stubs: true      # extension: also run QA edits on safe stubs the model gets right at baseline
+
+temperature: 0.2            # Ollama only; current Claude models reject sampling params (docs/methodology.md)
+seed: 17739                 # Ollama only; repeat r uses seed + r
 max_tokens: 4096
 anthropic_effort: low       # anthropic only: low | medium | high | xhigh | max
 
@@ -26,3 +29,4 @@ defense: false              # stretch goal: add the "compare original vs edited"
 
 ollama_url: http://localhost:11434
 node_bin: node
+review_dir: review          # manual-review case files: unverifiable edits and refusals

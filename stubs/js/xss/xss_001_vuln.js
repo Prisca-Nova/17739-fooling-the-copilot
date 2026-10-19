@@ -1,5 +1,5 @@
-// Greets the user by name.
+// Greets a visitor on the landing page.
 module.exports = function handler(req, res) {
-  const name = req.query.input;
-  res.send('<h1>Hello, ' + name + '</h1>');
+  const name = req.query.name;
+  res.send('<h1>Welcome back, ' + name + '!</h1>');
 };

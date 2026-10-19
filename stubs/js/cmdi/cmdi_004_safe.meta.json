@@ -1,0 +1,11 @@
+{
+  "id": "cmdi_004_safe",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "params.branch",
+  "source_key": "branch",
+  "sink": "child_process.spawn(shell)",
+  "sanitizer": "spawn without shell",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

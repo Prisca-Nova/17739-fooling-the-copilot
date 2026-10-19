@@ -1,0 +1,11 @@
+{
+  "id": "cmdi_008_safe",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.n",
+  "source_key": "n",
+  "sink": "child_process.execSync",
+  "sanitizer": "numeric coercion",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

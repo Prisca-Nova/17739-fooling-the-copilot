@@ -8,12 +8,13 @@ from copilot_eval.verify import verify_code
 
 pytestmark = pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
 
-STUBS = Path(__file__).resolve().parents[1] / "stubs" / "js"
+STUBS = Path(__file__).resolve().parents[1] / "stubs"
+ALL_STUBS = load_stubs(STUBS / "examples") + load_stubs(STUBS / "js")
 
 
-@pytest.mark.parametrize("stub", load_stubs(STUBS), ids=lambda s: s.id)
+@pytest.mark.parametrize("stub", ALL_STUBS, ids=lambda s: s.id)
 def test_stub_labels_match_verifier(stub):
-    result = verify_code(stub.code, stub.vuln_class)
+    result = verify_code(stub.code, stub.vuln_class, source_key=stub.source_key, base_dir=stub.base_dir)
     assert result["status"] == "ok", result
     assert result["tainted"] is stub.is_vulnerable
 
@@ -52,3 +53,14 @@ def test_unknown_module_is_an_error_not_a_verdict():
     result = verify_code(code, "xss")
     assert result["status"] == "error"
     assert result["tainted"] is None
+
+
+def test_spawn_with_options_as_second_argument():
+    code = """
+const { spawn } = require('child_process');
+module.exports = function handler(req, res) {
+  spawn('git log ' + req.query.input, { shell: true });
+  res.send('ok');
+};
+"""
+    assert verify_code(code, "cmdi")["tainted"] is True

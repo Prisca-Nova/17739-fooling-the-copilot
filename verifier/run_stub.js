@@ -82,6 +82,11 @@ function makeMocks(record) {
       return Buffer.from('');
     },
     spawn: (cmd, args, opts) => {
+      // spawn(cmd, options) is also valid: the options object may come second.
+      if (!Array.isArray(args) && opts === undefined) {
+        opts = args;
+        args = [];
+      }
       const full = [cmd].concat(Array.isArray(args) ? args : []).join(' ');
       if (opts && opts.shell) record('child_process.spawn(shell)', full, 'cmdi');
       return { on() {}, stdout: { on() {} }, stderr: { on() {} } };
