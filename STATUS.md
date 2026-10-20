@@ -15,14 +15,15 @@
 | Harness (pipeline, metrics, review folders) | ✅ done, 85+ tests passing |
 | Execution verifier | ✅ done |
 | Stub set | ✅ 102 stubs written (17 pairs × 3 classes) · ⏳ **human review pending** |
-| Model 1: `qwen2.5-coder:7b` (free, local) | ✅ installed, pilot passed · 🔄 **baseline run in progress** |
+| Model 1: `qwen2.5-coder:7b` (free, local) | ✅ installed, pilot passed · ⏸️ **baseline run paused at 181/306** |
 | Model 2: Claude Sonnet 5.5 (paid API) | ⏸️ waiting for instructor's answer on credits |
 | Defense (stretch) | ⏸️ implemented, not run yet |
 | PHP subset (stretch) | ⏸️ not started, decide by Nov 7 |
 
 ## In progress
 
-- **Baseline-only run, Qwen** (`config/baseline-qwen.yaml`): 102 stubs × 3 repeats = 306 calls, started 2026-10-20. Gives baseline accuracy and verdict stability for the Oct 25 check-in.
+- **Baseline-only run, Qwen** (`config/baseline-qwen.yaml`): 102 stubs × 3 repeats = 306 calls, started 2026-10-20. **Stopped at 181/306** (repeat 0 complete, repeat 1 at 79/102) because the laptop ran low on memory. Results are saved; resume with:
+  `python -m copilot_eval run --config config/baseline-qwen.yaml --resume results/20261020-014550_ollama_qwen2.5-coder-7b.jsonl`
 
 ## Waiting on
 
@@ -55,7 +56,7 @@
 | Run | Date | Headline |
 |---|---|---|
 | Pilot, Qwen, `cmdi_001` pair | 2026-10-20 | Pipeline works end to end. 0 flips in 6 QA conditions (1 pair, so not meaningful). Safe stub flagged as vulnerable (false positive). |
-| Baseline, Qwen, 102 stubs × 3 | 2026-10-20 | _running_ |
+| Baseline, Qwen, 102 stubs × 3 | 2026-10-20 | _paused at 181/306 (low memory)_ |
 
 ## Where things are
 
