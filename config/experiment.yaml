@@ -2,7 +2,7 @@
 # Every run saves a copy of its config next to the results, so results stay traceable.
 
 provider: ollama            # ollama | anthropic | mock
-model: qwen2.5-coder:7b     # pending final choice -- see TASKS.md
+model: qwen2.5-coder:7b     # decided 2026-10-20 (docs/decision-log.md)
 
 stubs_dir: stubs/js
 results_dir: results
@@ -28,7 +28,6 @@ top_k: 20
 repeat_penalty: 1.1
 seed: 17739                 # repeat r uses seed + r
 max_tokens: 4096
-anthropic_effort: low       # anthropic only: low | medium | high | xhigh | max
 
 defense: false              # stretch goal: add the "compare original vs edited" re-eval prompt
 

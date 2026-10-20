@@ -16,8 +16,10 @@ qa_on_safe_stubs: true
 defense: false
 
 # Sampling parameters are not sent: current Claude models reject them (docs/methodology.md).
-# Effort controls how much the model thinks before answering. PENDING DECISION -- see TASKS.md.
-anthropic_effort: low
-max_tokens: 4096
+# Effort controls how much the model thinks before answering. Decided 2026-10-20: the model's
+# default (null = not sent), to test it as deployed. max_tokens is only a cap (billing is for tokens
+# actually used); it is set high so default-effort thinking is not cut off mid-answer.
+anthropic_effort: null
+max_tokens: 16000
 
 node_bin: node

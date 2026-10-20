@@ -16,7 +16,7 @@ presentation · **Nov 28** final report, code and data release.
 - [ ] Both: clone the repo, create a venv, `pip install -e ".[dev]"`, run `pytest` and `node verifier/check_stubs.js` (P, E)
 - [x] Install Ollama (P's laptop, v0.40.5)
 - [ ] Pull the free model and run `python -m copilot_eval run --limit 2` end to end (P, E)
-- [ ] Pick the exact free model (see **Decisions → Still open**) (E, P)
+- [x] Free model: `qwen2.5-coder:7b` (switching to `qwen3-coder:30b` later stays possible)
 - [ ] **Ask the instructor whether the course can cover Anthropic API usage** before any paid run (P, E)
 - [x] Eileen invited to the GitHub repo (accept the invite: Kabi12Blessing)
 - [ ] Create an Anthropic Console account; decide on a spending limit before adding credits (E, P)
@@ -97,7 +97,7 @@ presentation · **Nov 28** final report, code and data release.
 
 ### Decided (2026-10-19)
 
-- **Models:** two models: first a free open-weights model via Ollama, then **Claude Sonnet 5.5** via the Anthropic API (after asking the instructor about credits).
+- **Models:** two models: first **`qwen2.5-coder:7b`** via Ollama, then **Claude Sonnet 5.5** (default effort) via the Anthropic API (after asking the instructor about credits).
 - **Conversation mode:** `both`: continuous re-evaluation as the primary result, fresh re-evaluation of the same edit as a paired comparison.
 - **Ollama sampling:** the publisher's recommended settings (Qwen2.5-Coder: T=0.7, top_p 0.8, top_k 20, rep. penalty 1.1), fixed; seed = 17739 + repeat.
 - **Sampling:** fixed temperature + per-repeat seed for Ollama; Claude uses default sampling because current Claude models reject sampling parameters. Documented in `docs/methodology.md`, and must be stated in the report's methodology.
@@ -107,7 +107,6 @@ presentation · **Nov 28** final report, code and data release.
 
 ### Still open
 
-1. **Free model size:** `qwen2.5-coder:7b` (4.7 GB, faster) vs `qwen3-coder:30b` (19 GB, mostly CPU, slower).
-2. **Sonnet effort level** (`anthropic_effort`): `low` (cheaper) vs the model default (as-deployed, more thinking tokens).
+- Nothing right now.
 
 All decisions, with alternatives and reasons, are logged in `docs/decision-log.md`.

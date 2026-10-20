@@ -24,7 +24,7 @@ class ExperimentConfig:
     repeat_penalty: float | None = None
     seed: int = 17739
     max_tokens: int = 4096
-    anthropic_effort: str = "low"
+    anthropic_effort: str | None = None  # None = the model's default effort
     defense: bool = False
     ollama_url: str = "http://localhost:11434"
     node_bin: str = "node"

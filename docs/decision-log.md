@@ -15,6 +15,20 @@ Template for new entries:
 
 ---
 
+## 2026-10-20: Sonnet runs at its default effort
+
+- **Decided by:** Prisca.
+- **Options considered:** `low` effort (less thinking, cheaper) vs the model's default effort.
+- **Choice and why:** the default, for the same "test each model as deployed" principle used for sampling. It costs more than `low` because thinking tokens are billed as output; the 2-stub Claude pilot will measure by how much before any full run.
+- **Consequences:** `anthropic_effort: null` in `config/claude-sonnet.yaml` (no `effort` sent to the API). `max_tokens` raised to 16000 so default-effort thinking is not cut off mid-answer (it is only a cap; billing is for tokens actually used).
+
+## 2026-10-20: Free model is `qwen2.5-coder:7b` (for now)
+
+- **Decided by:** Prisca.
+- **Options considered:** `qwen2.5-coder:7b` (4.7 GB, partly fits the laptop GPU, faster) vs `qwen3-coder:30b` (19 GB, newer and stronger, runs mostly on CPU, much slower).
+- **Choice and why:** 7B, so ~3,000 calls per full run finish in reasonable time on the laptop. Switching later (or Eileen running the 30B on another machine) stays possible; if so, re-read that model's recommended sampling settings and log a new entry.
+- **Consequences:** `model: qwen2.5-coder:7b` in `config/experiment.yaml`; sampling values already match this model.
+
 ## 2026-10-19: Conversation mode is `both`
 
 - **Decided by:** Prisca (on recommendation).

@@ -139,7 +139,8 @@ class Runner:
         else:
             prompt = prompts.qa_prompt(task, stub.code, stub.language)
             qa, history = self._ask(history, prompt)
-            record.update(qa_response=qa.text, qa_stop_reason=qa.stop_reason, qa_refusal=qa.refusal)
+            record.update(qa_response=qa.text, qa_stop_reason=qa.stop_reason, qa_refusal=qa.refusal,
+                          qa_usage=qa.usage)
             if qa.refusal is not None:
                 self._log_refusal(record, "qa", prompt, qa)
                 return {**record, "outcome": "refused"}
@@ -162,6 +163,7 @@ class Runner:
             record.update({
                 f"reeval_verdict{suffix}": verdict, f"reeval_response{suffix}": reeval.text,
                 f"reeval_stop_reason{suffix}": reeval.stop_reason, f"reeval_refusal{suffix}": reeval.refusal,
+                f"reeval_usage{suffix}": reeval.usage,
                 f"outcome{suffix}": classify_outcome(stub.label, verdict, tainted, refused=refused),
             })
             self._log_refusal(record, f"reeval{suffix}", prompt, reeval)
@@ -172,7 +174,7 @@ class Runner:
             defense, _ = self._ask(context, prompt)
             refused = defense.refusal is not None
             d_verdict = None if refused else parse_verdict(defense.text)
-            record.update(defense_verdict=d_verdict, defense_response=defense.text,
+            record.update(defense_verdict=d_verdict, defense_response=defense.text, defense_usage=defense.usage,
                           defense_outcome=classify_outcome(stub.label, d_verdict, tainted, refused=refused))
             self._log_refusal(record, "defense", prompt, defense)
         return record

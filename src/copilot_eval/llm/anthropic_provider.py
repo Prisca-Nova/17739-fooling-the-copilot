@@ -14,13 +14,11 @@ class AnthropicProvider(LLMProvider):
 
     def chat(self, messages, system=None):
         # Current Claude models reject temperature/top_p, so sampling is left at
-        # the model default. Thinking is adaptive by default; effort sets depth.
-        kwargs = {
-            "model": self.model,
-            "max_tokens": self.max_tokens,
-            "messages": messages,
-            "output_config": {"effort": self.opts.get("anthropic_effort", "low")},
-        }
+        # the model default. Thinking is adaptive by default; effort sets its depth,
+        # and is only sent when configured (otherwise the model's default applies).
+        kwargs = {"model": self.model, "max_tokens": self.max_tokens, "messages": messages}
+        if self.opts.get("anthropic_effort"):
+            kwargs["output_config"] = {"effort": self.opts["anthropic_effort"]}
         if system:
             kwargs["system"] = system
         response = self.client.messages.create(**kwargs)
