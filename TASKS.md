@@ -38,7 +38,7 @@ presentation · **Nov 28** final report, code and data release.
 - [x] Execution-based verifier with instrumented sinks (`verifier/run_stub.js`)
 - [x] Pipeline: baseline → QA edit → re-eval → verify, resumable JSONL output
 - [x] Provider backends: `ollama`, `anthropic`, `mock`; metrics; tests
-- [ ] Run a pilot with a real model on the 6 example stubs; read every QA edit by hand
+- [x] Pilot (2026-10-20): qwen2.5-coder:7b on the cmdi_001 pair, `both` mode, 1 repeat. 19 calls in 4m43s (~15 s/call), all verdicts parsed, no unverifiable edits; QA edits read by hand and the verifier's calls matched. Qwen flagged the safe stub as vulnerable (false positive), so it was correctly excluded from the safe-stub track.
 - [x] Unverifiable edits are written to `review/<run>/unverifiable/` with a `CHECKLIST.md`
 - [x] Refusals are written to `review/<run>/refusals/`
 - [x] QA edits on safe stubs (extension)
