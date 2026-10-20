@@ -23,3 +23,13 @@ def test_extract_longest_block():
 
 def test_extract_none():
     assert extract_code("no code here") is None
+
+
+def test_neutral_prompt_has_no_source_sink_hint():
+    from copilot_eval import prompts
+
+    default = prompts.detect_prompt("x();", variant="default")
+    neutral = prompts.detect_prompt("x();", variant="neutral")
+    assert "dangerous sink" in default and "dangerous sink" not in neutral
+    assert "security reviewer" not in prompts.system_prompt("neutral")
+    assert "VERDICT: VULNERABLE" in neutral and "VERDICT: SAFE" in neutral

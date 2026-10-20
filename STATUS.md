@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated:** 2026-10-20 · **Phase:** stub review + baseline evaluation (Phase 1/4 in [TASKS.md](TASKS.md))
+**Last updated:** 2026-10-20 (night) · **Phase:** baseline done → decide how to handle Qwen's bias, stub review (Phase 1/4 in [TASKS.md](TASKS.md))
 
 | Deadline | Date | Days left |
 |---|---|---|
@@ -15,15 +15,14 @@
 | Harness (pipeline, metrics, review folders) | ✅ done, 85+ tests passing |
 | Execution verifier | ✅ done |
 | Stub set | ✅ 102 stubs written (17 pairs × 3 classes) · ⏳ **human review pending** |
-| Model 1: `qwen2.5-coder:7b` (free, local) | ✅ installed, pilot passed · ⏸️ **baseline run paused at 181/306** |
+| Model 1: `qwen2.5-coder:7b` (free, local) | ✅ baseline done (306 + 102 verdicts) · ⚠️ **flags ~95% of safe stubs as vulnerable** |
 | Model 2: Claude Sonnet 5.5 (paid API) | ⏸️ waiting for instructor's answer on credits |
 | Defense (stretch) | ⏸️ implemented, not run yet |
 | PHP subset (stretch) | ⏸️ not started, decide by Nov 7 |
 
 ## In progress
 
-- **Baseline-only run, Qwen** (`config/baseline-qwen.yaml`): 102 stubs × 3 repeats = 306 calls, started 2026-10-20. **Stopped at 181/306** (repeat 0 complete, repeat 1 at 79/102) because the laptop ran low on memory. Results are saved; resume with:
-  `python -m copilot_eval run --config config/baseline-qwen.yaml --resume results/20261020-014550_ollama_qwen2.5-coder-7b.jsonl`
+- Nothing running. **Decision needed:** how to handle Qwen 7B's near "always vulnerable" bias before the full QA run (see Next steps).
 
 ## Waiting on
 
@@ -35,7 +34,7 @@
 
 ## Next steps
 
-1. Read the baseline results and put the tables into the check-in slides.
+1. **Decide on the free model** given the bias: keep Qwen 7B and report the bias, or test `qwen3-coder:30b` on a sample (19 GB; maybe on Eileen's machine). Baseline tables for the check-in slides: [analysis/2026-10-20-baseline-qwen.md](analysis/2026-10-20-baseline-qwen.md).
 2. Stub review with Eileen (by ~Oct 23 so the full QA run can go overnight before Oct 25).
 3. Full Qwen QA run: at most 5,508 calls, ~14–23 h on the laptop.
 4. Once credits are settled: 2-stub Sonnet pilot to measure real cost, then the full Sonnet run.
@@ -56,7 +55,8 @@
 | Run | Date | Headline |
 |---|---|---|
 | Pilot, Qwen, `cmdi_001` pair | 2026-10-20 | Pipeline works end to end. 0 flips in 6 QA conditions (1 pair, so not meaningful). Safe stub flagged as vulnerable (false positive). |
-| Baseline, Qwen, 102 stubs × 3 | 2026-10-20 | _paused at 181/306 (low memory)_ |
+| Baseline, Qwen, default prompt, 102 × 3 | 2026-10-20 | Recall **99%** (152/153), specificity **6%** (9/153), 0 unparsed. 8/102 stubs unstable across repeats. Precision ≈ 51%, i.e. close to "always vulnerable". |
+| Baseline, Qwen, neutral prompt, 102 × 1 | 2026-10-20 | Recall 98%, specificity 4%. 97/102 verdicts same as default. **Prompt priming is not the cause**; likely a 7B capability limit. Details: [analysis/2026-10-20-baseline-qwen.md](analysis/2026-10-20-baseline-qwen.md) |
 
 ## Where things are
 

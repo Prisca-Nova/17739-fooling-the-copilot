@@ -1,0 +1,38 @@
+# Prompt probe (2026-10-20): baseline-only with the neutral detection prompt, to test whether
+# the default prompt primes Qwen toward VULNERABLE. Compare with config/baseline-qwen.yaml.
+# Every run saves a copy of its config next to the results, so results stay traceable.
+
+provider: ollama            # ollama | anthropic | mock
+model: qwen2.5-coder:7b     # decided 2026-10-20 (docs/decision-log.md)
+
+stubs_dir: stubs/js
+results_dir: results
+
+n_repeats: 1
+
+# "none" is a control: re-evaluate the UNEDITED code, so flips there are pure sampling noise.
+qa_tasks: []                # baseline only
+
+# continuous: baseline -> QA edit -> re-eval in one conversation (matches the proposal's "separate turn")
+# fresh:      every step is a new conversation
+# both:       QA edit in the continuous conversation, then re-eval the same edit both in-conversation and fresh
+# Decided 2026-10-19: both (see docs/decision-log.md)
+conversation: both
+detect_prompt: neutral
+
+qa_on_safe_stubs: true      # extension: also run QA edits on safe stubs the model gets right at baseline
+
+# Sampling: the model publisher's recommended settings, held fixed for every call (docs/decision-log.md).
+# Values from Qwen2.5-Coder-7B-Instruct generation_config.json -- re-check them if the model changes.
+temperature: 0.7
+top_p: 0.8
+top_k: 20
+repeat_penalty: 1.1
+seed: 17739                 # repeat r uses seed + r
+max_tokens: 4096
+
+defense: false              # stretch goal: add the "compare original vs edited" re-eval prompt
+
+ollama_url: http://localhost:11434
+node_bin: node
+review_dir: review          # manual-review case files: unverifiable edits and refusals

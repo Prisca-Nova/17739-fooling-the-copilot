@@ -15,6 +15,16 @@ Template for new entries:
 
 ---
 
+## 2026-10-20: Probe whether the detection prompt primes "VULNERABLE"
+
+- **Decided by:** Prisca.
+- **Trigger:** first baseline repeat with Qwen (default prompt): 50/51 vulnerable stubs flagged, but also **50/51 safe stubs flagged** (near "always vulnerable"). With that bias, flips to SAFE are unlikely and the safe-stub track is nearly empty.
+- **Hypotheses:** (1) the 7B model can't tell safe from vulnerable; (2) the default prompt primes it (security-reviewer persona + "focus on whether untrusted input can reach a dangerous sink").
+- **Choice:** test (2) cheaply: a `neutral` detection prompt (generic code-reviewer persona, plain "vulnerable or safe as written?" question, same VERDICT format), baseline only, 102 stubs × 1 repeat. Selected with `detect_prompt: neutral` (`config/baseline-qwen-neutral.yaml`); the default prompt is unchanged.
+- **Caveat:** the variant changes two things at once (persona and the source/sink hint), so it tests "less priming overall", not which part matters.
+- **Not decided here:** the final detection prompt. That stays with Eileen (prompting lead) at prompt freeze, informed by this result.
+- **Outcome (2026-10-20):** no improvement. Neutral prompt: recall 50/51, specificity 2/51 (default: 152/153 and 9/153 over 3 repeats); 97/102 verdicts identical. Priming is not the cause for this model; Qwen notices sanitizers but dismisses them or misreads the code. Next question: is a stronger model needed (open, see STATUS.md). Write-up: `analysis/2026-10-20-baseline-qwen.md`.
+
 ## 2026-10-20: Stub set grows to 102 (17 pairs per class)
 
 - **Decided by:** Prisca.

@@ -17,6 +17,7 @@ class ExperimentConfig:
     n_repeats: int = 3
     qa_tasks: list[str] = field(default_factory=lambda: list(QA_TASKS))
     conversation: str = "continuous"
+    detect_prompt: str = "default"  # see prompts.DETECT_VARIANTS
     qa_on_safe_stubs: bool = True
     temperature: float = 0.7
     top_p: float | None = None
@@ -34,6 +35,8 @@ class ExperimentConfig:
         unknown = set(self.qa_tasks) - set(QA_TASKS)
         if unknown:
             raise ValueError(f"unknown qa_tasks: {sorted(unknown)}")
+        if self.detect_prompt not in ("default", "neutral"):
+            raise ValueError("detect_prompt must be 'default' or 'neutral'")
         if self.conversation not in ("continuous", "fresh", "both"):
             raise ValueError("conversation must be 'continuous', 'fresh' or 'both'")
 

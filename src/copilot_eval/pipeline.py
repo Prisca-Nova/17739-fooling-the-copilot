@@ -67,7 +67,7 @@ class Runner:
 
     def _ask(self, history: list[dict], prompt: str):
         messages = history + [{"role": "user", "content": prompt}]
-        result = self.llm.chat(messages, system=prompts.DETECT_SYSTEM)
+        result = self.llm.chat(messages, system=prompts.system_prompt(self.cfg.detect_prompt))
         return result, messages + [result.assistant_message]
 
     def _log_refusal(self, record: dict, step: str, prompt: str, result):
@@ -95,6 +95,7 @@ class Runner:
         return {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "provider": self.cfg.provider, "model": self.cfg.model, "conversation": self.cfg.conversation,
+            "detect_prompt": self.cfg.detect_prompt,
             "stub_id": stub.id, "vuln_class": stub.vuln_class, "label": stub.label,
             "repeat": repeat, "qa_task": step,
         }
@@ -103,7 +104,7 @@ class Runner:
         if all((stub.id, repeat, t) in done for t in ["baseline", *self.cfg.qa_tasks]):
             return
 
-        prompt = prompts.detect_prompt(stub.code, stub.language)
+        prompt = prompts.detect_prompt(stub.code, stub.language, self.cfg.detect_prompt)
         baseline, base_history = self._ask([], prompt)
         base_verdict = "REFUSED" if baseline.refusal is not None else parse_verdict(baseline.text)
         record = {**self._base_record(stub, repeat, "baseline"), "verdict": base_verdict,
@@ -156,7 +157,7 @@ class Runner:
 
         for suffix in _reeval_contexts(self.cfg):
             context = [] if suffix == "_fresh" or self.cfg.conversation == "fresh" else history
-            prompt = prompts.detect_prompt(edited, stub.language)
+            prompt = prompts.detect_prompt(edited, stub.language, self.cfg.detect_prompt)
             reeval, _ = self._ask(context, prompt)
             refused = reeval.refusal is not None
             verdict = None if refused else parse_verdict(reeval.text)
