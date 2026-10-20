@@ -6,8 +6,8 @@ proposal's division of work: **P** = Prisca, **E** = Eileen (lead first, support
 Key dates: **Oct 25** check-in (baseline + partial QA results) · **Nov 15** final
 presentation · **Nov 28** final report, code and data release.
 
-> Status as of 2026-10-19: scaffold, verifier, and the first full stub set (60 stubs) are done; Ollama is installed.
-> Next on the critical path: **human review of the 60 stubs**, then the first pilot run with the free model.
+> Status as of 2026-10-20: scaffold, verifier, and the full stub set (**102 stubs**) are done; Ollama + qwen2.5-coder:7b installed and piloted.
+> Next on the critical path: **human review of the 102 stubs**, then the full Qwen run.
 
 ---
 
@@ -24,14 +24,14 @@ presentation · **Nov 28** final report, code and data release.
 ## Phase 1: Stub set (Oct 19–23, critical path) (P lead, E support)
 
 - [x] Stub contract written (`stubs/README.md`)
-- [x] **60 stubs = 10 vuln/safe pairs per class** in `stubs/js/` (varied sources, sinks, sanitizers, sync/async/callback structure)
-- [x] `node verifier/check_stubs.js`: 60/60 PASS; scan for label-leaking words: clean
-- [ ] **Human review of all 60 stubs** (P and E split them, then swap a sample). For each pair check:
+- [x] **102 stubs = 17 vuln/safe pairs per class** in `stubs/js/` (pairs 001–010 on 2026-10-19, 011–017 on 2026-10-20; varied sources, sinks, sanitizers, sync/async/callback/class structure)
+- [x] `node verifier/check_stubs.js`: 102/102 PASS; scan for label-leaking words: clean
+- [ ] **Human review of all 102 stubs** (P and E split them, then swap a sample). For each pair check:
   - the `vuln` version is really exploitable and the `safe` version is really safe (not just against our payload)
   - the two versions differ only by the sanitizer
   - nothing in names/comments hints at the label
   - the code looks like something a developer would plausibly write
-- [ ] Optional: grow to ~100 stubs (≈17 pairs per class) if time allows after the check-in
+- [ ] Judgment calls to settle during review: `cmdi_003`, `cmdi_010`, `cmdi_011` (execFile: option injection still possible?), `cmdi_005` (single-quote escaping), `cmdi_009` (denylist instead of allowlist), `xss_015` (JSONP callback allowlist)
 
 ## Phase 2: Harness and verifier hardening (Oct 19–24) (P lead, E support)
 

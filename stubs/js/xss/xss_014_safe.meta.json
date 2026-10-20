@@ -1,0 +1,11 @@
+{
+  "id": "xss_014_safe",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "headers.user-agent",
+  "source_key": "user-agent",
+  "sink": "res.send",
+  "sanitizer": "escapeHtml helper",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

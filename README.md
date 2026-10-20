@@ -22,7 +22,7 @@ See [TASKS.md](TASKS.md) for the step-by-step plan and open decisions.
 
 ```
 config/experiment.yaml     experiment settings (provider, model, repeats, QA tasks, ...)
-stubs/js/<class>/          the stub set: 60 stubs, 10 vulnerable/safe pairs per class (see stubs/README.md)
+stubs/js/<class>/          the stub set: 102 stubs, 17 vulnerable/safe pairs per class (see stubs/README.md)
 stubs/examples/            6 example stubs used as templates and test fixtures
 verifier/                  Node execution-based verifier (does the payload reach the sink?)
 src/copilot_eval/          Python harness

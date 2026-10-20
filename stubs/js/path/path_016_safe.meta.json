@@ -1,0 +1,11 @@
+{
+  "id": "path_016_safe",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "body.backup",
+  "source_key": "backup",
+  "sink": "fs.readFileSync",
+  "sanitizer": "normalize + prefix check",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

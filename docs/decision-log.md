@@ -15,6 +15,13 @@ Template for new entries:
 
 ---
 
+## 2026-10-20: Stub set grows to 102 (17 pairs per class)
+
+- **Decided by:** Prisca.
+- **Options considered:** exactly 100 (17 + 17 + 16 pairs, uneven) vs 102 (17 pairs per class, balanced).
+- **Choice and why:** 102, so the three vulnerability classes stay equal in size and per-class comparisons stay clean. Within the proposal's 60–100 target in spirit; the extra pair per class costs ~2%.
+- **Consequences:** pairs 011–017 added per class with patterns the first batch lacked (style attributes, JSONP, error-path reflection, Promise wrappers, class-based helpers, `fs/promises`, `path.normalize`). A full run is now at most 5,508 calls (Sonnet estimate ~$50–100; Qwen ~14–23 h).
+
 ## 2026-10-20: Sonnet runs at its default effort
 
 - **Decided by:** Prisca.

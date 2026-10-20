@@ -1,0 +1,11 @@
+{
+  "id": "path_014_safe",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "headers.x-locale",
+  "source_key": "x-locale",
+  "sink": "fs.readFile",
+  "sanitizer": "allowlist set",
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}
