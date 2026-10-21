@@ -1,12 +1,12 @@
 # Project Status
 
-**Last updated:** 2026-10-20 (night) · **Phase:** baseline done → decide how to handle Qwen's bias, stub review (Phase 1/4 in [TASKS.md](TASKS.md))
+**Last updated:** 2026-10-21 · **Phase:** baseline done; 30B capability check next; stub review (Phase 1/4 in [TASKS.md](TASKS.md))
 
 | Deadline | Date | Days left |
 |---|---|---|
-| Check-in (baseline + partial QA results) | Oct 25 | 5 |
-| Final presentation | Nov 15 | 26 |
-| Final report, code, data | Nov 28 | 39 |
+| Check-in (baseline + partial QA results) | Oct 25 | 4 |
+| Final presentation | Nov 15 | 25 |
+| Final report, code, data | Nov 28 | 38 |
 
 ## At a glance
 
@@ -22,7 +22,7 @@
 
 ## In progress
 
-- Nothing running. **Decision needed:** how to handle Qwen 7B's near "always vulnerable" bias before the full QA run (see Next steps).
+- **Decided (2026-10-21):** keep the 7B results and test `qwen3-coder:30b` on a 24-stub sample (`config/sample-qwen3-30b.yaml`, 72 calls). Ready to run; **waiting on which machine runs it.**
 
 ## Waiting on
 
@@ -34,7 +34,7 @@
 
 ## Next steps
 
-1. **Decide on the free model** given the bias: keep Qwen 7B and report the bias, or test `qwen3-coder:30b` on a sample (19 GB; maybe on Eileen's machine). Baseline tables for the check-in slides: [analysis/2026-10-20-baseline-qwen.md](analysis/2026-10-20-baseline-qwen.md).
+1. **Run the 30B capability check** (19 GB download, ~20+ GB free RAM): `ollama pull qwen3-coder:30b`, then `python -m copilot_eval run --config config/sample-qwen3-30b.yaml`. Compare with 7B on the same stubs (specificity 5/36). Baseline tables for the check-in slides: [analysis/2026-10-20-baseline-qwen.md](analysis/2026-10-20-baseline-qwen.md).
 2. Stub review with Eileen (by ~Oct 23 so the full QA run can go overnight before Oct 25).
 3. Full Qwen QA run: at most 5,508 calls, ~14–23 h on the laptop.
 4. Once credits are settled: 2-stub Sonnet pilot to measure real cost, then the full Sonnet run.

@@ -15,6 +15,16 @@ Template for new entries:
 
 ---
 
+## 2026-10-21: Keep Qwen 7B results and test `qwen3-coder:30b` on a sample
+
+- **Decided by:** Prisca.
+- **Options considered:** (1) keep Qwen 7B and report its bias; (2) switch to `qwen3-coder:30b`; (3) both.
+- **Choice and why:** (3). The 7B result ("always vulnerable" at baseline) is itself a finding and a useful contrast; a stronger free model may be able to tell safe from vulnerable, which the QA-flip experiment needs to be informative.
+- **How:** baseline-only capability check, `config/sample-qwen3-30b.yaml`: a fixed sample of 4 pairs per class (pairs 003, 007, 011, 015 → 24 stubs) × 3 repeats = 72 calls, the default prompt, and Qwen3-Coder's own recommended sampling (T=0.7, top_p 0.8, top_k 20, repetition penalty **1.05**, from its `generation_config.json`). New config option `stub_ids` selects the sample.
+- **Comparison point:** 7B on the same 24 stubs: recall 36/36, specificity **5/36 (14%)** (slightly above its 6% on all stubs, so this sample is a bit easier).
+- **Rule for using the 30B in the main experiment (proposed):** only if it clearly beats the 7B on safe stubs (e.g. specificity of at least ~50% on the sample) while keeping recall high. Otherwise report both baselines and continue with what we have.
+- **Open:** whose machine runs it (19 GB download, ~20+ GB free RAM needed; Prisca's laptop already hit low memory with the 7B).
+
 ## 2026-10-20: Probe whether the detection prompt primes "VULNERABLE"
 
 - **Decided by:** Prisca.

@@ -13,6 +13,7 @@ class ExperimentConfig:
     provider: str = "mock"
     model: str = "mock"
     stubs_dir: str = "stubs/js"
+    stub_ids: list[str] = field(default_factory=list)  # empty = every stub in stubs_dir
     results_dir: str = "results"
     n_repeats: int = 3
     qa_tasks: list[str] = field(default_factory=lambda: list(QA_TASKS))

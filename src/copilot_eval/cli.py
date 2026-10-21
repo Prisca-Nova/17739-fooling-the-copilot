@@ -6,9 +6,8 @@ from pathlib import Path
 
 from .config import load_config
 from .metrics import summarize
-from .pipeline import estimate_calls, run_experiment
+from .pipeline import estimate_calls, run_experiment, select_stubs
 from .review import write_index
-from .stubs import load_stubs
 from .verify import verify_code
 
 
@@ -41,7 +40,7 @@ def main(argv=None):
         print(f"results written to {out}")
     elif args.command == "estimate":
         cfg = load_config(args.config)
-        stubs = load_stubs(cfg.stubs_dir)
+        stubs = select_stubs(cfg)
         print(f"{len(stubs)} stubs, at most {estimate_calls(cfg, stubs)} model calls")
     elif args.command == "metrics":
         print(summarize(args.results))

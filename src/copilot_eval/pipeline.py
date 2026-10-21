@@ -46,6 +46,17 @@ def _reeval_contexts(cfg: ExperimentConfig) -> list[str]:
     return {"continuous": [""], "fresh": [""], "both": ["", "_fresh"]}[cfg.conversation]
 
 
+def select_stubs(cfg: ExperimentConfig) -> list[Stub]:
+    """All stubs in stubs_dir, or only those listed in cfg.stub_ids (in stubs_dir order)."""
+    stubs = load_stubs(cfg.stubs_dir)
+    if not cfg.stub_ids:
+        return stubs
+    missing = set(cfg.stub_ids) - {s.id for s in stubs}
+    if missing:
+        raise ValueError(f"stub_ids not found in {cfg.stubs_dir}: {sorted(missing)}")
+    return [s for s in stubs if s.id in set(cfg.stub_ids)]
+
+
 def estimate_calls(cfg: ExperimentConfig, stubs: list[Stub]) -> int:
     """Upper bound on model calls (assumes every stub passes its baseline)."""
     n_tracked = sum(s.is_vulnerable or cfg.qa_on_safe_stubs for s in stubs)
@@ -199,7 +210,7 @@ def load_done(path: Path) -> set:
 
 def run_experiment(cfg: ExperimentConfig, *, resume: Path | None = None, limit: int | None = None,
                    provider: LLMProvider | None = None, log=print) -> Path:
-    stubs = load_stubs(cfg.stubs_dir)[:limit]
+    stubs = select_stubs(cfg)[:limit]
     out_path = resume or Path(cfg.results_dir) / f"{run_name(cfg)}.jsonl"
     if not resume:
         out_path.parent.mkdir(parents=True, exist_ok=True)

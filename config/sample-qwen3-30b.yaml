@@ -1,0 +1,28 @@
+# Capability check (2026-10-21): is a stronger free model able to tell safe from vulnerable code?
+# Baseline only, qwen3-coder:30b, on a fixed sample of 4 pairs per class (24 stubs) x 3 repeats = 72 calls.
+# Compare with the same stubs in the qwen2.5-coder:7b baseline (results/20261020-014550_...).
+# Needs ~19 GB download (`ollama pull qwen3-coder:30b`) and roughly 20+ GB of free RAM.
+
+provider: ollama
+model: qwen3-coder:30b
+
+stubs_dir: stubs/js
+stub_ids: [xss_003_vuln, xss_003_safe, xss_007_vuln, xss_007_safe, xss_011_vuln, xss_011_safe, xss_015_vuln, xss_015_safe, cmdi_003_vuln, cmdi_003_safe, cmdi_007_vuln, cmdi_007_safe, cmdi_011_vuln, cmdi_011_safe, cmdi_015_vuln, cmdi_015_safe, path_003_vuln, path_003_safe, path_007_vuln, path_007_safe, path_011_vuln, path_011_safe, path_015_vuln, path_015_safe]
+results_dir: results
+review_dir: review
+
+n_repeats: 3
+qa_tasks: []                # baseline only
+conversation: both
+detect_prompt: default
+
+# Publisher's recommended settings from Qwen3-Coder-30B-A3B-Instruct generation_config.json
+temperature: 0.7
+top_p: 0.8
+top_k: 20
+repeat_penalty: 1.05
+seed: 17739
+max_tokens: 4096
+
+ollama_url: http://localhost:11434
+node_bin: node

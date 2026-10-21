@@ -120,3 +120,12 @@ def test_refusals_are_recorded_and_logged(tmp_path):
     cases = list((tmp_path / "review" / out.stem / "refusals").glob("*.md"))
     assert len(cases) == 3
     assert '"category": "cyber"' in cases[0].read_text(encoding="utf-8")
+
+
+def test_select_stubs_by_id(tmp_path):
+    from copilot_eval.pipeline import select_stubs
+
+    cfg = _cfg(tmp_path, stub_ids=["example_xss_safe", "example_cmdi_vuln"])
+    assert [s.id for s in select_stubs(cfg)] == ["example_cmdi_vuln", "example_xss_safe"]
+    with pytest.raises(ValueError):
+        select_stubs(_cfg(tmp_path, stub_ids=["no_such_stub"]))
