@@ -16,7 +16,7 @@ LLM flags the   -->  LLM edits its   -->   LLM re-reviews; verifier   -->   fals
 clean stub           own code              runs the code                    by QA task x class
 ```
 
-**Current state of the project: [STATUS.md](STATUS.md).** Step-by-step plan: [TASKS.md](TASKS.md). Decisions: [docs/decision-log.md](docs/decision-log.md).
+**Current state of the project: [STATUS.md](STATUS.md).** Teammate handoffs live in `docs/HANDOFF-*.md`. Step-by-step plan: [TASKS.md](TASKS.md). Decisions: [docs/decision-log.md](docs/decision-log.md).
 
 ## Layout
 

@@ -22,7 +22,7 @@
 
 ## In progress
 
-- **Decided (2026-10-21):** keep the 7B results and test `qwen3-coder:30b` on a 24-stub sample (`config/sample-qwen3-30b.yaml`, 72 calls). Ready to run; **waiting on which machine runs it.**
+- **Decided (2026-10-21):** keep the 7B results and test `qwen3-coder:30b` on a 24-stub sample (`config/sample-qwen3-30b.yaml`, 72 calls). **Eileen runs it** on her machine: step-by-step guide in [docs/HANDOFF-eileen-30b.md](docs/HANDOFF-eileen-30b.md). She pushes results to branch `eileen/qwen3-30b-baseline`; Prisca merges.
 
 ## Waiting on
 
@@ -31,10 +31,11 @@
 | Instructor reply about Anthropic API credits | Prisca (email sent) | Asked for **$50–80**. Estimate for one full Sonnet run is ~$50–100, so staying within $80 may need the Batch API (50% cheaper) or measuring first with a 2-stub pilot (<$1). |
 | Human review of the 102 stubs | Prisca + Eileen | Checklist and judgment calls in TASKS.md, Phase 1. **Do this before the full QA run**, because changing stubs afterwards means rerunning everything. |
 | Eileen accepts the GitHub invite | Eileen | Invite sent to `Kabi12Blessing`. |
+| 30B capability check results | Eileen | Follow [docs/HANDOFF-eileen-30b.md](docs/HANDOFF-eileen-30b.md); push to `eileen/qwen3-30b-baseline`. |
 
 ## Next steps
 
-1. **Run the 30B capability check** (19 GB download, ~20+ GB free RAM): `ollama pull qwen3-coder:30b`, then `python -m copilot_eval run --config config/sample-qwen3-30b.yaml`. Compare with 7B on the same stubs (specificity 5/36). Baseline tables for the check-in slides: [analysis/2026-10-20-baseline-qwen.md](analysis/2026-10-20-baseline-qwen.md).
+1. **Eileen runs the 30B capability check** ([handoff guide](docs/HANDOFF-eileen-30b.md)). When her branch is pushed: merge it, compare with 7B on the same stubs (specificity 5/36), and decide which free model goes into the main experiment. Baseline tables for the check-in slides: [analysis/2026-10-20-baseline-qwen.md](analysis/2026-10-20-baseline-qwen.md).
 2. Stub review with Eileen (by ~Oct 23 so the full QA run can go overnight before Oct 25).
 3. Full Qwen QA run: at most 5,508 calls, ~14–23 h on the laptop.
 4. Once credits are settled: 2-stub Sonnet pilot to measure real cost, then the full Sonnet run.
