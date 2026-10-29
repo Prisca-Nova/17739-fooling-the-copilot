@@ -1,67 +1,70 @@
 # Project Status
 
-**Last updated:** 2026-10-21 · **Phase:** baseline done; 30B capability check next; stub review (Phase 1/4 in [TASKS.md](TASKS.md))
+**Last updated:** 2026-10-29 · **Phase:** first QA-edit results; stub review; getting access to stronger models
 
 | Deadline | Date | Days left |
 |---|---|---|
-| Check-in (baseline + partial QA results) | Oct 25 | 4 |
-| Final presentation | Nov 15 | 25 |
-| Final report, code, data | Nov 28 | 38 |
+| Project check with Prof. Bauer | Oct 30 | 1 |
+| Final presentation | Nov 15 | 17 |
+| Final report, code, data | Nov 28 | 30 |
 
 ## At a glance
 
 | Area | State |
 |---|---|
-| Harness (pipeline, metrics, review folders) | ✅ done, 85+ tests passing |
-| Execution verifier | ✅ done |
-| Stub set | ✅ 102 stubs written (17 pairs × 3 classes) · ⏳ **human review pending** |
-| Model 1: `qwen2.5-coder:7b` (free, local) | ✅ baseline done (306 + 102 verdicts) · ⚠️ **flags ~95% of safe stubs as vulnerable** |
-| Model 2: Claude Sonnet 5.5 (paid API) | ⏸️ waiting for instructor's answer on credits |
-| Defense (stretch) | ⏸️ implemented, not run yet |
+| Harness, verifier, tests | ✅ done, 130 tests passing |
+| Stub set | ✅ 102 stubs written · ⏳ **human review: 0/51 pairs** ([stubs/REVIEW.md](stubs/REVIEW.md)) |
+| Model 1: `qwen2.5-coder:7b` (free, local) | ✅ baseline done: catches 99% of vulnerable code but only **6%** of safe code · 🔄 **first QA run in progress** |
+| Stronger open model (`qwen3-coder:30b`) | ❌ too big for our laptops (Eileen couldn't run it) → try CMU AI Gateway |
+| Model 2: Claude Sonnet 5.5 | ⏸️ waiting for access: asked Prof. Bauer about the CMU AI Gateway, no reply yet |
+| Defense (stretch) | ⏸️ implemented, not run |
 | PHP subset (stretch) | ⏸️ not started, decide by Nov 7 |
 
 ## In progress
 
-- **Decided (2026-10-21):** keep the 7B results and test `qwen3-coder:30b` on a 24-stub sample (`config/sample-qwen3-30b.yaml`, 72 calls). **Eileen runs it** on her machine: step-by-step guide in [docs/HANDOFF-eileen-30b.md](docs/HANDOFF-eileen-30b.md). She pushes results to branch `eileen/qwen3-30b-baseline`; Prisca merges.
+- **First main QA run** (`config/qa-qwen-1rep.yaml`): Qwen 7B, all 102 stubs, 1 repeat, 5 QA tasks + no-edit control, `both` re-evaluation. ~1,000 calls, ~4 h, started 2026-10-29. Results go into [analysis/2026-10-30-checkin.md](analysis/2026-10-30-checkin.md).
+- **Check-in brief** for Oct 30: [analysis/2026-10-30-checkin.md](analysis/2026-10-30-checkin.md).
 
 ## Waiting on
 
 | What | Who | Notes |
 |---|---|---|
-| Instructor reply about Anthropic API credits | Prisca (email sent) | Asked for **$50–80**. Estimate for one full Sonnet run is ~$50–100, so staying within $80 may need the Batch API (50% cheaper) or measuring first with a 2-stub pilot (<$1). |
-| Human review of the 102 stubs | Prisca + Eileen | Checklist and judgment calls in TASKS.md, Phase 1. **Do this before the full QA run**, because changing stubs afterwards means rerunning everything. |
-| Eileen accepts the GitHub invite | Eileen | Invite sent to `Kabi12Blessing`. |
-| 30B capability check results | Eileen | Follow [docs/HANDOFF-eileen-30b.md](docs/HANDOFF-eileen-30b.md); push to `eileen/qwen3-30b-baseline`. |
+| AI Gateway team / API budget | Prof. Bauer | Ask again at the Oct 30 check-in. Unblocks Claude **and** possibly a stronger open model. Budget asked: $50–80. |
+| Stub review, prompt review | Eileen (25 pairs + prompts), Prisca (26 pairs) | Due **Sat Nov 1**. Eileen's guide: [docs/HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md); she pushes to branch `eileen/review`. |
+| Statistics + plots | Eileen | Due Wed Nov 12 (same guide, task 3). |
 
 ## Next steps
 
-1. **Eileen runs the 30B capability check** ([handoff guide](docs/HANDOFF-eileen-30b.md)). When her branch is pushed: merge it, compare with 7B on the same stubs (specificity 5/36), and decide which free model goes into the main experiment. Baseline tables for the check-in slides: [analysis/2026-10-20-baseline-qwen.md](analysis/2026-10-20-baseline-qwen.md).
-2. Stub review with Eileen (by ~Oct 23 so the full QA run can go overnight before Oct 25).
-3. Full Qwen QA run: at most 5,508 calls, ~14–23 h on the laptop.
-4. Once credits are settled: 2-stub Sonnet pilot to measure real cost, then the full Sonnet run.
+1. **Oct 30:** check-in with Prof. Bauer (brief above); ask for the AI Gateway team.
+2. **By Nov 1:** stub review (both) + prompt freeze (Eileen leads). Fix any flagged stubs, then `git tag prompts-v1`.
+3. **Nov 2–3:** gateway access → 2-stub Claude pilot to measure real cost.
+4. **Nov 3–7:** final runs: Qwen 7B × 3 repeats; Claude Sonnet 5.5; a stronger open model if the gateway has one.
+5. **Nov 8–12:** statistics + plots (Eileen), defense run (Prisca). **Nov 13–14:** slides.
 
 ## Key numbers
 
 | | Value |
 |---|---|
-| Stubs | 102 (51 vulnerable, 51 safe) |
+| Stubs | 102 (51 vulnerable, 51 safe), 3 classes |
 | QA tasks | 5 + `none` control |
-| Repeats | 3 |
-| Conversation mode | `both` (continuous + fresh re-evaluation) |
-| Calls per full run | ≤ 5,508 |
-| Qwen speed (pilot) | ~15 s per call |
+| Conversation mode | `both` (in-conversation + fresh re-evaluation of the same edit) |
+| Calls per full 3-repeat run | ≤ 5,508 |
+| Qwen 7B speed | ~15 s per call |
+| Ollama version | 0.40.12 (auto-updated from 0.40.5 on ~Oct 2x) |
 
 ## Results so far
 
 | Run | Date | Headline |
 |---|---|---|
-| Pilot, Qwen, `cmdi_001` pair | 2026-10-20 | Pipeline works end to end. 0 flips in 6 QA conditions (1 pair, so not meaningful). Safe stub flagged as vulnerable (false positive). |
-| Baseline, Qwen, default prompt, 102 × 3 | 2026-10-20 | Recall **99%** (152/153), specificity **6%** (9/153), 0 unparsed. 8/102 stubs unstable across repeats. Precision ≈ 51%, i.e. close to "always vulnerable". |
-| Baseline, Qwen, neutral prompt, 102 × 1 | 2026-10-20 | Recall 98%, specificity 4%. 97/102 verdicts same as default. **Prompt priming is not the cause**; likely a 7B capability limit. Details: [analysis/2026-10-20-baseline-qwen.md](analysis/2026-10-20-baseline-qwen.md) |
+| Pilot, Qwen 7B, 1 pair | Oct 20 | Pipeline works end to end. |
+| Baseline, Qwen 7B, default prompt, 102 × 3 | Oct 20 | Recall **99%**, specificity **6%**: close to "always vulnerable". |
+| Baseline, Qwen 7B, neutral prompt, 102 × 1 | Oct 20 | Same picture (specificity 4%). **Prompt priming is not the cause.** |
+| QA run, Qwen 7B, 102 × 1 | Oct 29 | _running_ |
 
 ## Where things are
 
-- Plan and checklists: [TASKS.md](TASKS.md)
+- Plan and checklists: [TASKS.md](TASKS.md) · Stub review: [stubs/REVIEW.md](stubs/REVIEW.md)
 - Why each decision was made: [docs/decision-log.md](docs/decision-log.md)
 - Methodology notes for the report: [docs/methodology.md](docs/methodology.md)
-- Manual-review checklists (after QA runs): `review/<run>/CHECKLIST.md`
+- Teammate guides: `docs/HANDOFF-*.md`
+- Results write-ups: `analysis/`

@@ -1,5 +1,8 @@
 # Handoff: run the `qwen3-coder:30b` capability check (Eileen)
 
+> **On hold (2026-10-29):** the 30B model needs more memory than our laptops have. Current tasks for Eileen:
+> [HANDOFF-eileen-review-analysis.md](HANDOFF-eileen-review-analysis.md). We're asking for the CMU AI Gateway instead.
+
 **Goal.** Find out whether a stronger free model can tell safe code from vulnerable code.
 The 7B model we tested calls almost everything "vulnerable" (it gets only ~6% of safe stubs right),
 which would make the main experiment uninformative. You'll run the bigger `qwen3-coder:30b` on a

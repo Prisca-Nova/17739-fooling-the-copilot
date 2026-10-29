@@ -15,6 +15,16 @@ Template for new entries:
 
 ---
 
+## 2026-10-29: 30B on hold; first QA run on Qwen 7B; re-split work with Eileen
+
+- **Decided by:** Prisca.
+- **Context:** Eileen could not run `qwen3-coder:30b` (needs more memory than her machine has); nothing was pushed. Project check with Prof. Bauer on Oct 30, and no QA-edit results existed yet.
+- **Choices:**
+  - Run the **first main QA experiment on Qwen 7B** now: all 102 stubs, 1 repeat, all QA tasks + control, `both` re-evaluation (`config/qa-qwen-1rep.yaml`). Marked **preliminary** because the stubs are not yet human-reviewed. Even with Qwen's over-flagging, this is the first data on the research question.
+  - Put the 30B run **on hold**; get a stronger open model through the **CMU AI Gateway** if it hosts one (along with Claude).
+  - Re-split work along the proposal's division: Eileen reviews 25 stub pairs, leads the prompt freeze and the statistics; Prisca reviews 26 pairs and runs the experiments (`docs/HANDOFF-eileen-review-analysis.md`, `stubs/REVIEW.md`).
+- **Note:** Ollama auto-updated from 0.40.5 to 0.40.12 between the baseline (Oct 20) and this run. Model weights are unchanged (same `qwen2.5-coder:7b`), but record it in the methodology.
+
 ## 2026-10-21: Keep Qwen 7B results and test `qwen3-coder:30b` on a sample
 
 - **Decided by:** Prisca.

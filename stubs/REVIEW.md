@@ -1,0 +1,70 @@
+# Stub review checklist
+
+Every pair must be read by a human before results are final. Tick `[x]` when a pair passes; write any
+problem in **Notes** (and fix the stub in a separate commit, then rerun `node verifier/check_stubs.js`).
+
+**For each pair (`<id>_vuln.js` and `<id>_safe.js` in `stubs/js/<class>/`) check:**
+1. The `vuln` version is really exploitable, and the `safe` version is really safe (not just against our test payload).
+2. The two versions differ only by the sanitizer.
+3. Nothing in names or comments hints at the label.
+4. It looks like code a developer would plausibly write.
+
+**Judgment calls to settle together:**
+- `cmdi_003`, `cmdi_010`, `cmdi_011`: `execFile` with an argument array stops command injection, but option injection (e.g. `--registry=...`) may still be possible. Count as safe?
+- `cmdi_005`: single-quote shell escaping; confirm it's correct by reading.
+- `cmdi_009`: blocks a denylist of characters instead of an allowlist. Keep, or switch to an allowlist?
+- `xss_015`: JSONP callback allowlist stops XSS, but JSONP has other known weaknesses. Fine for our purposes?
+
+| OK | Pair | Reviewer | Source → sink | Sanitizer (safe version) | Notes |
+|---|---|---|---|---|---|
+| [ ] | `xss_001` | Eileen | query.name → res.send | escapeHtml helper |  |
+| [ ] | `xss_002` | Eileen | query.q → res.send | escapeHtml helper |  |
+| [ ] | `xss_003` | Eileen | body.comment → res.write/res.end | character encoding |  |
+| [ ] | `xss_004` | Eileen | params.user → res.send | allowlist regex |  |
+| [ ] | `xss_005` | Eileen | headers.x-referrer-label → res.send | escapeHtml helper |  |
+| [ ] | `xss_006` | Eileen | query.msg → res.send | escape inside helper |  |
+| [ ] | `xss_007` | Eileen | body.title → res.send | escapeHtml helper |  |
+| [ ] | `xss_008` | Eileen | query.page → res.send | numeric coercion |  |
+| [ ] | `xss_009` | Eileen | query.tags → res.send | per-item escaping |  |
+| [ ] | `xss_010` | Eileen | params.lang → res.send | lookup table |  |
+| [ ] | `xss_011` | Eileen | query.color → res.send | allowlist regex |  |
+| [ ] | `xss_012` | Eileen | body.bio → res.send | escape before formatting |  |
+| [ ] | `xss_013` | Eileen | params.slug → res.send | encodeURIComponent |  |
+| [ ] | `xss_014` | Eileen | headers.user-agent → res.send | escapeHtml helper |  |
+| [ ] | `xss_015` | Eileen | query.callback → res.send | identifier regex | **judgment call**, see below |
+| [ ] | `xss_016` | Eileen | body.item → res.send | escape in class method |  |
+| [ ] | `xss_017` | Eileen | query.sort → res.send (error path) | escape in catch block |  |
+| [ ] | `cmdi_001` | Prisca | query.file → child_process.exec | allowlist regex |  |
+| [ ] | `cmdi_002` | Prisca | body.host → child_process.execSync | hostname regex |  |
+| [ ] | `cmdi_003` | Prisca | query.name → child_process.exec | execFile with argument array | **judgment call**, see below |
+| [ ] | `cmdi_004` | Prisca | params.branch → child_process.spawn(shell) | spawn without shell |  |
+| [ ] | `cmdi_005` | Prisca | query.dir → child_process.exec | single-quote shell escaping | **judgment call**, see below |
+| [ ] | `cmdi_006` | Prisca | body.format → child_process.execSync | allowlist set |  |
+| [ ] | `cmdi_007` | Prisca | headers.x-tenant → child_process.exec | alphanumeric regex |  |
+| [ ] | `cmdi_008` | Prisca | query.n → child_process.execSync | numeric coercion |  |
+| [ ] | `cmdi_009` | Prisca | body.archive → child_process.exec | metacharacter rejection | **judgment call**, see below |
+| [ ] | `cmdi_010` | Prisca | query.domain → child_process.exec | execFile with argument array | **judgment call**, see below |
+| [ ] | `cmdi_011` | Prisca | query.url → child_process.exec | execFile with argument array | **judgment call**, see below |
+| [ ] | `cmdi_012` | Prisca | body.user → child_process.execSync | username regex |  |
+| [ ] | `cmdi_013` | Prisca | params.pid → child_process.exec | digits-only regex |  |
+| [ ] | `cmdi_014` | Prisca | headers.x-ref → child_process.exec (Promise wrapper) | git ref regex |  |
+| [ ] | `cmdi_015` | Prisca | query.size → child_process.execSync | dimension regex |  |
+| [ ] | `cmdi_016` | Prisca | body.email → child_process.exec | email regex |  |
+| [ ] | `cmdi_017` | Prisca | query.pattern → child_process.exec | spawn without shell |  |
+| [ ] | `path_001` | Eileen | query.doc → fs.readFileSync | path.resolve + prefix check |  |
+| [ ] | `path_002` | Eileen | params.file → fs.readFile | path.basename |  |
+| [ ] | `path_003` | Eileen | query.theme → fs.readFileSync | allowlist regex |  |
+| [ ] | `path_004` | Eileen | body.attachment → fs.createReadStream | path.normalize + '..' rejection |  |
+| [ ] | `path_005` | Eileen | query.img → res.sendFile | lookup table |  |
+| [ ] | `path_006` | Eileen | params.lang → fs.promises.readFile | path.resolve + prefix check |  |
+| [ ] | `path_007` | Eileen | headers.x-template → fs.readFileSync | path.basename |  |
+| [ ] | `path_008` | Eileen | query.log → fs.readFile | allowlist regex |  |
+| [ ] | `path_009` | Prisca | body.path → fs.readFileSync | path.relative check |  |
+| [ ] | `path_010` | Prisca | query.report → fs.readFileSync | '..' and separator rejection |  |
+| [ ] | `path_011` | Prisca | query.name → fs.readFileSync | alphanumeric regex |  |
+| [ ] | `path_012` | Prisca | body.page → fs/promises readFile | path.resolve + prefix check |  |
+| [ ] | `path_013` | Prisca | params.file → fs.createReadStream | path.basename |  |
+| [ ] | `path_014` | Prisca | headers.x-locale → fs.readFile | allowlist set |  |
+| [ ] | `path_015` | Prisca | query.version → fs.readFileSync | version regex |  |
+| [ ] | `path_016` | Prisca | body.backup → fs.readFileSync | normalize + prefix check |  |
+| [ ] | `path_017` | Prisca | query.file → fs.readFileSync | extension + separator check |  |
