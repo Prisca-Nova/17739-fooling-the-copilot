@@ -1,0 +1,11 @@
+{
+  "id": "xss_013_vuln",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "params.slug",
+  "source_key": "slug",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

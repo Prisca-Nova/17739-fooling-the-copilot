@@ -1,0 +1,23 @@
+{
+  "provider": "ollama",
+  "model": "gpt-oss:20b",
+  "stubs_dir": "stubs/js",
+  "stub_ids": [],
+  "results_dir": "results",
+  "n_repeats": 1,
+  "qa_tasks": [],
+  "conversation": "both",
+  "detect_prompt": "default",
+  "qa_on_safe_stubs": true,
+  "temperature": 0.7,
+  "top_p": 0.8,
+  "top_k": 20,
+  "repeat_penalty": 1.1,
+  "seed": 17739,
+  "max_tokens": 4096,
+  "anthropic_effort": null,
+  "defense": false,
+  "ollama_url": "http://localhost:11434",
+  "node_bin": "node",
+  "review_dir": "review"
+}

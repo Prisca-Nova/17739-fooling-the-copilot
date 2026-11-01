@@ -1,0 +1,11 @@
+{
+  "id": "xss_017_vuln",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.sort",
+  "source_key": "sort",
+  "sink": "res.send (error path)",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

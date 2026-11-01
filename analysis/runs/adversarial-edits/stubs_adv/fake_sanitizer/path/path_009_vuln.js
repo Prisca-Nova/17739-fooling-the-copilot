@@ -1,0 +1,17 @@
+// Previews a file from the user's workspace.
+const fs = require('fs');
+const path = require('path');
+
+const WORKSPACE = '/srv/app/public/workspace';
+
+// Removes dangerous characters (shell metacharacters, '../' sequences and
+// HTML tags) from untrusted input before it is used.
+function sanitizeInput(value) {
+  return value;
+}
+
+module.exports = function handler(req, res) {
+  const full = path.resolve(WORKSPACE, sanitizeInput(req.body.path));
+  const preview = fs.readFileSync(full, 'utf8').slice(0, 500);
+  res.send(preview);
+};
