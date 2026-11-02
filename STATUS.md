@@ -1,70 +1,56 @@
 # Project Status
 
-**Last updated:** 2026-10-29 · **Phase:** first QA-edit results; stub review; getting access to stronger models
+**Last updated:** 2026-10-31 · **Phase:** first QA results (partial); verifier hardened; choosing the free model
 
 | Deadline | Date | Days left |
 |---|---|---|
-| Project check with Prof. Bauer | Oct 30 | 1 |
-| Final presentation | Nov 15 | 17 |
-| Final report, code, data | Nov 28 | 30 |
+| Final presentation | Nov 15 | 15 |
+| Final report, code, data | Nov 28 | 28 |
 
 ## At a glance
 
 | Area | State |
 |---|---|
-| Harness, verifier, tests | ✅ done, 130 tests passing |
-| Stub set | ✅ 102 stubs written · ⏳ **human review: 0/51 pairs** ([stubs/REVIEW.md](stubs/REVIEW.md)) |
-| Model 1: `qwen2.5-coder:7b` (free, local) | ✅ baseline done: catches 99% of vulnerable code but only **6%** of safe code · 🔄 **first QA run in progress** |
-| Stronger open model (`qwen3-coder:30b`) | ❌ too big for our laptops (Eileen couldn't run it) → try CMU AI Gateway |
-| Model 2: Claude Sonnet 5.5 | ⏸️ waiting for access: asked Prof. Bauer about the CMU AI Gateway, no reply yet |
+| Harness, verifier, tests | ✅ done · **verifier fixed 2026-10-31** (quote-breakout payloads, Node-style argument checks) |
+| Stub set | ✅ 102 stubs · ⏳ **human review: 0/51 pairs** ([stubs/REVIEW.md](stubs/REVIEW.md)), due Sat Nov 1 |
+| `qwen2.5-coder:7b` (free, local) | ✅ baseline: recall 99%, **specificity 6%** · ⚠️ **QA run stopped at 71/~1,000 records** (low memory on the laptop) |
+| `qwen3-coder:30b` (free, Kaggle GPU) | ✅ sample baseline by Eileen: specificity **39%** (7B: 14% on the same stubs) · ⏳ **decision: use it or not** |
+| Claude Sonnet 5.5 | ⏸️ waiting for AI Gateway access from Prof. Bauer |
 | Defense (stretch) | ⏸️ implemented, not run |
-| PHP subset (stretch) | ⏸️ not started, decide by Nov 7 |
 
-## In progress
+## In progress / needs a decision
 
-- **First main QA run** (`config/qa-qwen-1rep.yaml`): Qwen 7B, all 102 stubs, 1 repeat, 5 QA tasks + no-edit control, `both` re-evaluation. ~1,000 calls, ~4 h, started 2026-10-29. Results go into [analysis/2026-10-30-checkin.md](analysis/2026-10-30-checkin.md).
-- **Check-in brief** for Oct 30: [analysis/2026-10-30-checkin.md](analysis/2026-10-30-checkin.md).
+- **Free model:** 30B is clearly better than 7B but below the ≥50% bar we set on Oct 21 (39%). Kaggle makes it cheap and fast (~3 s/call). Decide: keep the 7B, or also run the QA experiment on the 30B. See [analysis/2026-10-31-qwen3-30b.md](analysis/2026-10-31-qwen3-30b.md) and the decision log.
+- **Where to run the QA experiment:** the laptop's memory stopped two runs. **Kaggle** (where Eileen ran the 30B) avoids that and is ~5× faster.
+- **Manual review:** 3 unverifiable QA edits in [review/…reverified/CHECKLIST.md](review/20261029-130247_ollama_qwen2.5-coder-7b.reverified/CHECKLIST.md).
 
 ## Waiting on
 
 | What | Who | Notes |
 |---|---|---|
-| AI Gateway team / API budget | Prof. Bauer | Ask again at the Oct 30 check-in. Unblocks Claude **and** possibly a stronger open model. Budget asked: $50–80. |
-| Stub review, prompt review | Eileen (25 pairs + prompts), Prisca (26 pairs) | Due **Sat Nov 1**. Eileen's guide: [docs/HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md); she pushes to branch `eileen/review`. |
-| Statistics + plots | Eileen | Due Wed Nov 12 (same guide, task 3). |
+| AI Gateway team / API budget | Prof. Bauer | Unblocks Claude (and maybe more models). Budget asked: $50–80. |
+| Stub review (25 pairs) + prompt review | Eileen | Due Sat Nov 1 · [docs/HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md) |
+| Stub review (26 pairs) | Prisca | Due Sat Nov 1 · [stubs/REVIEW.md](stubs/REVIEW.md) |
+| Statistics + plots | Eileen | Due Wed Nov 12; can start now on the partial QA file in `analysis/runs/` |
 
 ## Next steps
 
-1. **Oct 30:** check-in with Prof. Bauer (brief above); ask for the AI Gateway team.
-2. **By Nov 1:** stub review (both) + prompt freeze (Eileen leads). Fix any flagged stubs, then `git tag prompts-v1`.
-3. **Nov 2–3:** gateway access → 2-stub Claude pilot to measure real cost.
-4. **Nov 3–7:** final runs: Qwen 7B × 3 repeats; Claude Sonnet 5.5; a stronger open model if the gateway has one.
-5. **Nov 8–12:** statistics + plots (Eileen), defense run (Prisca). **Nov 13–14:** slides.
-
-## Key numbers
-
-| | Value |
-|---|---|
-| Stubs | 102 (51 vulnerable, 51 safe), 3 classes |
-| QA tasks | 5 + `none` control |
-| Conversation mode | `both` (in-conversation + fresh re-evaluation of the same edit) |
-| Calls per full 3-repeat run | ≤ 5,508 |
-| Qwen 7B speed | ~15 s per call |
-| Ollama version | 0.40.12 (auto-updated from 0.40.5 on ~Oct 2x) |
+1. Decide the free model(s) and where to run (Kaggle recommended).
+2. By Nov 1: stub review (both) + prompt freeze (Eileen). Fix flagged stubs, `git tag prompts-v1`.
+3. Nov 2–7: full QA runs (Qwen on Kaggle; Claude once the gateway is available).
+4. Nov 8–12: statistics + plots (Eileen), defense run (Prisca). Nov 13–14: slides.
 
 ## Results so far
 
 | Run | Date | Headline |
 |---|---|---|
-| Pilot, Qwen 7B, 1 pair | Oct 20 | Pipeline works end to end. |
-| Baseline, Qwen 7B, default prompt, 102 × 3 | Oct 20 | Recall **99%**, specificity **6%**: close to "always vulnerable". |
-| Baseline, Qwen 7B, neutral prompt, 102 × 1 | Oct 20 | Same picture (specificity 4%). **Prompt priming is not the cause.** |
-| QA run, Qwen 7B, 102 × 1 | Oct 29 | _running_ |
+| Baseline, Qwen 7B, 102 × 3 | Oct 20 | Recall **99%**, specificity **6%**: near "always vulnerable". Neutral prompt: same, so not priming. |
+| Baseline, Qwen3 30B, 24-stub sample × 3 (Kaggle, Eileen) | Oct 30 | Recall 100%, specificity **39%** (7B on same stubs: 14%). XSS 10/12, path 4/12, **cmdi 0/12**, often with wrong reasoning. |
+| QA run, Qwen 7B, 102 × 1 | Oct 29 | **Partial: 9 vulnerable stubs, 53 QA edits** (cmdi only) before the laptop ran out of memory. Re-verified with the fixed verifier: **0 genuine misses**; 2 edits really fixed the bug and the model said SAFE in-conversation (but VULNERABLE when re-asked fresh); 6 real fixes still flagged; 3 unverifiable (2 imported npm packages, 1 broken `spawn` call). Too small to conclude anything. |
+| Verifier spot-check | Oct 31 | Manual reading of the first QA edits found 2 verifier false negatives; fixed, all 108 stubs re-confirmed, partial run re-verified (2/53 records changed). |
 
 ## Where things are
 
-- Plan and checklists: [TASKS.md](TASKS.md) · Stub review: [stubs/REVIEW.md](stubs/REVIEW.md)
-- Why each decision was made: [docs/decision-log.md](docs/decision-log.md)
-- Methodology notes for the report: [docs/methodology.md](docs/methodology.md)
-- Teammate guides: `docs/HANDOFF-*.md`
-- Results write-ups: `analysis/`
+- Plan: [TASKS.md](TASKS.md) · Stub review: [stubs/REVIEW.md](stubs/REVIEW.md) · Decisions: [docs/decision-log.md](docs/decision-log.md)
+- Methodology notes: [docs/methodology.md](docs/methodology.md) · Teammate guides: `docs/HANDOFF-*.md`
+- Results write-ups: `analysis/` · Result files: `analysis/runs/`

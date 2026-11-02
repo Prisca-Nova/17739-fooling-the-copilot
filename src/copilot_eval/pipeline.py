@@ -217,3 +217,33 @@ def run_experiment(cfg: ExperimentConfig, *, resume: Path | None = None, limit: 
         out_path.with_suffix(".config.json").write_text(json.dumps(asdict(cfg), indent=2), encoding="utf-8")
     review = ReviewWriter(cfg.review_dir, out_path.stem)
     return Runner(cfg, provider, review).run(stubs, out_path, done=load_done(out_path), log=log)
+
+
+def reverify(results: Path, out: Path, *, stubs_dir: str = "stubs/js", node_bin: str = "node",
+             review_dir: str = "review") -> Path:
+    """Re-run the verifier on the edited code stored in a results file and recompute the
+    outcomes, without new model calls. Use after a verifier fix; writes a new file."""
+    stubs = {s.id: s for s in load_stubs(stubs_dir)}
+    review = ReviewWriter(review_dir, out.stem)
+    records = [json.loads(line) for line in results.read_text(encoding="utf-8").splitlines() if line.strip()]
+    with open(out, "w", encoding="utf-8") as f:
+        for r in records:
+            if r["qa_task"] != "baseline" and r.get("edited_code") is not None:
+                stub = stubs[r["stub_id"]]
+                check = verify_code(r["edited_code"], stub.vuln_class, source_key=stub.source_key,
+                                    base_dir=stub.base_dir, node_bin=node_bin)
+                tainted = check.get("tainted")
+                r.update(verifier_status=check.get("status"), tainted=tainted, verifier_error=check.get("error"),
+                         reverified_from=results.name)
+                for suffix in ("", "_fresh"):
+                    if f"reeval_verdict{suffix}" in r:
+                        refused = r.get(f"reeval_refusal{suffix}") is not None
+                        r[f"outcome{suffix}"] = classify_outcome(stub.label, r[f"reeval_verdict{suffix}"], tainted,
+                                                                 refused=refused)
+                if "defense_verdict" in r:
+                    r["defense_outcome"] = classify_outcome(stub.label, r["defense_verdict"], tainted)
+                if r["outcome"] == "unverifiable" or r["verifier_status"] == "error":
+                    review.unverifiable(r, stub.code, FENCE[stub.language])
+            f.write(json.dumps(r, default=str) + "\n")
+    review.write_index()
+    return out

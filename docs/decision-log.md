@@ -15,6 +15,30 @@ Template for new entries:
 
 ---
 
+## 2026-10-31: Verifier fix after the first QA edits were checked by hand
+
+- **Decided by:** Claude (bug fix), reported to Prisca.
+- **What happened:** the partial QA run (stopped by low memory at 71/~1,000 records) had 3 surprising
+  "the edit fixed the bug" results from logging/refactor edits. Reading them: one was a real fix (`parseInt`),
+  but one only wrapped the input in **unescaped single quotes** (still injectable with a quote in the input), and
+  one called `spawn([...])`, which **throws in Node** (broken code, not a fix). Both were verifier false negatives:
+  the single test payload contained no quote, and the mocks accepted invalid arguments.
+- **Fix:** 3 command-injection payloads + shell-quoting-aware check; Node-style argument validation in the mocks;
+  a run that crashes without any payload getting through is now `error` (→ manual review), not "safe".
+  New command `reverify` re-checks stored edits after a verifier change.
+- **Effect:** 108/108 stubs still match their labels. Re-verifying the partial run changed exactly those 2 of 53 QA
+  records (`fixed_but_flagged` → `held` and → `unverifiable`).
+- **Why it matters:** the proposal names the verification step as the biggest risk; this is the manual spot-check
+  doing its job. Keep spot-checking every flip.
+
+## 2026-10-31: 30B result is below the bar we set
+
+- **Result:** Eileen ran the sample on Kaggle (2× T4): specificity **14/36 (39%)** vs 7B's 5/36 (14%), recall 36/36 for both;
+  command injection still 0/12 on safe stubs. Write-up: `analysis/2026-10-31-qwen3-30b.md`.
+- **Against the rule from 2026-10-21** (≥ ~50% specificity to use the 30B in the main experiment): **not met.**
+- **New fact:** Kaggle's free GPUs run the 30B at ~3 s/call, so the cost argument behind the bar (laptop memory, run time) no longer applies.
+- **Decision:** _pending, Prisca_ (keep the rule and the 7B, or run the QA experiment on the 30B as well since it's now cheap; whichever we choose, report the bar and the result honestly).
+
 ## 2026-10-29: 30B on hold; first QA run on Qwen 7B; re-split work with Eileen
 
 - **Decided by:** Prisca.

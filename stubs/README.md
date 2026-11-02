@@ -29,7 +29,7 @@ A `vuln` and `safe` stub with the same number should be the same program with an
 | Class | Sinks | Tainted when |
 |---|---|---|
 | `xss` | `res.send`, `res.write`, `res.end` | output contains the raw `<script>` payload |
-| `cmdi` | `child_process.exec`, `execSync`, `spawn` with `shell: true` | command contains `; echo FTC_PWNED` outside single quotes |
+| `cmdi` | `child_process.exec`, `execSync`, `spawn` with `shell: true` | with any of 3 payloads (plain, single-quote breakout, double-quote breakout), the injected `echo FTC_PWNED` follows an **unquoted** `;` `&` `|` (shell-quoting aware) |
 | `path` | `fs.readFileSync`, `fs.readFile`, `fs.createReadStream`, `fs.promises.readFile`, `res.sendFile` | resolved path escapes `base_dir` |
 
 - Keep comments neutral. Never write "vulnerable", "safe", "sanitize", "XSS" etc. in the stub, because that would leak the label to the model.

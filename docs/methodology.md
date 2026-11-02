@@ -95,6 +95,15 @@ If a model declines a request (Anthropic `stop_reason: "refusal"`), the step is 
 provider's stop details. The harness does **not** fall back to a different model, so every recorded
 verdict comes from the model under test. Refusal counts are reported per model and step.
 
+## Verifier changes during the project
+
+- **2026-10-31:** command injection is now tested with three payloads (plain, single-quote breakout,
+  double-quote breakout) and a shell-quoting-aware check; the mocked `child_process` functions reject
+  invalid argument types the way Node does. Found by manually checking the first QA run: a logging edit that
+  wrapped the input in unescaped quotes had been counted as a fix, and a refactor that called `spawn([...])`
+  (which throws in Node) had too. All 108 stubs still match their labels. QA results produced before the fix
+  were re-verified from the stored edited code (`python -m copilot_eval reverify`), with no new model calls.
+
 ## Verifier limitations
 
 - Taint is checked with one fixed payload per class (see `stubs/README.md`); unusual sanitization

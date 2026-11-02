@@ -6,7 +6,7 @@ from pathlib import Path
 
 from .config import load_config
 from .metrics import summarize
-from .pipeline import estimate_calls, run_experiment, select_stubs
+from .pipeline import estimate_calls, reverify, run_experiment, select_stubs
 from .review import write_index
 from .verify import verify_code
 
@@ -29,6 +29,10 @@ def main(argv=None):
     p_rev = sub.add_parser("review-index", help="refresh CHECKLIST.md for a run's review folder")
     p_rev.add_argument("run_dir", type=Path)
 
+    p_rev2 = sub.add_parser("reverify", help="re-run the verifier on stored edits after a verifier fix (no model calls)")
+    p_rev2.add_argument("results", type=Path)
+    p_rev2.add_argument("--out", type=Path, required=True)
+
     p_ver = sub.add_parser("verify", help="run the execution verifier on one file")
     p_ver.add_argument("file", type=Path)
     p_ver.add_argument("--class", dest="vuln_class", required=True, choices=["xss", "cmdi", "path"])
@@ -47,6 +51,8 @@ def main(argv=None):
     elif args.command == "review-index":
         index = write_index(args.run_dir)
         print(index or "no review cases in this folder")
+    elif args.command == "reverify":
+        print(f"re-verified results written to {reverify(args.results, args.out)}")
     elif args.command == "verify":
         print(json.dumps(verify_code(args.file.read_text(encoding="utf-8"), args.vuln_class), indent=2))
 

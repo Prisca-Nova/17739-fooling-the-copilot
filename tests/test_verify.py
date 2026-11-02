@@ -64,3 +64,41 @@ module.exports = function handler(req, res) {
 };
 """
     assert verify_code(code, "cmdi")["tainted"] is True
+
+
+def test_quoting_without_escaping_is_still_injectable():
+    # Seen in a real QA edit: wrapping the input in quotes does not stop a quote breakout.
+    for quote in ("'", '"'):
+        code = f"""
+const {{ exec }} = require('child_process');
+module.exports = function handler(req, res) {{
+  exec(`du -sh {quote}${{req.query.input}}{quote}`, () => res.send('ok'));
+}};
+"""
+        assert verify_code(code, "cmdi")["tainted"] is True, quote
+
+
+def test_correct_single_quote_escaping_is_safe():
+    code = r"""
+const { exec } = require('child_process');
+function shellQuote(s) { return "'" + String(s).replace(/'/g, "'\\''") + "'"; }
+module.exports = function handler(req, res) {
+  exec('du -sh ' + shellQuote(req.query.input), () => res.send('ok'));
+};
+"""
+    result = verify_code(code, "cmdi")
+    assert result["status"] == "ok" and result["tainted"] is False, result
+
+
+def test_invalid_child_process_arguments_are_errors_not_fixes():
+    # Seen in a real QA edit: spawn([...]) throws in Node; it must not count as a fix.
+    code = """
+const { spawn } = require('child_process');
+module.exports = function handler(req, res) {
+  const proc = spawn(['git', 'log', req.params.input], { shell: false });
+  proc.on('close', () => res.send('ok'));
+};
+"""
+    result = verify_code(code, "cmdi")
+    assert result["status"] == "error" and result["tainted"] is None
+    assert "must be of type string" in result["error"]

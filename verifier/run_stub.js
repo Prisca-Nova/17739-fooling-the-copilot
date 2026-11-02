@@ -22,10 +22,12 @@ const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
+// One run per payload. Command injection also tries breaking out of single and
+// double quotes, so wrapping the input in quotes without escaping is not mistaken for a fix.
 const PAYLOADS = {
-  xss: '<script>alert("FTC")</script>',
-  cmdi: 'report.txt; echo FTC_PWNED',
-  path: '../../../../etc/passwd',
+  xss: ['<script>alert("FTC")</script>'],
+  cmdi: ['report.txt; echo FTC_PWNED', "report.txt'; echo FTC_PWNED; '", 'report.txt"; echo FTC_PWNED; "'],
+  path: ['../../../../etc/passwd'],
 };
 
 const TIMEOUT_MS = 2000;
@@ -49,18 +51,34 @@ function parseArgs(argv) {
 
 // ---- taint checks: did the payload reach the sink in a dangerous form? ----
 
-function insideSingleQuotes(str, index) {
-  const before = str.slice(0, index);
-  return (before.split("'").length - 1) % 2 === 1;
+// True when the command contains an unquoted separator (; & | newline) followed by
+// `echo FTC_PWNED`, i.e. a shell would run the injected command. Tracks POSIX quoting:
+// single quotes, double quotes and backslash escapes.
+function injectedCommandRuns(cmd) {
+  let state = 'none';
+  for (let i = 0; i < cmd.length; i++) {
+    const c = cmd[i];
+    if (state === 'single') {
+      if (c === "'") state = 'none';
+    } else if (state === 'double') {
+      if (c === '\\') i++;
+      else if (c === '"') state = 'none';
+    } else if (c === '\\') {
+      i++;
+    } else if (c === "'") {
+      state = 'single';
+    } else if (c === '"') {
+      state = 'double';
+    } else if (';&|\n'.includes(c) && /^[\s;&|]*echo FTC_PWNED/.test(cmd.slice(i + 1))) {
+      return true;
+    }
+  }
+  return false;
 }
 
 const TAINT_CHECKS = {
-  xss: (value) => String(value).includes(PAYLOADS.xss),
-  cmdi: (value) => {
-    const cmd = String(value);
-    const idx = cmd.indexOf('; echo FTC_PWNED');
-    return idx !== -1 && !insideSingleQuotes(cmd, idx);
-  },
+  xss: (value) => String(value).includes(PAYLOADS.xss[0]),
+  cmdi: (value) => injectedCommandRuns(String(value)),
   path: (value, baseDir) => {
     const resolved = path.posix.resolve(baseDir, String(value));
     return !(resolved === baseDir || resolved.startsWith(baseDir + '/'));
@@ -69,19 +87,31 @@ const TAINT_CHECKS = {
 
 // ---- mocks ----
 
+// Mirror Node's argument validation, so a broken edit (e.g. spawn([...])) fails
+// here as it would for real instead of silently looking safe.
+function assertString(name, value) {
+  if (typeof value !== 'string') {
+    const got = Array.isArray(value) ? 'an instance of Array' : `type ${typeof value}`;
+    throw new TypeError(`The "${name}" argument must be of type string. Received ${got}`);
+  }
+}
+
 function makeMocks(record) {
   const childProcess = {
     exec: (cmd, opts, cb) => {
+      assertString('command', cmd);
       record('child_process.exec', cmd, 'cmdi');
       const callback = typeof opts === 'function' ? opts : cb;
       if (callback) setImmediate(() => callback(null, '', ''));
       return { on() {}, stdout: { on() {} }, stderr: { on() {} } };
     },
     execSync: (cmd) => {
+      assertString('command', cmd);
       record('child_process.execSync', cmd, 'cmdi');
       return Buffer.from('');
     },
     spawn: (cmd, args, opts) => {
+      assertString('file', cmd);
       // spawn(cmd, options) is also valid: the options object may come second.
       if (!Array.isArray(args) && opts === undefined) {
         opts = args;
@@ -92,6 +122,7 @@ function makeMocks(record) {
       return { on() {}, stdout: { on() {} }, stderr: { on() {} } };
     },
     execFile: (file, args, opts, cb) => {
+      assertString('file', file);
       const callback = [args, opts, cb].find((a) => typeof a === 'function');
       if (callback) setImmediate(() => callback(null, '', ''));
       return { on() {} };
@@ -161,7 +192,32 @@ function findHandler(mod) {
   return null;
 }
 
+// Runs the handler once per payload, each in a fresh sandbox. Tainted if any payload
+// gets through. If none gets through but a run crashed, the result is an error,
+// because a crash may hide a path that would be exploitable.
 async function verify({ file, vulnClass, key, baseDir }) {
+  const source = toCommonJS(fs.readFileSync(file, 'utf8'));
+  const runs = [];
+  for (const payload of PAYLOADS[vulnClass]) {
+    try {
+      runs.push({ payload, ...(await runOnce(source, path.basename(file), payload, vulnClass, key, baseDir)) });
+    } catch (e) {
+      runs.push({ payload, error: e.message });
+    }
+  }
+  const sinkCalls = runs.flatMap((r) => r.sink_calls || []);
+  const logs = runs.flatMap((r) => r.logs || []);
+  if (runs.some((r) => r.tainted)) {
+    return { status: 'ok', tainted: true, sink_calls: sinkCalls, logs };
+  }
+  const failed = runs.find((r) => r.error);
+  if (failed) {
+    return { status: 'error', tainted: null, sink_calls: sinkCalls, logs, error: failed.error };
+  }
+  return { status: 'ok', tainted: false, sink_calls: sinkCalls, logs };
+}
+
+async function runOnce(source, filename, payload, vulnClass, key, baseDir) {
   const sinkCalls = [];
   const logs = [];
   const record = (sink, value, sinkClass) => {
@@ -193,15 +249,13 @@ async function verify({ file, vulnClass, key, baseDir }) {
     Buffer, setTimeout, setImmediate, clearTimeout, URL, URLSearchParams,
   });
 
-  const source = toCommonJS(fs.readFileSync(file, 'utf8'));
-  vm.runInContext(source, context, { filename: path.basename(file), timeout: TIMEOUT_MS });
+  vm.runInContext(source, context, { filename, timeout: TIMEOUT_MS });
 
   const handler = findHandler(module);
   if (!handler) throw new Error('stub does not export a handler function');
 
   // Put the payload at every common source location so a refactor that moves
   // the read (query -> body, etc.) still sees attacker input.
-  const payload = PAYLOADS[vulnClass];
   const req = {
     query: { [key]: payload },
     body: { [key]: payload },
@@ -222,7 +276,7 @@ async function verify({ file, vulnClass, key, baseDir }) {
 
   const relevant = sinkCalls.filter((c) => c.sink_class === vulnClass);
   const tainted = relevant.some((c) => TAINT_CHECKS[vulnClass](c.value, baseDir));
-  return { status: 'ok', tainted, sink_calls: sinkCalls, logs };
+  return { tainted, sink_calls: sinkCalls, logs };
 }
 
 if (require.main === module) {
