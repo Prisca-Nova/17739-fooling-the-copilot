@@ -1,6 +1,9 @@
 # Project Status
 
-**Last updated:** 2026-10-31 · **Phase:** first QA results (partial); verifier hardened; choosing the free model
+**Last updated:** 2026-11-02 · **Phase:** first full QA results (gpt-oss:20b); presenting to Prof. Bauer today
+
+> **Nov 2 update:** Eileen compared 5 free models on Kaggle; only **gpt-oss:20b** recognizes safe code (43/51). Its QA run: **0 genuine misses in 255 edits** (re-verified with the fixed verifier: 0/306 outcomes changed). Misleading edits: fooled **1/255**; all 255 edited stubs confirmed still vulnerable by the project verifier. Full write-ups: `analysis/2026-11-01-gpt-oss-results.md`. Overview doc for Prof. Bauer: https://claude.ai/artifact/D2jQyQGokEs2WVWuS7anQE
+> **Open:** gpt-oss ran with Qwen's sampling settings (fix in final runs); 3-repeat runs; stub review; Claude access.
 
 | Deadline | Date | Days left |
 |---|---|---|

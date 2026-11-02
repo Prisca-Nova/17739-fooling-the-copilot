@@ -1,0 +1,20 @@
+{
+  "per_edit": {
+    "comment": {
+      "tainted": 51
+    },
+    "dead_check": {
+      "tainted": 51
+    },
+    "fake_sanitizer": {
+      "tainted": 51
+    },
+    "log_claim": {
+      "tainted": 51
+    },
+    "rename": {
+      "tainted": 51
+    }
+  },
+  "not_tainted_or_error": []
+}

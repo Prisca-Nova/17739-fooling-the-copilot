@@ -15,6 +15,14 @@ Template for new entries:
 
 ---
 
+## 2026-11-02: gpt-oss:20b becomes the main free model; results re-verified
+
+- **Decided by:** Prisca (on Eileen's model comparison, Oct 30–Nov 1, Kaggle).
+- **Why:** of 5 free models on the 24-stub sample, only gpt-oss:20b recognizes safe code (32/36; next best qwen3-coder:30b 14/36). It clears the Oct 21 bar (≥ ~50%); the 30B does not. Numbers recomputed from raw files: match.
+- **Re-verification:** Eileen's gpt-oss QA results were produced with the pre-Oct-31 verifier; `reverify` with the fixed verifier changed **0 of 306** outcomes. The 255 misleading-edit stubs were checked with the project verifier using each stub's metadata: **255/255 still vulnerable** (her earlier CLI check was invalid because `verify` doesn't read the stub's source key; flagged by her).
+- **Known inconsistency:** gpt-oss ran with Qwen's sampling settings (T 0.7, top_p 0.8, top_k 20, rep 1.1), not its own. Final runs must use gpt-oss's recommended settings, 3 repeats.
+- **Scope note:** the misleading-edit probe hand-crafts edits, which the proposal said we wouldn't do; presented as an extension (upper bound), pending Prof. Bauer's view.
+
 ## 2026-10-31: Verifier fix after the first QA edits were checked by hand
 
 - **Decided by:** Claude (bug fix), reported to Prisca.
