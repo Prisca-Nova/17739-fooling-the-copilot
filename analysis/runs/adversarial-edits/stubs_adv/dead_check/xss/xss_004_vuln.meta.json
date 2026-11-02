@@ -1,0 +1,11 @@
+{
+  "id": "xss_004_vuln",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "params.user",
+  "source_key": "user",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}

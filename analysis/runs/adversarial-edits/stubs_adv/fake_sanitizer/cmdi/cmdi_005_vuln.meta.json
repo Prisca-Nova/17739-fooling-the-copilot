@@ -1,0 +1,11 @@
+{
+  "id": "cmdi_005_vuln",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.dir",
+  "source_key": "dir",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js"
+}
