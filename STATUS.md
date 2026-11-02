@@ -7,8 +7,8 @@
 
 | Deadline | Date | Days left |
 |---|---|---|
-| Final presentation | Nov 15 | 15 |
-| Final report, code, data | Nov 28 | 28 |
+| Final presentation | Nov 15 | 13 |
+| Final report, code, data | Nov 28 | 26 |
 
 ## At a glance
 
