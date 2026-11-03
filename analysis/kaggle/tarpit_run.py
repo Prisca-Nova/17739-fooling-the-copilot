@@ -1,4 +1,4 @@
-# Transformation experiment (config/tarpit-gpt-oss.yaml). Two notebooks, can run in parallel:
+# Transformation + multi-file experiment (config/tarpit-gpt-oss.yaml). Two notebooks (docs/HANDOFF-eileen-transformations.md):
 #   notebook A: PARTS = ["original", "single"]   (~3,060 calls, ~8 h)
 #   notebook B: PARTS = ["stacked", "multifile"] (~918 + ~612 calls, ~4.5 h)
 # Run as one cell with "Save Version -> Save & Run All (Commit)" so it runs in the background.

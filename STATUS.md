@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-11-03 · **Phase:** new direction after the check-in: program transformations, then multi-file programs
 
-> **Nov 3 update:** after the check-in, Prof. Bauer suggested (1) semantics-preserving program transformations and (2) larger multi-file programs. We re-implemented Rui Wang's 9 most natural "tarpit" transformations (`transforms/tarpit.js`): **918 single + 306 stacked transformed stubs, all verified** to keep their label. **Multi-file apps** (Part 3): 204 apps of ~77 / ~147 lines (6 / 11 files), the input crossing into a `lib/` helper, all verified. Ready to run on Kaggle (`analysis/kaggle/tarpit_run.py`, gpt-oss with its **own** sampling settings): notebook A (Prisca), notebook B (Eileen). See the decision log.
+> **Nov 3 update:** after the check-in, Prof. Bauer suggested (1) semantics-preserving program transformations and (2) larger multi-file programs. We re-implemented Rui Wang's 9 most natural "tarpit" transformations (`transforms/tarpit.js`): **918 single + 306 stacked transformed stubs, all verified** to keep their label. **Multi-file apps** (Part 3): 204 apps of ~77 / ~147 lines (6 / 11 files), the input crossing into a `lib/` helper, all verified. Ready to run on Kaggle (`analysis/kaggle/tarpit_run.py`, gpt-oss with its **own** sampling settings): notebooks A and B, both run by Eileen. See the decision log.
 >
 > **Nov 2 update:** Eileen compared 5 free models on Kaggle; only **gpt-oss:20b** recognizes safe code (43/51). Its QA run: **0 genuine misses in 255 edits** (re-verified with the fixed verifier: 0/306 outcomes changed). Misleading edits: fooled **1/255**; all 255 edited stubs confirmed still vulnerable by the project verifier. Full write-ups: `analysis/2026-11-01-gpt-oss-results.md`. Overview doc for Prof. Bauer: https://claude.ai/artifact/D2jQyQGokEs2WVWuS7anQE
 > **Open:** gpt-oss ran with Qwen's sampling settings (fix in final runs); 3-repeat runs; stub review; Claude access.
@@ -38,8 +38,7 @@
 | AI Gateway team / API budget | Prof. Bauer | Unblocks Claude (and maybe more models). Budget asked: $50–80. |
 | Stub review (25 pairs) + prompt review | Eileen | Due Sat Nov 1 · [docs/HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md) |
 | Stub review (26 pairs) | Prisca | Due Sat Nov 1 · [stubs/REVIEW.md](stubs/REVIEW.md) |
-| Notebook B: stacked transformations + multi-file apps (~4.5 h) | Eileen | ASAP · [docs/HANDOFF-eileen-transformations.md](docs/HANDOFF-eileen-transformations.md) |
-| Transformation run, notebook A (original + single) | Prisca | ASAP, ~8 h on Kaggle |
+| Notebooks A (original + single, ~8 h) and B (stacked + multi-file, ~4.5 h) | Eileen | start Nov 4 · [docs/HANDOFF-eileen-transformations.md](docs/HANDOFF-eileen-transformations.md) |
 | Statistics + plots | Eileen | Due Wed Nov 12; can start now on the partial QA file in `analysis/runs/` |
 
 ## Next steps

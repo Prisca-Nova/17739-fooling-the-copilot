@@ -40,7 +40,7 @@ Template for new entries:
   - **Verifier:** new `--local-requires` flag, so a route can `require('../lib/…')` inside the sandbox. It is used only for multi-file apps; single-file verification is unchanged (108/108).
   - **Result:** `stubs/multifile/d3` (102 apps, median 77 lines, 6 files) and `d8` (102 apps, median 147 lines, 11 files). **204/204 verified.** The original stubs are about 11 lines.
   - **Scope:** baseline detection only. QA edits on multi-file apps would need the model to return several files, which is out of scope for now.
-- **Who runs what:** notebook A (original + single, ~8 h) Prisca; notebook B (stacked + multi-file, ~4.5 h) Eileen ([HANDOFF-eileen-transformations.md](HANDOFF-eileen-transformations.md)).
+- **Who runs what:** Eileen runs both notebooks, A (original + single, ~8 h) and B (stacked + multi-file, ~4.5 h); decided by Prisca on 2026-11-03 ([HANDOFF-eileen-transformations.md](HANDOFF-eileen-transformations.md)).
 - **Consequences:** new `transforms/`, `stubs/transformed/`, `config/tarpit-gpt-oss.yaml`, `analysis/kaggle/tarpit_run.py`, the `tarpit-metrics` CLI command, `tests/test_transforms.py`; for Part 3 `transforms/multifile.js`, `transforms/decoys/`, `stubs/multifile/`, `--local-requires` in the verifier.
 
 ## 2026-11-02: gpt-oss:20b becomes the main free model; results re-verified
