@@ -1,0 +1,15 @@
+{
+  "id": "path_008_safe__ternary",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.log",
+  "source_key": "log",
+  "sink": "fs.readFile",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_008_safe",
+  "transforms": [
+    "ternary"
+  ]
+}

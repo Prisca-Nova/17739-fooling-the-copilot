@@ -1,0 +1,18 @@
+{
+  "id": "xss_016_safe__k4",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "body.item",
+  "source_key": "item",
+  "sink": "res.send",
+  "sanitizer": "escape in class method",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_016_safe",
+  "transforms": [
+    "computed-properties",
+    "arrow-function",
+    "nested-function",
+    "try-catch"
+  ]
+}

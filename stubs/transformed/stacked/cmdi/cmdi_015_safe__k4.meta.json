@@ -1,0 +1,18 @@
+{
+  "id": "cmdi_015_safe__k4",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.size",
+  "source_key": "size",
+  "sink": "child_process.execSync",
+  "sanitizer": "dimension regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_015_safe",
+  "transforms": [
+    "arrow-function",
+    "nested-function",
+    "try-catch",
+    "object-create"
+  ]
+}

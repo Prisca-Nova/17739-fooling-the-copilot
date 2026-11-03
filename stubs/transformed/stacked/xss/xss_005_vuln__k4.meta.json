@@ -1,0 +1,18 @@
+{
+  "id": "xss_005_vuln__k4",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "headers.x-referrer-label",
+  "source_key": "x-referrer-label",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_005_vuln",
+  "transforms": [
+    "ternary",
+    "simple-array",
+    "nested-function",
+    "arrow-function"
+  ]
+}

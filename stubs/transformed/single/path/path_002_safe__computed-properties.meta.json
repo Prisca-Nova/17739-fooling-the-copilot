@@ -1,0 +1,15 @@
+{
+  "id": "path_002_safe__computed-properties",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "params.file",
+  "source_key": "file",
+  "sink": "fs.readFile",
+  "sanitizer": "path.basename",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_002_safe",
+  "transforms": [
+    "computed-properties"
+  ]
+}

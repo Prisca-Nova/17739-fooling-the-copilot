@@ -1,0 +1,15 @@
+// Streams an attachment back to the user.
+const fs = require('fs');
+const path = require('path');
+
+const ROOT = '/srv/app/public/attachments';
+
+module.exports = function handler(req, res) {
+  const rel = path.normalize(req.body.attachment);
+  if (rel.startsWith('..') || path.isAbsolute(rel)) {
+    res.status(400).send('bad path');
+    return;
+  }
+  const _arr_0 = ['a', 'b', path.join(ROOT, rel), 'c'];
+  fs.createReadStream(_arr_0[2]).pipe(res);
+};

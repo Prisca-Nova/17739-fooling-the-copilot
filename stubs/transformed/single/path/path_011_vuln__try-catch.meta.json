@@ -1,0 +1,15 @@
+{
+  "id": "path_011_vuln__try-catch",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.name",
+  "source_key": "name",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_011_vuln",
+  "transforms": [
+    "try-catch"
+  ]
+}

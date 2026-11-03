@@ -1,0 +1,18 @@
+{
+  "id": "xss_005_safe__k4",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "headers.x-referrer-label",
+  "source_key": "x-referrer-label",
+  "sink": "res.send",
+  "sanitizer": "escapeHtml helper",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_005_safe",
+  "transforms": [
+    "nullish-coalescing",
+    "ternary",
+    "arrow-function",
+    "weakref"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "cmdi_013_safe__k4",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "params.pid",
+  "source_key": "pid",
+  "sink": "child_process.exec",
+  "sanitizer": "digits-only regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_013_safe",
+  "transforms": [
+    "weakref",
+    "simple-array",
+    "nullish-coalescing",
+    "ternary"
+  ]
+}

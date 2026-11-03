@@ -1,0 +1,18 @@
+{
+  "id": "cmdi_010_vuln__k4",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.domain",
+  "source_key": "domain",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_010_vuln",
+  "transforms": [
+    "try-catch",
+    "weakref",
+    "simple-array",
+    "nullish-coalescing"
+  ]
+}

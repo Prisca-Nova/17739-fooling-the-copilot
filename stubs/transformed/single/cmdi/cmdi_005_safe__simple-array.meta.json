@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_005_safe__simple-array",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.dir",
+  "source_key": "dir",
+  "sink": "child_process.exec",
+  "sanitizer": "single-quote shell escaping",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_005_safe",
+  "transforms": [
+    "simple-array"
+  ]
+}

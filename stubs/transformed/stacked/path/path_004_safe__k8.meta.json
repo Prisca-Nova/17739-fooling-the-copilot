@@ -1,0 +1,22 @@
+{
+  "id": "path_004_safe__k8",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "body.attachment",
+  "source_key": "attachment",
+  "sink": "fs.createReadStream",
+  "sanitizer": "path.normalize + '..' rejection",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_004_safe",
+  "transforms": [
+    "nullish-coalescing",
+    "object-create",
+    "ternary",
+    "try-catch",
+    "arrow-function",
+    "nested-function",
+    "simple-array",
+    "computed-properties"
+  ]
+}

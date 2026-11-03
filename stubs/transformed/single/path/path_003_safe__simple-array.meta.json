@@ -1,0 +1,15 @@
+{
+  "id": "path_003_safe__simple-array",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.theme",
+  "source_key": "theme",
+  "sink": "fs.readFileSync",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_003_safe",
+  "transforms": [
+    "simple-array"
+  ]
+}

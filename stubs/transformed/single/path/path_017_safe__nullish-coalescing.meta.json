@@ -1,0 +1,15 @@
+{
+  "id": "path_017_safe__nullish-coalescing",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.file",
+  "source_key": "file",
+  "sink": "fs.readFileSync",
+  "sanitizer": "extension + separator check",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_017_safe",
+  "transforms": [
+    "nullish-coalescing"
+  ]
+}

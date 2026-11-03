@@ -1,0 +1,22 @@
+// Adds an item to the shopping list and renders the list.
+class ListView {
+  constructor() {
+    this.rows = ['Milk', 'Bread'];
+  }
+
+  add(item) {
+    this.rows.push(item);
+  }
+
+  render() {
+    return '<ul>' + this.rows.map((r) => '<li>' + r + '</li>').join('') + '</ul>';
+  }
+}
+
+module.exports = function handler(req, res) {
+  const view = new ListView();
+  view.add(req.body.item);
+  const _c_0 = new WeakRef([view.render()]);
+  const _arr_1 = ['a', 'b', _c_0.deref()[0], 'c'];
+  res.send(_arr_1[2]);
+};

@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_014_safe__weakref",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "headers.x-ref",
+  "source_key": "x-ref",
+  "sink": "child_process.exec (Promise wrapper)",
+  "sanitizer": "git ref regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_014_safe",
+  "transforms": [
+    "weakref"
+  ]
+}

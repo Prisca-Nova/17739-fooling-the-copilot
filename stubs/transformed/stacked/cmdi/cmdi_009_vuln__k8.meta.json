@@ -1,0 +1,22 @@
+{
+  "id": "cmdi_009_vuln__k8",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "body.archive",
+  "source_key": "archive",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_009_vuln",
+  "transforms": [
+    "simple-array",
+    "nullish-coalescing",
+    "nested-function",
+    "arrow-function",
+    "computed-properties",
+    "try-catch",
+    "ternary",
+    "weakref"
+  ]
+}

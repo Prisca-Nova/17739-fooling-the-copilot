@@ -1,0 +1,22 @@
+{
+  "id": "xss_008_safe__k8",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.page",
+  "source_key": "page",
+  "sink": "res.send",
+  "sanitizer": "numeric coercion",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_008_safe",
+  "transforms": [
+    "try-catch",
+    "arrow-function",
+    "weakref",
+    "simple-array",
+    "computed-properties",
+    "object-create",
+    "nullish-coalescing",
+    "ternary"
+  ]
+}

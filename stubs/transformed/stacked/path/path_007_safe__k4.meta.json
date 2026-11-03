@@ -1,0 +1,18 @@
+{
+  "id": "path_007_safe__k4",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "headers.x-template",
+  "source_key": "x-template",
+  "sink": "fs.readFileSync",
+  "sanitizer": "path.basename",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_007_safe",
+  "transforms": [
+    "arrow-function",
+    "ternary",
+    "weakref",
+    "object-create"
+  ]
+}

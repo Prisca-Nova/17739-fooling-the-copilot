@@ -1,0 +1,22 @@
+{
+  "id": "path_009_safe__k8",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "body.path",
+  "source_key": "path",
+  "sink": "fs.readFileSync",
+  "sanitizer": "path.relative check",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_009_safe",
+  "transforms": [
+    "ternary",
+    "nullish-coalescing",
+    "arrow-function",
+    "computed-properties",
+    "object-create",
+    "weakref",
+    "simple-array",
+    "nested-function"
+  ]
+}

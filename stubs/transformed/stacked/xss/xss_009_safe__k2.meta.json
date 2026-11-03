@@ -1,0 +1,16 @@
+{
+  "id": "xss_009_safe__k2",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.tags",
+  "source_key": "tags",
+  "sink": "res.send",
+  "sanitizer": "per-item escaping",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_009_safe",
+  "transforms": [
+    "ternary",
+    "try-catch"
+  ]
+}

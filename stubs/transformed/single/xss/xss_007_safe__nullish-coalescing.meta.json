@@ -1,0 +1,15 @@
+{
+  "id": "xss_007_safe__nullish-coalescing",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "body.title",
+  "source_key": "title",
+  "sink": "res.send",
+  "sanitizer": "escapeHtml helper",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_007_safe",
+  "transforms": [
+    "nullish-coalescing"
+  ]
+}

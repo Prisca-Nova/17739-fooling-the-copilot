@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_010_safe__nullish-coalescing",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.domain",
+  "source_key": "domain",
+  "sink": "child_process.exec",
+  "sanitizer": "execFile with argument array",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_010_safe",
+  "transforms": [
+    "nullish-coalescing"
+  ]
+}

@@ -1,0 +1,11 @@
+// Downloads an invoice PDF by file name.
+const fs = require('fs');
+
+module.exports = function handler(req, res) {
+  const file = req.params.file;
+  const _msg_0 = '/srv/app/public/invoices/' + file;
+  const _func_1 = () => { return _msg_0; };
+  fs.readFile(_func_1(), (err, data) => {
+    res.send(err ? 'not found' : data);
+  });
+};

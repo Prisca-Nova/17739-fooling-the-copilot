@@ -1,0 +1,22 @@
+{
+  "id": "xss_011_vuln__k8",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.color",
+  "source_key": "color",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_011_vuln",
+  "transforms": [
+    "nullish-coalescing",
+    "nested-function",
+    "ternary",
+    "object-create",
+    "simple-array",
+    "try-catch",
+    "computed-properties",
+    "arrow-function"
+  ]
+}

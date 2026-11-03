@@ -1,0 +1,12 @@
+{
+  "name": "copilot-eval-transforms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Semantics-preserving tarpit transformations applied to the sink argument of JS stubs",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "acorn": "8.19.0"
+  }
+}

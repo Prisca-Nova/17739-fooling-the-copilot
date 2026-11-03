@@ -1,0 +1,18 @@
+{
+  "id": "xss_002_vuln__k4",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.q",
+  "source_key": "q",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_002_vuln",
+  "transforms": [
+    "nullish-coalescing",
+    "ternary",
+    "simple-array",
+    "weakref"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "xss_003_vuln__weakref",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "body.comment",
+  "source_key": "comment",
+  "sink": "res.write/res.end",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_003_vuln",
+  "transforms": [
+    "weakref"
+  ]
+}

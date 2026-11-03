@@ -1,14 +1,16 @@
 # Project Status
 
-**Last updated:** 2026-11-02 · **Phase:** first full QA results (gpt-oss:20b); presenting to Prof. Bauer today
+**Last updated:** 2026-11-03 · **Phase:** new direction after the check-in: program transformations, then multi-file programs
 
+> **Nov 3 update:** after the check-in, Prof. Bauer suggested (1) semantics-preserving program transformations and (2) larger multi-file programs. We re-implemented Rui Wang's 9 most natural "tarpit" transformations (`transforms/tarpit.js`): **918 single + 306 stacked transformed stubs, all verified** to keep their label. Ready to run on Kaggle (`analysis/kaggle/tarpit_run.py`, 2 notebooks, gpt-oss with its **own** sampling settings). Next: design the multi-file programs. See the decision log.
+>
 > **Nov 2 update:** Eileen compared 5 free models on Kaggle; only **gpt-oss:20b** recognizes safe code (43/51). Its QA run: **0 genuine misses in 255 edits** (re-verified with the fixed verifier: 0/306 outcomes changed). Misleading edits: fooled **1/255**; all 255 edited stubs confirmed still vulnerable by the project verifier. Full write-ups: `analysis/2026-11-01-gpt-oss-results.md`. Overview doc for Prof. Bauer: https://claude.ai/artifact/D2jQyQGokEs2WVWuS7anQE
 > **Open:** gpt-oss ran with Qwen's sampling settings (fix in final runs); 3-repeat runs; stub review; Claude access.
 
 | Deadline | Date | Days left |
 |---|---|---|
-| Final presentation | Nov 15 | 13 |
-| Final report, code, data | Nov 28 | 26 |
+| Final presentation | Nov 15 | 12 |
+| Final report, code, data | Nov 28 | 25 |
 
 ## At a glance
 
@@ -20,6 +22,8 @@
 | `qwen3-coder:30b` (free, Kaggle GPU) | ✅ sample baseline by Eileen: specificity **39%** (7B: 14% on the same stubs) · ⏳ **decision: use it or not** |
 | Claude Sonnet 5.5 | ⏸️ waiting for AI Gateway access from Prof. Bauer |
 | Defense (stretch) | ⏸️ implemented, not run |
+| Transformations (Part 2) | ✅ 9 transformations, 1,224 transformed stubs verified · ⏳ **Kaggle run** (~4,000 calls, 2 notebooks) |
+| Multi-file programs (Part 3) | ⏳ design to agree |
 
 ## In progress / needs a decision
 

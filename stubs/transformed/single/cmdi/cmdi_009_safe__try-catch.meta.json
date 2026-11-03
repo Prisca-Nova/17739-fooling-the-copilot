@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_009_safe__try-catch",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "body.archive",
+  "source_key": "archive",
+  "sink": "child_process.exec",
+  "sanitizer": "metacharacter rejection",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_009_safe",
+  "transforms": [
+    "try-catch"
+  ]
+}

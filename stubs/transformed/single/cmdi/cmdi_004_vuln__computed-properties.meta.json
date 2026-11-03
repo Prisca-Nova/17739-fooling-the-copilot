@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_004_vuln__computed-properties",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "params.branch",
+  "source_key": "branch",
+  "sink": "child_process.spawn(shell)",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_004_vuln",
+  "transforms": [
+    "computed-properties"
+  ]
+}

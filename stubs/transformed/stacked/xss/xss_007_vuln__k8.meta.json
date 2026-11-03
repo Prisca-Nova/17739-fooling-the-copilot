@@ -1,0 +1,22 @@
+{
+  "id": "xss_007_vuln__k8",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "body.title",
+  "source_key": "title",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_007_vuln",
+  "transforms": [
+    "simple-array",
+    "arrow-function",
+    "nullish-coalescing",
+    "computed-properties",
+    "ternary",
+    "weakref",
+    "nested-function",
+    "object-create"
+  ]
+}

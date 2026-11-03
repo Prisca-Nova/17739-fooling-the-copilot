@@ -1,0 +1,16 @@
+{
+  "id": "xss_006_vuln__k2",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.msg",
+  "source_key": "msg",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_006_vuln",
+  "transforms": [
+    "try-catch",
+    "nullish-coalescing"
+  ]
+}

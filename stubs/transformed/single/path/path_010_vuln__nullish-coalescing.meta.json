@@ -1,0 +1,15 @@
+{
+  "id": "path_010_vuln__nullish-coalescing",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.report",
+  "source_key": "report",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_010_vuln",
+  "transforms": [
+    "nullish-coalescing"
+  ]
+}

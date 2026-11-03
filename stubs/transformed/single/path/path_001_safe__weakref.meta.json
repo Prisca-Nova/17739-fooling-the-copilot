@@ -1,0 +1,15 @@
+{
+  "id": "path_001_safe__weakref",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.doc",
+  "source_key": "doc",
+  "sink": "fs.readFileSync",
+  "sanitizer": "path.resolve + prefix check",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_001_safe",
+  "transforms": [
+    "weakref"
+  ]
+}

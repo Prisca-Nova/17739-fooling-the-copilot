@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_001_safe__computed-properties",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.file",
+  "source_key": "file",
+  "sink": "child_process.exec",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_001_safe",
+  "transforms": [
+    "computed-properties"
+  ]
+}

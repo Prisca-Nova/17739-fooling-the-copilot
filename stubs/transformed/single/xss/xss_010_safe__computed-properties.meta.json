@@ -1,0 +1,15 @@
+{
+  "id": "xss_010_safe__computed-properties",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "params.lang",
+  "source_key": "lang",
+  "sink": "res.send",
+  "sanitizer": "lookup table",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_010_safe",
+  "transforms": [
+    "computed-properties"
+  ]
+}

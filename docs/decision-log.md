@@ -15,6 +15,25 @@ Template for new entries:
 
 ---
 
+## 2026-11-03: New direction after the Nov 2 check-in: program transformations, then larger multi-file programs
+
+- **Decided by:** Prisca, following Prof. Bauer's suggestion (Nov 2 check-in and his email introducing Rui Wang, who works on adversarially transformed code with Prof. Limin Jia).
+- **Why:** the model's own QA edits fooled gpt-oss 0/255 times. Prof. Bauer suggested (1) "normal" semantics-preserving program transformations and (2) larger, multi-file programs (as proposed at the check-in).
+- **Part 1 stays:** the QA-edit result (0/255 genuine misses) is kept as the first result, a negative one.
+- **Part 2 (transformations):**
+  - **Source:** Rui's list of 80 JavaScript "testability tarpit" transformations (`tarpit80-examples.pdf`, after Compagna et al., NDSS 2022). We can't use his toolkit, so we re-implemented them ourselves.
+  - **Subset:** his 9 most natural ones (5 by popularity in real code + 5 by smallest line change, ternary is on both lists): arrow-function, computed-properties, nested-function, nullish-coalescing, object-create, simple-array, ternary, try-catch, weakref.
+  - **Tool:** `transforms/tarpit.js` (Node + the `acorn` parser). It splices edits into the original text, so comments and formatting are kept.
+  - **Which sink is transformed:** chosen with the verifier, not guessed. It is the first sink call in the vulnerable stub whose argument, replaced by a constant, removes the taint (this matters for `xss_017`, which has two `res.send` calls). The safe twin uses the same sink.
+  - **Generated sets** (both committed, both checked by the verifier):
+    - `stubs/transformed/single`: 102 stubs × 9 = **918**, all match their labels.
+    - `stubs/transformed/stacked`: 102 stubs × {2, 4, 8} random transformations (seed 17739) = **306**, all match.
+  - **Experiment:** baseline verdicts only (the transformation is the "edit"), gpt-oss:20b, 3 repeats, on the original, single and stacked sets.
+  - **Main metric:** misses on transformed vulnerable stubs whose original was flagged in every repeat (`tarpit-metrics --base`). Safe stubs show whether transformations add false alarms.
+- **Sampling, fixing the 2026-11-02 inconsistency:** gpt-oss's own recommendation (openai/gpt-oss README, checked 2026-11-03): temperature 1.0, top_p 1.0. No top_k or repetition penalty is recommended, so we set `top_k: 0` and `repeat_penalty: 1.0` to turn off Ollama's defaults. The untransformed stubs are re-run with the same settings as the reference.
+- **Part 3 (larger, multi-file programs):** next. The design is to be agreed (see STATUS).
+- **Consequences:** new `transforms/`, `stubs/transformed/`, `config/tarpit-gpt-oss.yaml`, `analysis/kaggle/tarpit_run.py`, the `tarpit-metrics` CLI command, `tests/test_transforms.py`.
+
 ## 2026-11-02: gpt-oss:20b becomes the main free model; results re-verified
 
 - **Decided by:** Prisca (on Eileen's model comparison, Oct 30–Nov 1, Kaggle).

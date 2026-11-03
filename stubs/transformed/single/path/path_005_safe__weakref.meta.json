@@ -1,0 +1,15 @@
+{
+  "id": "path_005_safe__weakref",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.img",
+  "source_key": "img",
+  "sink": "res.sendFile",
+  "sanitizer": "lookup table",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_005_safe",
+  "transforms": [
+    "weakref"
+  ]
+}

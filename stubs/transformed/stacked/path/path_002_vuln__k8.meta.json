@@ -1,0 +1,22 @@
+{
+  "id": "path_002_vuln__k8",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "params.file",
+  "source_key": "file",
+  "sink": "fs.readFile",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_002_vuln",
+  "transforms": [
+    "ternary",
+    "computed-properties",
+    "weakref",
+    "object-create",
+    "simple-array",
+    "nested-function",
+    "nullish-coalescing",
+    "try-catch"
+  ]
+}

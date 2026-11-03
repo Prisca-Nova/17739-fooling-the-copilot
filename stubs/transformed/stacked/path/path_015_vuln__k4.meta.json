@@ -1,0 +1,18 @@
+{
+  "id": "path_015_vuln__k4",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.version",
+  "source_key": "version",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_015_vuln",
+  "transforms": [
+    "nullish-coalescing",
+    "computed-properties",
+    "nested-function",
+    "simple-array"
+  ]
+}

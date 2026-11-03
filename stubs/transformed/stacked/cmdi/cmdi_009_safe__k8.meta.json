@@ -1,0 +1,22 @@
+{
+  "id": "cmdi_009_safe__k8",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "body.archive",
+  "source_key": "archive",
+  "sink": "child_process.exec",
+  "sanitizer": "metacharacter rejection",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_009_safe",
+  "transforms": [
+    "nested-function",
+    "ternary",
+    "simple-array",
+    "object-create",
+    "nullish-coalescing",
+    "weakref",
+    "try-catch",
+    "arrow-function"
+  ]
+}

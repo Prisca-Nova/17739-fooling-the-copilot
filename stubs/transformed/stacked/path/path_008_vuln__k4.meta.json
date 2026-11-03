@@ -1,0 +1,18 @@
+{
+  "id": "path_008_vuln__k4",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.log",
+  "source_key": "log",
+  "sink": "fs.readFile",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_008_vuln",
+  "transforms": [
+    "arrow-function",
+    "object-create",
+    "computed-properties",
+    "nested-function"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "path_014_safe__k8",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "headers.x-locale",
+  "source_key": "x-locale",
+  "sink": "fs.readFile",
+  "sanitizer": "allowlist set",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_014_safe",
+  "transforms": [
+    "computed-properties",
+    "nullish-coalescing",
+    "ternary",
+    "object-create",
+    "simple-array",
+    "arrow-function",
+    "weakref",
+    "nested-function"
+  ]
+}

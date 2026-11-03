@@ -1,0 +1,15 @@
+{
+  "id": "xss_004_vuln__ternary",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "params.user",
+  "source_key": "user",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_004_vuln",
+  "transforms": [
+    "ternary"
+  ]
+}

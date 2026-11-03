@@ -1,0 +1,18 @@
+{
+  "id": "path_015_safe__k4",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.version",
+  "source_key": "version",
+  "sink": "fs.readFileSync",
+  "sanitizer": "version regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_015_safe",
+  "transforms": [
+    "arrow-function",
+    "weakref",
+    "ternary",
+    "nullish-coalescing"
+  ]
+}

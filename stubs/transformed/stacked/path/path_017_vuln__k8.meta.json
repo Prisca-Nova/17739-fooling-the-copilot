@@ -1,0 +1,22 @@
+{
+  "id": "path_017_vuln__k8",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.file",
+  "source_key": "file",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_017_vuln",
+  "transforms": [
+    "weakref",
+    "try-catch",
+    "arrow-function",
+    "simple-array",
+    "computed-properties",
+    "object-create",
+    "nested-function",
+    "nullish-coalescing"
+  ]
+}

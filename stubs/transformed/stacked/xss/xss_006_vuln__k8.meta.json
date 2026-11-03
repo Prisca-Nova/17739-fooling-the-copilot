@@ -1,0 +1,22 @@
+{
+  "id": "xss_006_vuln__k8",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.msg",
+  "source_key": "msg",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_006_vuln",
+  "transforms": [
+    "nullish-coalescing",
+    "weakref",
+    "ternary",
+    "arrow-function",
+    "object-create",
+    "simple-array",
+    "try-catch",
+    "computed-properties"
+  ]
+}

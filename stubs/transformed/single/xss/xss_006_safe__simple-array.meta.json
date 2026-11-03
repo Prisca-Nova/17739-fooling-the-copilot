@@ -1,0 +1,15 @@
+{
+  "id": "xss_006_safe__simple-array",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.msg",
+  "source_key": "msg",
+  "sink": "res.send",
+  "sanitizer": "escape inside helper",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_006_safe",
+  "transforms": [
+    "simple-array"
+  ]
+}

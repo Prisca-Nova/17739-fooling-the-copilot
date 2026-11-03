@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from .config import load_config
-from .metrics import summarize
+from .metrics import load_records, summarize, to_markdown, transform_table
 from .pipeline import estimate_calls, reverify, run_experiment, select_stubs
 from .review import write_index
 from .verify import verify_code
@@ -25,6 +25,10 @@ def main(argv=None):
 
     p_met = sub.add_parser("metrics", help="summarize a results JSONL file")
     p_met.add_argument("results", type=Path)
+
+    p_tt = sub.add_parser("tarpit-metrics", help="baseline accuracy per transformation (transformed-stub runs)")
+    p_tt.add_argument("results", type=Path)
+    p_tt.add_argument("--base", type=Path, help="baseline run on the untransformed stubs, for paired misses")
 
     p_rev = sub.add_parser("review-index", help="refresh CHECKLIST.md for a run's review folder")
     p_rev.add_argument("run_dir", type=Path)
@@ -48,6 +52,9 @@ def main(argv=None):
         print(f"{len(stubs)} stubs, at most {estimate_calls(cfg, stubs)} model calls")
     elif args.command == "metrics":
         print(summarize(args.results))
+    elif args.command == "tarpit-metrics":
+        base = load_records(args.base) if args.base else None
+        print(to_markdown(transform_table(load_records(args.results), base)))
     elif args.command == "review-index":
         index = write_index(args.run_dir)
         print(index or "no review cases in this folder")

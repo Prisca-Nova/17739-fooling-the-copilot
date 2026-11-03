@@ -1,0 +1,15 @@
+{
+  "id": "xss_007_vuln__ternary",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "body.title",
+  "source_key": "title",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_007_vuln",
+  "transforms": [
+    "ternary"
+  ]
+}

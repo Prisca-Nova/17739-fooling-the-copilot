@@ -1,0 +1,15 @@
+{
+  "id": "xss_008_safe__nested-function",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.page",
+  "source_key": "page",
+  "sink": "res.send",
+  "sanitizer": "numeric coercion",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_008_safe",
+  "transforms": [
+    "nested-function"
+  ]
+}

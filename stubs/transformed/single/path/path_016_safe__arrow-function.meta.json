@@ -1,0 +1,15 @@
+{
+  "id": "path_016_safe__arrow-function",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "body.backup",
+  "source_key": "backup",
+  "sink": "fs.readFileSync",
+  "sanitizer": "normalize + prefix check",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_016_safe",
+  "transforms": [
+    "arrow-function"
+  ]
+}

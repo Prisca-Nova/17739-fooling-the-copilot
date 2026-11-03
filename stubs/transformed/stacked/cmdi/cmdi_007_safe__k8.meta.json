@@ -1,0 +1,22 @@
+{
+  "id": "cmdi_007_safe__k8",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "headers.x-tenant",
+  "source_key": "x-tenant",
+  "sink": "child_process.exec",
+  "sanitizer": "alphanumeric regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_007_safe",
+  "transforms": [
+    "nullish-coalescing",
+    "weakref",
+    "object-create",
+    "simple-array",
+    "nested-function",
+    "computed-properties",
+    "arrow-function",
+    "try-catch"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_013_vuln__simple-array",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "params.pid",
+  "source_key": "pid",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_013_vuln",
+  "transforms": [
+    "simple-array"
+  ]
+}

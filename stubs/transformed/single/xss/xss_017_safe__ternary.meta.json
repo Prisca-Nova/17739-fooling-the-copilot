@@ -1,0 +1,15 @@
+{
+  "id": "xss_017_safe__ternary",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.sort",
+  "source_key": "sort",
+  "sink": "res.send (error path)",
+  "sanitizer": "escape in catch block",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_017_safe",
+  "transforms": [
+    "ternary"
+  ]
+}

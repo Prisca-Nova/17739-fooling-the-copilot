@@ -1,0 +1,16 @@
+{
+  "id": "xss_002_safe__k2",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.q",
+  "source_key": "q",
+  "sink": "res.send",
+  "sanitizer": "escapeHtml helper",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_002_safe",
+  "transforms": [
+    "nested-function",
+    "simple-array"
+  ]
+}

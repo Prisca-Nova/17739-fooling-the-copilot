@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_011_vuln__try-catch",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.url",
+  "source_key": "url",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_011_vuln",
+  "transforms": [
+    "try-catch"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "xss_015_vuln__nested-function",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.callback",
+  "source_key": "callback",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_015_vuln",
+  "transforms": [
+    "nested-function"
+  ]
+}

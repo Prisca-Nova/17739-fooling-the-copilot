@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_008_safe__computed-properties",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.n",
+  "source_key": "n",
+  "sink": "child_process.execSync",
+  "sanitizer": "numeric coercion",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_008_safe",
+  "transforms": [
+    "computed-properties"
+  ]
+}

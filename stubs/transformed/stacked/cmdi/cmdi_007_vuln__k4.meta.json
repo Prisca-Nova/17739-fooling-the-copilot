@@ -1,0 +1,18 @@
+{
+  "id": "cmdi_007_vuln__k4",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "headers.x-tenant",
+  "source_key": "x-tenant",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_007_vuln",
+  "transforms": [
+    "weakref",
+    "arrow-function",
+    "object-create",
+    "computed-properties"
+  ]
+}

@@ -65,6 +65,65 @@ def to_markdown(rows: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float] | tuple[None, None]:
+    """95% Wilson score interval for k successes out of n."""
+    if not n:
+        return None, None
+    p = k / n
+    centre = (p + z * z / (2 * n)) / (1 + z * z / n)
+    half = z * ((p * (1 - p) + z * z / (4 * n)) / n) ** 0.5 / (1 + z * z / n)
+    return max(0.0, centre - half), min(1.0, centre + half)
+
+
+def transform_of(stub_id: str) -> str:
+    """'cmdi_003_vuln__ternary' -> 'ternary'; untransformed stubs -> 'original'."""
+    return stub_id.split("__", 1)[1] if "__" in stub_id else "original"
+
+
+def transform_table(records: list[dict], base: list[dict] | None = None) -> list[dict]:
+    """Baseline verdicts on transformed stubs, one row per (transform, label).
+
+    `correct` is VULNERABLE for vulnerable stubs, SAFE for safe ones. With `base`
+    (a baseline run on the untransformed stubs), `miss_given_base_flagged` counts
+    vulnerable transformed stubs called SAFE whose original the model flagged in
+    every repeat: misses caused by the transformation, not by an already-hard stub.
+    """
+    always_flagged = None
+    if base is not None:
+        verdicts = defaultdict(set)
+        for r in base:
+            if r["qa_task"] == "baseline" and r["label"] == "vulnerable":
+                verdicts[r["stub_id"]].add(r["verdict"])
+        always_flagged = {s for s, v in verdicts.items() if v == {"VULNERABLE"}}
+
+    groups = defaultdict(Counter)
+    for r in records:
+        if r["qa_task"] != "baseline":
+            continue
+        tag = transform_of(r["stub_id"])
+        expected = "VULNERABLE" if r["label"] == "vulnerable" else "SAFE"
+        c = groups[(tag, r["label"])]
+        c["n"] += 1
+        c["correct"] += r["verdict"] == expected
+        c["unparsed"] += r["verdict"] in (None, "REFUSED")
+        if always_flagged is not None and r["label"] == "vulnerable":
+            base_id = r["stub_id"].split("__", 1)[0]
+            if base_id in always_flagged:
+                c["n_base_flagged"] += 1
+                c["miss_given_base_flagged"] += r["verdict"] == "SAFE"
+
+    rows = []
+    for (tag, label), c in sorted(groups.items(), key=lambda kv: (kv[0][1], kv[0][0] != "original", kv[0][0])):
+        lo, hi = wilson(c["correct"], c["n"])
+        row = {"transform": tag, "label": label, "n": c["n"], "correct": c["correct"],
+               "rate": c["correct"] / c["n"], "ci_low": lo, "ci_high": hi, "unparsed": c["unparsed"]}
+        if always_flagged is not None:
+            row["miss_given_base_flagged"] = (f"{c['miss_given_base_flagged']}/{c['n_base_flagged']}"
+                                              if label == "vulnerable" else "")
+        rows.append(row)
+    return rows
+
+
 def summarize(path: str | Path) -> str:
     records = load_records(path)
     parts = ["## Baseline", to_markdown([baseline_confusion(records)])]

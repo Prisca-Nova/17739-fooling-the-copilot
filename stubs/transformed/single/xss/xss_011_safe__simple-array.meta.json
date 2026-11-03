@@ -1,0 +1,15 @@
+{
+  "id": "xss_011_safe__simple-array",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.color",
+  "source_key": "color",
+  "sink": "res.send",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_011_safe",
+  "transforms": [
+    "simple-array"
+  ]
+}

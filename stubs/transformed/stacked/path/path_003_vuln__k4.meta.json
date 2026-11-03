@@ -1,0 +1,18 @@
+{
+  "id": "path_003_vuln__k4",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.theme",
+  "source_key": "theme",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_003_vuln",
+  "transforms": [
+    "ternary",
+    "try-catch",
+    "computed-properties",
+    "object-create"
+  ]
+}

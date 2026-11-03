@@ -1,0 +1,18 @@
+{
+  "id": "xss_012_vuln__k4",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "body.bio",
+  "source_key": "bio",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_012_vuln",
+  "transforms": [
+    "arrow-function",
+    "ternary",
+    "simple-array",
+    "object-create"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "cmdi_004_safe__k8",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "params.branch",
+  "source_key": "branch",
+  "sink": "child_process.spawn(shell)",
+  "sanitizer": "spawn without shell",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_004_safe",
+  "transforms": [
+    "nested-function",
+    "ternary",
+    "simple-array",
+    "object-create",
+    "nullish-coalescing",
+    "try-catch",
+    "arrow-function",
+    "weakref"
+  ]
+}

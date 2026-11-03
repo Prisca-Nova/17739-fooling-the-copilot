@@ -1,0 +1,18 @@
+{
+  "id": "xss_009_vuln__k4",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.tags",
+  "source_key": "tags",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_009_vuln",
+  "transforms": [
+    "computed-properties",
+    "simple-array",
+    "ternary",
+    "try-catch"
+  ]
+}

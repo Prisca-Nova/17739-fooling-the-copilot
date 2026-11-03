@@ -11,6 +11,7 @@ Lines starting with `!` or `%` are notebook shell/magic commands, so these files
 | `model_comparison.py` | model-comparison | 24-stub capability check for 3 models, then gpt-oss on all 102 stubs |
 | `qa_run.py` | qa-gpt-oss-20b | QA-edit run with gpt-oss (QA edits on the 51 vulnerable stubs) |
 | `adversarial_edits.py` | adversarial-edits | misleading edits (uses `../adversarial/perturb.py`) |
+| `tarpit_run.py` | tarpit-A / tarpit-B (Nov 3+) | transformation experiment: original + single (A), stacked (B), gpt-oss's own sampling |
 
 The qwen3-coder:30b check used the same setup cells with `config/sample-qwen3-30b.yaml` unchanged
 (results in `analysis/runs/20261031-024211_ollama_qwen3-coder-30b.*`).

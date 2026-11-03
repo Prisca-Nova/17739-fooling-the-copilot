@@ -1,0 +1,15 @@
+{
+  "id": "cmdi_016_vuln__nested-function",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "body.email",
+  "source_key": "email",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_016_vuln",
+  "transforms": [
+    "nested-function"
+  ]
+}

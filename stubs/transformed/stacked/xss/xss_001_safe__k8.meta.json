@@ -1,0 +1,22 @@
+{
+  "id": "xss_001_safe__k8",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.name",
+  "source_key": "name",
+  "sink": "res.send",
+  "sanitizer": "escapeHtml helper",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_001_safe",
+  "transforms": [
+    "object-create",
+    "nested-function",
+    "nullish-coalescing",
+    "try-catch",
+    "ternary",
+    "simple-array",
+    "computed-properties",
+    "arrow-function"
+  ]
+}

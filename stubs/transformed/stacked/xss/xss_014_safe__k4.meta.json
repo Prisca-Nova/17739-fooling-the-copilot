@@ -1,0 +1,18 @@
+{
+  "id": "xss_014_safe__k4",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "headers.user-agent",
+  "source_key": "user-agent",
+  "sink": "res.send",
+  "sanitizer": "escapeHtml helper",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_014_safe",
+  "transforms": [
+    "object-create",
+    "arrow-function",
+    "computed-properties",
+    "try-catch"
+  ]
+}

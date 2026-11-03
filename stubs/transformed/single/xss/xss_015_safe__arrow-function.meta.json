@@ -1,0 +1,15 @@
+{
+  "id": "xss_015_safe__arrow-function",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.callback",
+  "source_key": "callback",
+  "sink": "res.send",
+  "sanitizer": "identifier regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_015_safe",
+  "transforms": [
+    "arrow-function"
+  ]
+}

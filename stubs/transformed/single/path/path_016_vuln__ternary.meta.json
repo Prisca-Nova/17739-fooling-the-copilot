@@ -1,0 +1,15 @@
+{
+  "id": "path_016_vuln__ternary",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "body.backup",
+  "source_key": "backup",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_016_vuln",
+  "transforms": [
+    "ternary"
+  ]
+}
