@@ -1,5 +1,7 @@
 # Handoff: stub review, prompt freeze, analysis (Eileen)
 
+> **Nov 3: new task first:** run the transformation notebook B, see [HANDOFF-eileen-transformations.md](HANDOFF-eileen-transformations.md). Task 3 below gains transformation tables there.
+
 _Replaces the 30B run ([HANDOFF-eileen-30b.md](HANDOFF-eileen-30b.md) is on hold: the model needs more memory
 than our laptops have; we're asking for the CMU AI Gateway instead)._
 

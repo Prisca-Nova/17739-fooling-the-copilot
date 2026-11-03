@@ -38,6 +38,8 @@
 | AI Gateway team / API budget | Prof. Bauer | Unblocks Claude (and maybe more models). Budget asked: $50–80. |
 | Stub review (25 pairs) + prompt review | Eileen | Due Sat Nov 1 · [docs/HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md) |
 | Stub review (26 pairs) | Prisca | Due Sat Nov 1 · [stubs/REVIEW.md](stubs/REVIEW.md) |
+| Transformation run, notebook B (stacked) | Eileen | ASAP · [docs/HANDOFF-eileen-transformations.md](docs/HANDOFF-eileen-transformations.md) |
+| Transformation run, notebook A (original + single) | Prisca | ASAP, ~8 h on Kaggle |
 | Statistics + plots | Eileen | Due Wed Nov 12; can start now on the partial QA file in `analysis/runs/` |
 
 ## Next steps
