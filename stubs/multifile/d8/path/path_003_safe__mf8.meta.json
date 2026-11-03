@@ -1,0 +1,40 @@
+{
+  "id": "path_003_safe__mf8",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.theme",
+  "source_key": "theme",
+  "sink": "fs.readFileSync",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_003_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_003_safe__mf8/routes/theme.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/downloads.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/settings.js",
+      "routes/stats.js",
+      "routes/theme.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "health",
+      "profile",
+      "stats",
+      "downloads",
+      "products",
+      "version",
+      "orders",
+      "settings"
+    ],
+    "lines": 150
+  }
+}

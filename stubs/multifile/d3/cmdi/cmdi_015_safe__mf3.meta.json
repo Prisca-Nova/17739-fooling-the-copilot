@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_015_safe__mf3",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.size",
+  "source_key": "size",
+  "sink": "child_process.execSync",
+  "sanitizer": "dimension regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_015_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_015_safe__mf3/routes/thumbnail-uploaded-image.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/thumbnail-uploaded-image.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "products",
+      "version",
+      "orders"
+    ],
+    "lines": 73
+  }
+}

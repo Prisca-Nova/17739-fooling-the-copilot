@@ -1,0 +1,30 @@
+{
+  "id": "xss_004_safe__mf3",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "params.user",
+  "source_key": "user",
+  "sink": "res.send",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_004_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_004_safe__mf3/routes/profile-header-users.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/orders.js",
+      "routes/profile-header-users.js",
+      "routes/search.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "search",
+      "orders",
+      "stats"
+    ],
+    "lines": 73
+  }
+}

@@ -1,12 +1,13 @@
 # Transformation experiment (config/tarpit-gpt-oss.yaml). Two notebooks, can run in parallel:
 #   notebook A: PARTS = ["original", "single"]   (~3,060 calls, ~8 h)
-#   notebook B: PARTS = ["stacked"]              (~918 calls, ~2.5 h)
+#   notebook B: PARTS = ["stacked", "multifile"] (~918 + ~612 calls, ~4.5 h)
 # Run as one cell with "Save Version -> Save & Run All (Commit)" so it runs in the background.
 # The upload must include stubs/transformed/ (it is committed; regenerate with transforms/tarpit.js if missing).
 import glob, os, re, pathlib, subprocess, time
 
-PARTS = ["original", "single"]   # notebook B: ["stacked"]
-STUBS = {"original": "stubs/js", "single": "stubs/transformed/single", "stacked": "stubs/transformed/stacked"}
+PARTS = ["original", "single"]   # notebook B: ["stacked", "multifile"]
+STUBS = {"original": "stubs/js", "single": "stubs/transformed/single", "stacked": "stubs/transformed/stacked",
+         "multifile": "stubs/multifile"}
 
 # 1. Copy and install the project
 src = os.path.dirname(glob.glob("/kaggle/input/**/pyproject.toml", recursive=True)[0])
@@ -14,7 +15,7 @@ print("project found at:", src)
 !cp -r {src} /kaggle/working/project
 %cd /kaggle/working/project
 !pip install -q -e ".[dev]"
-!node verifier/check_stubs.js stubs/transformed/single stubs/transformed/stacked | tail -1
+!node verifier/check_stubs.js stubs/transformed/single stubs/transformed/stacked stubs/multifile/d3 stubs/multifile/d8 | tail -1
 
 # 2. Install Ollama, start it, download gpt-oss
 !apt-get -qq install -y zstd > /dev/null

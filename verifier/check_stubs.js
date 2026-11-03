@@ -18,8 +18,10 @@ async function main() {
     if (!fs.statSync(dir).isDirectory()) continue;
     for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.meta.json'))) {
       const meta = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
-      const file = path.join(dir, f.replace('.meta.json', '.js'));
-      const r = await verify({ file, vulnClass: meta.vuln_class, key: meta.source_key, baseDir: meta.base_dir })
+      // Multi-file apps are checked through their entry route, with the app's own requires.
+      const file = meta.multifile ? path.join(dir, meta.multifile.entry) : path.join(dir, f.replace('.meta.json', '.js'));
+      const r = await verify({ file, vulnClass: meta.vuln_class, key: meta.source_key, baseDir: meta.base_dir,
+        localRequires: Boolean(meta.multifile) })
         .catch((e) => ({ status: 'error', error: e.message }));
       const expected = meta.label === 'vulnerable';
       const ok = r.status === 'ok' && r.tainted === expected;

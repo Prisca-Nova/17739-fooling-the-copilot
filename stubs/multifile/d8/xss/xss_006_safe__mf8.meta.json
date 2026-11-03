@@ -1,0 +1,40 @@
+{
+  "id": "xss_006_safe__mf8",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.msg",
+  "source_key": "msg",
+  "sink": "res.send",
+  "sanitizer": "escape inside helper",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_006_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_006_safe__mf8/routes/flash-message-through.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/flash-message-through.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/settings.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "profile",
+      "downloads",
+      "version",
+      "health",
+      "feedback",
+      "settings",
+      "orders",
+      "products"
+    ],
+    "lines": 153
+  }
+}

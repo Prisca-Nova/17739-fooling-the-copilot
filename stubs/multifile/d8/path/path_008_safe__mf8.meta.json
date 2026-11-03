@@ -1,0 +1,40 @@
+{
+  "id": "path_008_safe__mf8",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.log",
+  "source_key": "log",
+  "sink": "fs.readFile",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_008_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_008_safe__mf8/routes/log-file-logs.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/log-file-logs.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/stats.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "version",
+      "feedback",
+      "products",
+      "stats",
+      "settings",
+      "orders",
+      "search",
+      "health"
+    ],
+    "lines": 150
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "xss_012_vuln__mf3",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "body.bio",
+  "source_key": "bio",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_012_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_012_vuln__mf3/routes/profile-bio-line.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/profile-bio-line.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "orders",
+      "stats",
+      "health"
+    ],
+    "lines": 65
+  }
+}

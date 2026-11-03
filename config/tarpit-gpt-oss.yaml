@@ -4,6 +4,7 @@
 #   stubs/js                      untransformed reference, same settings   (102 stubs)
 #   stubs/transformed/single      9 transformations, one at a time         (918 stubs)
 #   stubs/transformed/stacked     2, 4 or 8 transformations combined       (306 stubs)
+#   stubs/multifile               multi-file apps, 3 or 8 decoy routes     (204 stubs, transforms/multifile.js)
 
 provider: ollama
 model: gpt-oss:20b          # main free model since 2026-11-02

@@ -1,0 +1,40 @@
+{
+  "id": "xss_010_safe__mf8",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "params.lang",
+  "source_key": "lang",
+  "sink": "res.send",
+  "sanitizer": "lookup table",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_010_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_010_safe__mf8/routes/greeting-hello-lang.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/greeting-hello-lang.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "settings",
+      "stats",
+      "products",
+      "profile",
+      "orders",
+      "search",
+      "feedback",
+      "downloads"
+    ],
+    "lines": 153
+  }
+}

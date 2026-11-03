@@ -1,0 +1,30 @@
+{
+  "id": "path_014_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "headers.x-locale",
+  "source_key": "x-locale",
+  "sink": "fs.readFile",
+  "sanitizer": "allowlist set",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_014_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_014_safe__mf3/routes/strings-locale-client.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/downloads.js",
+      "routes/products.js",
+      "routes/stats.js",
+      "routes/strings-locale-client.js"
+    ],
+    "decoys": [
+      "products",
+      "stats",
+      "downloads"
+    ],
+    "lines": 91
+  }
+}

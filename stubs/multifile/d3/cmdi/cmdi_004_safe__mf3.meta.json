@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_004_safe__mf3",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "params.branch",
+  "source_key": "branch",
+  "sink": "child_process.spawn(shell)",
+  "sanitizer": "spawn without shell",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_004_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_004_safe__mf3/routes/commit-branch.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/commit-branch.js",
+      "routes/health.js",
+      "routes/products.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "products",
+      "stats",
+      "health"
+    ],
+    "lines": 71
+  }
+}

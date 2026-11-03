@@ -1,0 +1,30 @@
+{
+  "id": "path_002_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "params.file",
+  "source_key": "file",
+  "sink": "fs.readFile",
+  "sanitizer": "path.basename",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_002_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_002_safe__mf3/routes/invoice-pdf-file.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/downloads.js",
+      "routes/invoice-pdf-file.js",
+      "routes/search.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "downloads",
+      "search",
+      "version"
+    ],
+    "lines": 73
+  }
+}

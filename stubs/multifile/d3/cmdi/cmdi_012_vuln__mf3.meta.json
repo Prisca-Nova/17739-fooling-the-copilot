@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_012_vuln__mf3",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "body.user",
+  "source_key": "user",
+  "sink": "child_process.execSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_012_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_012_vuln__mf3/routes/membership-system-account.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/membership-system-account.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/search.js"
+    ],
+    "decoys": [
+      "search",
+      "products",
+      "profile"
+    ],
+    "lines": 84
+  }
+}

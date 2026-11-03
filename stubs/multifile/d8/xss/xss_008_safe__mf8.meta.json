@@ -1,0 +1,40 @@
+{
+  "id": "xss_008_safe__mf8",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.page",
+  "source_key": "page",
+  "sink": "res.send",
+  "sanitizer": "numeric coercion",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_008_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_008_safe__mf8/routes/number-pagination-bar.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/number-pagination-bar.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/search.js",
+      "routes/stats.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "stats",
+      "products",
+      "orders",
+      "search",
+      "feedback",
+      "version",
+      "downloads",
+      "health"
+    ],
+    "lines": 135
+  }
+}

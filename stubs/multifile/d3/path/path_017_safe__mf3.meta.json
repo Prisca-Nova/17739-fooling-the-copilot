@@ -1,0 +1,30 @@
+{
+  "id": "path_017_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.file",
+  "source_key": "file",
+  "sink": "fs.readFileSync",
+  "sanitizer": "extension + separator check",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_017_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_017_safe__mf3/routes/flag-file-json.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/flag-file-json.js",
+      "routes/products.js",
+      "routes/search.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "stats",
+      "search",
+      "products"
+    ],
+    "lines": 85
+  }
+}

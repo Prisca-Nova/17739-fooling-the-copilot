@@ -1,0 +1,40 @@
+{
+  "id": "path_015_vuln__mf8",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.version",
+  "source_key": "version",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_015_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_015_vuln__mf8/routes/documentation-index-release.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/documentation-index-release.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/settings.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "profile",
+      "settings",
+      "stats",
+      "feedback",
+      "orders",
+      "health",
+      "downloads",
+      "products"
+    ],
+    "lines": 152
+  }
+}

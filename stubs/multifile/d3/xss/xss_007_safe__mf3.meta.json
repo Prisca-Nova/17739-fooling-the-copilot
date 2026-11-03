@@ -1,0 +1,30 @@
+{
+  "id": "xss_007_safe__mf3",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "body.title",
+  "source_key": "title",
+  "sink": "res.send",
+  "sanitizer": "escapeHtml helper",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_007_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_007_safe__mf3/routes/draft-post-confirmation.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/draft-post-confirmation.js",
+      "routes/feedback.js",
+      "routes/search.js"
+    ],
+    "decoys": [
+      "downloads",
+      "feedback",
+      "search"
+    ],
+    "lines": 81
+  }
+}

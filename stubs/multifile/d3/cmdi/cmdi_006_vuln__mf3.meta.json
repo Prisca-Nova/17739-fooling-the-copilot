@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_006_vuln__mf3",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "body.format",
+  "source_key": "format",
+  "sink": "child_process.execSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_006_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_006_vuln__mf3/routes/latest-export-format.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/feedback.js",
+      "routes/latest-export-format.js",
+      "routes/products.js",
+      "routes/search.js"
+    ],
+    "decoys": [
+      "search",
+      "products",
+      "feedback"
+    ],
+    "lines": 76
+  }
+}

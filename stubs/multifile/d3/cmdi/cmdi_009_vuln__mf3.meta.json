@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_009_vuln__mf3",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "body.archive",
+  "source_key": "archive",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_009_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_009_vuln__mf3/routes/contents-uploaded-archive.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/contents-uploaded-archive.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "downloads",
+      "version",
+      "feedback"
+    ],
+    "lines": 78
+  }
+}

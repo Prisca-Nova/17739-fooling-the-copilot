@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_016_vuln__mf3",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "body.email",
+  "source_key": "email",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_016_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_016_vuln__mf3/routes/weekly-digest-address.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/stats.js",
+      "routes/weekly-digest-address.js"
+    ],
+    "decoys": [
+      "downloads",
+      "feedback",
+      "stats"
+    ],
+    "lines": 80
+  }
+}

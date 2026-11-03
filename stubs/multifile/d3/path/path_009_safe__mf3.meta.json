@@ -1,0 +1,30 @@
+{
+  "id": "path_009_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "body.path",
+  "source_key": "path",
+  "sink": "fs.readFileSync",
+  "sanitizer": "path.relative check",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_009_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_009_safe__mf3/routes/file-workspace.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/file-workspace.js",
+      "routes/profile.js",
+      "routes/stats.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "version",
+      "stats",
+      "profile"
+    ],
+    "lines": 80
+  }
+}

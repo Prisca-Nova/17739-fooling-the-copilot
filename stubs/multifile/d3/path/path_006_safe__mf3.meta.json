@@ -1,0 +1,30 @@
+{
+  "id": "path_006_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "params.lang",
+  "source_key": "lang",
+  "sink": "fs.promises.readFile",
+  "sanitizer": "path.resolve + prefix check",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_006_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_006_safe__mf3/routes/translation-file-i.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/products.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/translation-file-i.js"
+    ],
+    "decoys": [
+      "products",
+      "settings",
+      "search"
+    ],
+    "lines": 83
+  }
+}

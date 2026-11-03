@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_007_vuln__mf3",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "headers.x-tenant",
+  "source_key": "x-tenant",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_007_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_007_vuln__mf3/routes/cache-flush-tenant.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/cache-flush-tenant.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/products.js"
+    ],
+    "decoys": [
+      "health",
+      "orders",
+      "products"
+    ],
+    "lines": 66
+  }
+}

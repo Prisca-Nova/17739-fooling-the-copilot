@@ -1,0 +1,40 @@
+{
+  "id": "xss_002_vuln__mf8",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.q",
+  "source_key": "q",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_002_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_002_vuln__mf8/routes/term-above-empty.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/settings.js",
+      "routes/stats.js",
+      "routes/term-above-empty.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "products",
+      "profile",
+      "downloads",
+      "health",
+      "settings",
+      "version",
+      "feedback",
+      "stats"
+    ],
+    "lines": 147
+  }
+}

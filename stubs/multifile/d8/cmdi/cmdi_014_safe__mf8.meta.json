@@ -1,0 +1,40 @@
+{
+  "id": "cmdi_014_safe__mf8",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "headers.x-ref",
+  "source_key": "x-ref",
+  "sink": "child_process.exec (Promise wrapper)",
+  "sanitizer": "git ref regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_014_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_014_safe__mf8/routes/hook-checks-out.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/hook-checks-out.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/settings.js"
+    ],
+    "decoys": [
+      "profile",
+      "products",
+      "health",
+      "feedback",
+      "downloads",
+      "settings",
+      "search",
+      "orders"
+    ],
+    "lines": 158
+  }
+}

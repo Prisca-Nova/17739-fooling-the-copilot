@@ -1,0 +1,40 @@
+{
+  "id": "path_009_vuln__mf8",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "body.path",
+  "source_key": "path",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_009_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_009_vuln__mf8/routes/file-workspace.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/downloads.js",
+      "routes/file-workspace.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/stats.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "version",
+      "stats",
+      "profile",
+      "downloads",
+      "settings",
+      "search",
+      "health",
+      "orders"
+    ],
+    "lines": 144
+  }
+}

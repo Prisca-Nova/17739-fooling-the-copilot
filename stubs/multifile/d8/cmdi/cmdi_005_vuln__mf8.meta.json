@@ -1,0 +1,40 @@
+{
+  "id": "cmdi_005_vuln__mf8",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.dir",
+  "source_key": "dir",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_005_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_005_vuln__mf8/routes/disk-usage-project.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/disk-usage-project.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "health",
+      "version",
+      "search",
+      "products",
+      "orders",
+      "settings",
+      "feedback",
+      "downloads"
+    ],
+    "lines": 143
+  }
+}

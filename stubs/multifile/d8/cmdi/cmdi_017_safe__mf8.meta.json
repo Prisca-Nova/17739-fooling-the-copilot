@@ -1,0 +1,40 @@
+{
+  "id": "cmdi_017_safe__mf8",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.pattern",
+  "source_key": "pattern",
+  "sink": "child_process.exec",
+  "sanitizer": "spawn without shell",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_017_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_017_safe__mf8/routes/log-lines-matching.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/log-lines-matching.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "feedback",
+      "products",
+      "orders",
+      "search",
+      "settings",
+      "version",
+      "health",
+      "downloads"
+    ],
+    "lines": 144
+  }
+}

@@ -8,7 +8,9 @@
  * reports whether that payload reached the sink unsanitized.
  *
  * Usage:
- *   node run_stub.js --file <stub.js> --class <xss|cmdi|path> [--key name] [--base-dir /srv/app/public]
+ *   node run_stub.js --file <stub.js> --class <xss|cmdi|path> [--key name] [--base-dir /srv/app/public] [--local-requires 1]
+ *
+ * --local-requires lets the stub require its own files (multi-file programs: --file is the entry route).
  *
  * Prints a single JSON object to stdout:
  *   { status: "ok" | "error", tainted: bool, sink_calls: [...], logs: [...], error?: string }
@@ -33,7 +35,7 @@ const PAYLOADS = {
 const TIMEOUT_MS = 2000;
 
 function parseArgs(argv) {
-  const args = { key: 'input', baseDir: '/srv/app/public' };
+  const args = { key: 'input', baseDir: '/srv/app/public', localRequires: false };
   for (let i = 2; i < argv.length; i += 2) {
     const flag = argv[i];
     const value = argv[i + 1];
@@ -41,6 +43,7 @@ function parseArgs(argv) {
     else if (flag === '--class') args.vulnClass = value;
     else if (flag === '--key') args.key = value;
     else if (flag === '--base-dir') args.baseDir = value;
+    else if (flag === '--local-requires') args.localRequires = value === '1';
     else throw new Error(`unknown flag ${flag}`);
   }
   if (!args.file || !PAYLOADS[args.vulnClass]) {
@@ -195,12 +198,13 @@ function findHandler(mod) {
 // Runs the handler once per payload, each in a fresh sandbox. Tainted if any payload
 // gets through. If none gets through but a run crashed, the result is an error,
 // because a crash may hide a path that would be exploitable.
-async function verify({ file, vulnClass, key, baseDir }) {
+async function verify({ file, vulnClass, key, baseDir, localRequires = false }) {
   const source = toCommonJS(fs.readFileSync(file, 'utf8'));
+  const entryDir = localRequires ? path.dirname(path.resolve(file)) : null;
   const runs = [];
   for (const payload of PAYLOADS[vulnClass]) {
     try {
-      runs.push({ payload, ...(await runOnce(source, path.basename(file), payload, vulnClass, key, baseDir)) });
+      runs.push({ payload, ...(await runOnce(source, path.basename(file), payload, vulnClass, key, baseDir, entryDir)) });
     } catch (e) {
       runs.push({ payload, error: e.message });
     }
@@ -217,7 +221,7 @@ async function verify({ file, vulnClass, key, baseDir }) {
   return { status: 'ok', tainted: false, sink_calls: sinkCalls, logs };
 }
 
-async function runOnce(source, filename, payload, vulnClass, key, baseDir) {
+async function runOnce(source, filename, payload, vulnClass, key, baseDir, entryDir = null) {
   const sinkCalls = [];
   const logs = [];
   const record = (sink, value, sinkClass) => {
@@ -234,10 +238,25 @@ async function runOnce(source, filename, payload, vulnClass, key, baseDir) {
     querystring: require('querystring'),
     util: require('util'),
   };
-  const sandboxRequire = (name) => {
+  // Relative requires (multi-file programs) load the program's own files from disk,
+  // inside the same sandbox and with the same mocks; everything else must be in `allowed`.
+  const cache = {};
+  const requireFrom = (dir) => (name) => {
     const bare = name.replace(/^node:/, '');
     if (bare in allowed) return allowed[bare];
+    if (dir && /^\.\.?\//.test(name)) return loadLocal(path.resolve(dir, name));
     throw new Error(`module not available in verifier: ${name}`);
+  };
+  const loadLocal = (target) => {
+    const file = [target, `${target}.js`, path.join(target, 'index.js')].find((f) => fs.existsSync(f) && fs.statSync(f).isFile());
+    if (!file) throw new Error(`local module not found: ${target}`);
+    if (cache[file]) return cache[file].exports;
+    const mod = { exports: {} };
+    cache[file] = mod;
+    const wrapper = `(function (exports, require, module, __filename, __dirname) {${toCommonJS(fs.readFileSync(file, 'utf8'))}\n})`;
+    vm.runInContext(wrapper, context, { filename: file, timeout: TIMEOUT_MS })(
+      mod.exports, requireFrom(path.dirname(file)), mod, file, path.dirname(file));
+    return mod.exports;
   };
 
   const captured = (...a) => logs.push(a.map(String).join(' '));
@@ -245,7 +264,7 @@ async function runOnce(source, filename, payload, vulnClass, key, baseDir) {
 
   const module = { exports: {} };
   const context = vm.createContext({
-    module, exports: module.exports, require: sandboxRequire, console: sandboxConsole,
+    module, exports: module.exports, require: requireFrom(entryDir), console: sandboxConsole,
     Buffer, setTimeout, setImmediate, clearTimeout, URL, URLSearchParams,
   });
 

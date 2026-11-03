@@ -1,0 +1,40 @@
+{
+  "id": "cmdi_007_safe__mf8",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "headers.x-tenant",
+  "source_key": "x-tenant",
+  "sink": "child_process.exec",
+  "sanitizer": "alphanumeric regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_007_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_007_safe__mf8/routes/cache-flush-tenant.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/cache-flush-tenant.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/settings.js"
+    ],
+    "decoys": [
+      "health",
+      "orders",
+      "products",
+      "downloads",
+      "feedback",
+      "settings",
+      "profile",
+      "search"
+    ],
+    "lines": 151
+  }
+}

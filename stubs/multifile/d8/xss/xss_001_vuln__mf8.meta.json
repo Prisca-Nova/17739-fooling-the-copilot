@@ -1,0 +1,40 @@
+{
+  "id": "xss_001_vuln__mf8",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.name",
+  "source_key": "name",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_001_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_001_vuln__mf8/routes/visitor-landing-page.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/version.js",
+      "routes/visitor-landing-page.js"
+    ],
+    "decoys": [
+      "version",
+      "products",
+      "downloads",
+      "health",
+      "settings",
+      "profile",
+      "search",
+      "orders"
+    ],
+    "lines": 140
+  }
+}

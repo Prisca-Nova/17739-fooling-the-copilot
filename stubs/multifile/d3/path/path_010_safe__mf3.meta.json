@@ -1,0 +1,30 @@
+{
+  "id": "path_010_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.report",
+  "source_key": "report",
+  "sink": "fs.readFileSync",
+  "sanitizer": "'..' and separator rejection",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_010_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_010_safe__mf3/routes/report-name.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/report-name.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "version",
+      "feedback",
+      "downloads"
+    ],
+    "lines": 84
+  }
+}

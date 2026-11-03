@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_002_vuln__mf3",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "body.host",
+  "source_key": "host",
+  "sink": "child_process.execSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_002_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_002_vuln__mf3/routes/host-network-diagnostics.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/health.js",
+      "routes/host-network-diagnostics.js",
+      "routes/search.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "search",
+      "stats",
+      "health"
+    ],
+    "lines": 65
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "path_008_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.log",
+  "source_key": "log",
+  "sink": "fs.readFile",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_008_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_008_safe__mf3/routes/log-file-logs.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/feedback.js",
+      "routes/log-file-logs.js",
+      "routes/products.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "version",
+      "feedback",
+      "products"
+    ],
+    "lines": 85
+  }
+}

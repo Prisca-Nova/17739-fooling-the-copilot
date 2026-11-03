@@ -1,0 +1,30 @@
+{
+  "id": "path_011_vuln__mf3",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.name",
+  "source_key": "name",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_011_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_011_vuln__mf3/routes/image.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/downloads.js",
+      "routes/image.js",
+      "routes/search.js",
+      "routes/settings.js"
+    ],
+    "decoys": [
+      "search",
+      "settings",
+      "downloads"
+    ],
+    "lines": 79
+  }
+}

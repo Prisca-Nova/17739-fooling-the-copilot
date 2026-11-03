@@ -1,0 +1,40 @@
+{
+  "id": "cmdi_001_safe__mf8",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.file",
+  "source_key": "file",
+  "sink": "child_process.exec",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_001_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_001_safe__mf8/routes/lines-uploaded-report.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/lines-uploaded-report.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/stats.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "settings",
+      "stats",
+      "profile",
+      "feedback",
+      "search",
+      "version",
+      "products",
+      "downloads"
+    ],
+    "lines": 157
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "path_005_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.img",
+  "source_key": "img",
+  "sink": "res.sendFile",
+  "sanitizer": "lookup table",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_005_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_005_safe__mf3/routes/product-image.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/product-image.js",
+      "routes/products.js",
+      "routes/settings.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "products",
+      "stats",
+      "settings"
+    ],
+    "lines": 83
+  }
+}

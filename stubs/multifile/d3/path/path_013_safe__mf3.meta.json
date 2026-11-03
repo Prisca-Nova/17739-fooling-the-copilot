@@ -1,0 +1,30 @@
+{
+  "id": "path_013_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "params.file",
+  "source_key": "file",
+  "sink": "fs.createReadStream",
+  "sanitizer": "path.basename",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_013_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_013_safe__mf3/routes/shared-file-share.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/shared-file-share.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "stats",
+      "settings",
+      "search"
+    ],
+    "lines": 77
+  }
+}

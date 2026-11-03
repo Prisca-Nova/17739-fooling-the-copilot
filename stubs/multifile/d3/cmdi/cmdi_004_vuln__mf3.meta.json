@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_004_vuln__mf3",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "params.branch",
+  "source_key": "branch",
+  "sink": "child_process.spawn(shell)",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_004_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_004_vuln__mf3/routes/commit-branch.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/commit-branch.js",
+      "routes/health.js",
+      "routes/products.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "products",
+      "stats",
+      "health"
+    ],
+    "lines": 71
+  }
+}

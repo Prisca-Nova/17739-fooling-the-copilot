@@ -1,0 +1,30 @@
+{
+  "id": "xss_003_vuln__mf3",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "body.comment",
+  "source_key": "comment",
+  "sink": "res.write/res.end",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_003_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_003_vuln__mf3/routes/submitted-comment-preview.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/health.js",
+      "routes/search.js",
+      "routes/submitted-comment-preview.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "version",
+      "search",
+      "health"
+    ],
+    "lines": 61
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "cmdi_011_safe__mf3",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.url",
+  "source_key": "url",
+  "sink": "child_process.exec",
+  "sanitizer": "execFile with argument array",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_011_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_011_safe__mf3/routes/link-post-reachable.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/link-post-reachable.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/settings.js"
+    ],
+    "decoys": [
+      "settings",
+      "profile",
+      "products"
+    ],
+    "lines": 82
+  }
+}

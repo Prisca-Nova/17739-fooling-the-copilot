@@ -1,0 +1,40 @@
+{
+  "id": "xss_011_safe__mf8",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.color",
+  "source_key": "color",
+  "sink": "res.send",
+  "sanitizer": "allowlist regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_011_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_011_safe__mf8/routes/badge-color-picked.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/badge-color-picked.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/products.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/stats.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "feedback",
+      "stats",
+      "products",
+      "health",
+      "search",
+      "version",
+      "downloads",
+      "settings"
+    ],
+    "lines": 145
+  }
+}

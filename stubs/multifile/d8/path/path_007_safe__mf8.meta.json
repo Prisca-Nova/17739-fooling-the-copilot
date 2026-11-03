@@ -1,0 +1,40 @@
+{
+  "id": "path_007_safe__mf8",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "headers.x-template",
+  "source_key": "x-template",
+  "sink": "fs.readFileSync",
+  "sanitizer": "path.basename",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_007_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_007_safe__mf8/routes/email-template-chosen.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/downloads.js",
+      "routes/email-template-chosen.js",
+      "routes/feedback.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/stats.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "products",
+      "orders",
+      "feedback",
+      "stats",
+      "version",
+      "settings",
+      "downloads",
+      "search"
+    ],
+    "lines": 150
+  }
+}

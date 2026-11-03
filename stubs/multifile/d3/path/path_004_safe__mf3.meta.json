@@ -1,0 +1,30 @@
+{
+  "id": "path_004_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "body.attachment",
+  "source_key": "attachment",
+  "sink": "fs.createReadStream",
+  "sanitizer": "path.normalize + '..' rejection",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_004_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_004_safe__mf3/routes/attachment.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/attachment.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "health",
+      "feedback",
+      "version"
+    ],
+    "lines": 72
+  }
+}

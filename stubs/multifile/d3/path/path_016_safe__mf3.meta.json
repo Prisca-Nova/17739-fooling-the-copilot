@@ -1,0 +1,30 @@
+{
+  "id": "path_016_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "body.backup",
+  "source_key": "backup",
+  "sink": "fs.readFileSync",
+  "sanitizer": "normalize + prefix check",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_016_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_016_safe__mf3/routes/configuration-backup.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/configuration-backup.js",
+      "routes/downloads.js",
+      "routes/search.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "downloads",
+      "search",
+      "stats"
+    ],
+    "lines": 80
+  }
+}

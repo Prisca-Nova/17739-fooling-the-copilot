@@ -1,0 +1,30 @@
+{
+  "id": "path_001_vuln__mf3",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.doc",
+  "source_key": "doc",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_001_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_001_vuln__mf3/routes/document-public-folder.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/document-public-folder.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "orders",
+      "stats",
+      "health"
+    ],
+    "lines": 67
+  }
+}

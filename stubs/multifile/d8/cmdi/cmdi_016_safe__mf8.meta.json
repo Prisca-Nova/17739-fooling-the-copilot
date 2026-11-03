@@ -1,0 +1,40 @@
+{
+  "id": "cmdi_016_safe__mf8",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "body.email",
+  "source_key": "email",
+  "sink": "child_process.exec",
+  "sanitizer": "email regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_016_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_016_safe__mf8/routes/weekly-digest-address.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/orders.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/stats.js",
+      "routes/version.js",
+      "routes/weekly-digest-address.js"
+    ],
+    "decoys": [
+      "downloads",
+      "feedback",
+      "stats",
+      "settings",
+      "profile",
+      "orders",
+      "search",
+      "version"
+    ],
+    "lines": 155
+  }
+}

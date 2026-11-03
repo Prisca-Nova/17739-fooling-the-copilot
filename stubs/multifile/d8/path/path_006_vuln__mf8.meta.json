@@ -1,0 +1,40 @@
+{
+  "id": "path_006_vuln__mf8",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "params.lang",
+  "source_key": "lang",
+  "sink": "fs.promises.readFile",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_006_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_006_vuln__mf8/routes/translation-file-i.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/downloads.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/stats.js",
+      "routes/translation-file-i.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "products",
+      "settings",
+      "search",
+      "orders",
+      "downloads",
+      "profile",
+      "version",
+      "stats"
+    ],
+    "lines": 150
+  }
+}

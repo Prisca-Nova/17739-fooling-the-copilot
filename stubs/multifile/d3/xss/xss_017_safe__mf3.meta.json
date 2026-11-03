@@ -1,0 +1,30 @@
+{
+  "id": "xss_017_safe__mf3",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.sort",
+  "source_key": "sort",
+  "sink": "res.send (error path)",
+  "sanitizer": "escape in catch block",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_017_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_017_safe__mf3/routes/product-list-unknown.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/orders.js",
+      "routes/product-list-unknown.js",
+      "routes/search.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "search",
+      "stats",
+      "orders"
+    ],
+    "lines": 83
+  }
+}

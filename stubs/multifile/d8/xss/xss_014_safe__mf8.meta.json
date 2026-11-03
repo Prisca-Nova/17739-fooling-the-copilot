@@ -1,0 +1,40 @@
+{
+  "id": "xss_014_safe__mf8",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "headers.user-agent",
+  "source_key": "user-agent",
+  "sink": "res.send",
+  "sanitizer": "escapeHtml helper",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_014_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_014_safe__mf8/routes/page-that-visitor.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/page-that-visitor.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "feedback",
+      "downloads",
+      "orders",
+      "stats",
+      "health",
+      "search",
+      "profile",
+      "products"
+    ],
+    "lines": 150
+  }
+}

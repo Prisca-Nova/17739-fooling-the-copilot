@@ -1,0 +1,40 @@
+{
+  "id": "path_005_vuln__mf8",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.img",
+  "source_key": "img",
+  "sink": "res.sendFile",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_005_vuln",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_005_vuln__mf8/routes/product-image.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/downloads.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/product-image.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/settings.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "products",
+      "stats",
+      "settings",
+      "downloads",
+      "health",
+      "profile",
+      "orders",
+      "feedback"
+    ],
+    "lines": 148
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "xss_008_safe__mf3",
+  "vuln_class": "xss",
+  "label": "safe",
+  "source": "query.page",
+  "source_key": "page",
+  "sink": "res.send",
+  "sanitizer": "numeric coercion",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_008_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_008_safe__mf3/routes/number-pagination-bar.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/number-pagination-bar.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "stats",
+      "products",
+      "orders"
+    ],
+    "lines": 69
+  }
+}

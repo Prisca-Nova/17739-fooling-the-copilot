@@ -1,0 +1,30 @@
+{
+  "id": "path_015_safe__mf3",
+  "vuln_class": "path",
+  "label": "safe",
+  "source": "query.version",
+  "source_key": "version",
+  "sink": "fs.readFileSync",
+  "sanitizer": "version regex",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_015_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_015_safe__mf3/routes/documentation-index-release.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/documentation-index-release.js",
+      "routes/profile.js",
+      "routes/settings.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "profile",
+      "settings",
+      "stats"
+    ],
+    "lines": 85
+  }
+}

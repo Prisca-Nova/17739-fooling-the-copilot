@@ -1,0 +1,40 @@
+{
+  "id": "cmdi_010_safe__mf8",
+  "vuln_class": "cmdi",
+  "label": "safe",
+  "source": "query.domain",
+  "source_key": "domain",
+  "sink": "child_process.exec",
+  "sanitizer": "execFile with argument array",
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_010_safe",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_010_safe__mf8/routes/dns-records-domain.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/dns-records-domain.js",
+      "routes/downloads.js",
+      "routes/health.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "stats",
+      "settings",
+      "downloads",
+      "search",
+      "profile",
+      "products",
+      "orders",
+      "health"
+    ],
+    "lines": 148
+  }
+}
