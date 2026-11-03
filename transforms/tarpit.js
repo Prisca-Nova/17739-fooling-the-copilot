@@ -3,7 +3,7 @@
  * Semantics-preserving "testability tarpit" transformations for JS stubs.
  *
  * Re-implements the natural subset of the 80 transformations Rui Wang shared
- * (tarpit80-examples.pdf, after Compagna et al., NDSS 2022). Each one rewrites
+ * (tarpit80-examples.pdf, after Al Kassar et al., "Testability Tarpits", NDSS 2022). Each one rewrites
  * the expression that reaches the sink, e.g.
  *   exec('npm view ' + name)  ->  var _x_0 = 5; exec(_x_0 > 9 ? 'safe' : 'npm view ' + name)
  * The program's behavior is unchanged, so a vulnerable stub stays vulnerable and

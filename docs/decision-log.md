@@ -15,13 +15,19 @@ Template for new entries:
 
 ---
 
+## 2026-11-03: Keep the project resumable from the repo alone (CLAUDE.md)
+
+- **Decided by:** Prisca ("keep everything updated on the repo so a new chat doesn't lose track").
+- **What:** `CLAUDE.md` at the repo root is the entry point for a new Claude chat: the project in one paragraph, the reading order (STATUS → decision log → methodology → handoffs), the working rules (heads-up, ask instead of guessing, no Claude attribution in commits, update STATUS + this log + handoffs + the overview doc after every change), and the commands. README, TASKS and STATUS were refreshed to the three-part project.
+- **Also fixed:** the tarpit paper is by Al Kassar et al. (NDSS 2022), not "Compagna et al." as first written; corrected in this log, `transforms/tarpit.js`, and the overview doc.
+
 ## 2026-11-03: New direction after the Nov 2 check-in: program transformations, then larger multi-file programs
 
 - **Decided by:** Prisca, following Prof. Bauer's suggestion (Nov 2 check-in and his email introducing Rui Wang, who works on adversarially transformed code with Prof. Limin Jia).
 - **Why:** the model's own QA edits fooled gpt-oss 0/255 times. Prof. Bauer suggested (1) "normal" semantics-preserving program transformations and (2) larger, multi-file programs (as proposed at the check-in).
 - **Part 1 stays:** the QA-edit result (0/255 genuine misses) is kept as the first result, a negative one.
 - **Part 2 (transformations):**
-  - **Source:** Rui's list of 80 JavaScript "testability tarpit" transformations (`tarpit80-examples.pdf`, after Compagna et al., NDSS 2022). We can't use his toolkit, so we re-implemented them ourselves.
+  - **Source:** Rui's list of 80 JavaScript "testability tarpit" transformations (`tarpit80-examples.pdf`, after Al Kassar et al., "Testability Tarpits", NDSS 2022). We can't use his toolkit, so we re-implemented them ourselves.
   - **Subset:** his 9 most natural ones (5 by popularity in real code + 5 by smallest line change, ternary is on both lists): arrow-function, computed-properties, nested-function, nullish-coalescing, object-create, simple-array, ternary, try-catch, weakref.
   - **Tool:** `transforms/tarpit.js` (Node + the `acorn` parser). It splices edits into the original text, so comments and formatting are kept.
   - **Which sink is transformed:** chosen with the verifier, not guessed. It is the first sink call in the vulnerable stub whose argument, replaced by a constant, removes the taint (this matters for `xss_017`, which has two `res.send` calls). The safe twin uses the same sink.

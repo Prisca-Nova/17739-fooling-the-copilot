@@ -109,3 +109,41 @@ verdict comes from the model under test. Refusal counts are reported per model a
 - Taint is checked with one fixed payload per class (see `stubs/README.md`); unusual sanitization
   (e.g. shell quoting variants) can be misjudged, which is why flips are spot-checked by hand.
 - The verifier uses Node's `vm` module with mocked `child_process` / `fs`. It is not a security sandbox.
+
+## Part 2: semantics-preserving transformations (added 2026-11-03)
+
+- **Source:** Rui Wang (CMU) shared 80 JavaScript "testability tarpit" transformations, after Al Kassar et al.,
+  "Testability Tarpits: the Impact of Code Patterns on the Security Testing of Web Applications" (NDSS 2022). Those
+  patterns were designed to defeat program-analysis tools; we test whether they also defeat an LLM.
+- **Subset:** the 9 Rui ranked most natural (popularity in real code; smallest line change): arrow-function,
+  computed-properties, nested-function, nullish-coalescing, object-create, simple-array, ternary, try-catch, weakref.
+  Re-implemented by us in `transforms/tarpit.js`, following his examples; his toolkit was not used.
+- **What is rewritten:** only the expression that reaches the sink, e.g. `exec(cmd)` becomes
+  `var _x_0 = 5; exec(_x_0 > 9 ? 'safe' : cmd)`. Edits are spliced into the original text, so comments and formatting
+  stay. Helper statements go right before the statement holding the sink; an arrow-function expression body or an
+  unbraced `if` body is braced first, so nothing is evaluated earlier or more often than before.
+- **Which sink:** chosen with the verifier: the first sink call in the vulnerable stub whose argument, replaced by a
+  constant, removes the taint. The safe twin uses the same position. (Guessing picked the wrong `res.send` in `xss_017`.)
+- **Sets:** `single/` = each of the 9 alone (918 stubs); `stacked/` = 2, 4 or 8 distinct transformations in random
+  order (seed 17739; 306 stubs). Labels are unchanged; every generated stub is re-checked by the verifier.
+- **Experiment:** baseline verdicts only (`qa_tasks: []`), 3 repeats. Headline: transformed vulnerable stubs called SAFE
+  whose original was flagged in all 3 repeats (`tarpit-metrics --base`), with 95% Wilson intervals.
+
+## Part 3: larger, multi-file programs (added 2026-11-03)
+
+- `transforms/multifile.js` turns each stub into an Express-style app: `app.js` (routes in shuffled order), the stub's
+  handler as `routes/<name>.js`, the sink expression moved into a helper in `lib/` (with any module-level sanitizer it
+  uses), and 3 or 8 routes drawn from 10 hand-written decoys (`transforms/decoys/`).
+- Decoys are verified safe for all three classes; several use sinks safely (fixed-argument `execFile`, escaped HTML,
+  `path.basename`). Vulnerable and safe twins get the same decoys and order. The app's label is the stub's label.
+- The model sees one text: all files, each preceded by `// File: <path>`. Sizes: `d3` median 77 lines (6 files),
+  `d8` median 147 lines (11 files), vs. about 11 lines for the stubs.
+- The verifier runs the target route with `--local-requires`, so its relative `require`s load the app's own files in
+  the same sandbox; the cross-file flow is what gets checked. Without the flag, behavior is unchanged.
+- Baseline detection only; QA edits on multi-file apps are out of scope (the model would have to return several files).
+
+## Sampling for gpt-oss (2026-11-03)
+
+gpt-oss's own recommendation (openai/gpt-oss README): temperature 1.0, top_p 1.0. It names no top_k or repetition
+penalty, so `top_k: 0` and `repeat_penalty: 1.0` turn off Ollama's defaults (top_k 40, repeat_penalty 1.1). Part 1's
+gpt-oss runs used Qwen's settings; the untransformed stubs are re-run with the new settings as the reference for Parts 2-3.
