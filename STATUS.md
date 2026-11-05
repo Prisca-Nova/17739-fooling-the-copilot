@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated:** 2026-11-03 · **Phase:** Parts 2–3 built and verified; Kaggle runs next (Eileen, from Nov 4)
+**Last updated:** 2026-11-05 · **Phase:** Parts 2–3 built and verified; Kaggle runs (Eileen); prompts frozen (`prompts-v1`)
 
 New chat? Read [CLAUDE.md](CLAUDE.md) first. Overview doc for Prof. Bauer (kept in sync):
 https://claude.ai/artifact/D2jQyQGokEs2WVWuS7anQE
@@ -21,7 +21,8 @@ bug is still there (checked by running the code)? Main model: **gpt-oss:20b** (f
 | 2. Transformations (9 tarpit rewrites, single or stacked) | ✅ built + verified: 918 single + 306 stacked stubs · ⏳ Kaggle notebook A (single) and B (stacked) |
 | 3. Multi-file programs (apps of ~77 / ~147 lines, input crosses into `lib/`) | ✅ built + verified: 204 apps · ⏳ Kaggle notebook B |
 | Claude Sonnet 5.5 | ⏸️ waiting for an AI Gateway team from Prof. Bauer |
-| Stub human review | ⏳ 0/51 pairs ticked in [stubs/REVIEW.md](stubs/REVIEW.md) (was due Nov 1) |
+| Stub human review | ⏳ 0/51 pairs ticked in [stubs/REVIEW.md](stubs/REVIEW.md) · Claude's first pass on Prisca's 26 done ([REVIEW-first-pass.md](stubs/REVIEW-first-pass.md)): all OK for their class; 5 cmdi safe stubs debatable overall (003, 004, 009, 010, 011) → Prisca to confirm + tick |
+| Prompts | ✅ frozen: tag `prompts-v1` (same prompts as Part 1, unchanged since Oct 20) |
 | Defense prompt (stretch) | ⏸️ implemented, not run |
 
 **Why the new direction (Nov 3):** QA edits didn't fool gpt-oss, so at the Nov 2 check-in Prof. Bauer suggested
@@ -35,13 +36,13 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 | Kaggle notebooks A (original + single, ~8 h) and B (stacked + multi-file, ~4.5 h) | Eileen | start Nov 4 · [docs/HANDOFF-eileen-transformations.md](docs/HANDOFF-eileen-transformations.md) · results to branch `eileen/tarpit-runs` |
 | Statistics + plots, Parts 1–3 | Eileen | due Wed Nov 12 · same handoff + [HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md) |
 | AI Gateway team / API budget ($50–80 asked) | Prof. Bauer | unblocks Claude; no answer recorded yet |
-| Stub review: 25 pairs (xss, path_001–008) / 26 pairs (cmdi, path_009–017) | Eileen / Prisca | judgment calls `cmdi_009_safe`, `cmdi_011_safe` |
+| Stub review: 25 pairs (xss, path_001–008) / 26 pairs (cmdi, path_009–017) | Eileen / Prisca | Prisca: confirm the first pass and tick; decide the strict-subset proposal |
 
 ## Next steps
 
 1. **Nov 4–6:** Kaggle runs (Eileen). When results arrive: recompute the headline numbers independently from the raw
    files, write `analysis/2026-11-xx-transformations.md`, update this file, the decision log and the overview doc.
-2. **Nov 4–7:** stub review (both); prompt freeze (`git tag prompts-v1`); Claude runs if the gateway arrives.
+2. **Nov 5–7:** stub review (Prisca: confirm the first pass; Eileen: her 25 pairs); Claude runs if the gateway arrives. Email Lujo once Eileen's results are in.
 3. **Nov 8–12:** statistics + plots (Eileen); optional defense run (Prisca).
 4. **Nov 13–14:** slides. **Nov 15:** presentation. **Nov 16–28:** report + release.
 

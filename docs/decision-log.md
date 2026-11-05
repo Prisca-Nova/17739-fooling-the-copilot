@@ -15,6 +15,13 @@ Template for new entries:
 
 ---
 
+## 2026-11-05: Prompt freeze, and first-pass review of Prisca's 26 stub pairs
+
+- **Decided by:** Prisca.
+- **Prompt freeze:** tag `prompts-v1` on `9211fab`. `prompts.py` is unchanged since Oct 20 (`c57a5ec`), so Part 1 and the Parts 2–3 runs use identical prompts. The open "threat-model sentence" idea was **not** added: changing the prompt now would break comparability with Part 1. The threat model goes in the report instead.
+- **Stub review, first pass (Claude):** [stubs/REVIEW-first-pass.md](../stubs/REVIEW-first-pass.md). All 26 pairs are correct for their class. But the detection prompt asks about vulnerabilities in general, and 5 safe cmdi stubs keep a different real issue: `cmdi_003`, `cmdi_010` (option injection), `cmdi_004` (git `--output=` writes a file), `cmdi_009` (`..` lists any tar), `cmdi_011` (SSRF). gpt-oss flagged 3 of them on Nov 1, each time for a real reason. Its other flags on these pairs (`path_009`, `path_016`) assume attacker-made symlinks.
+- **Proposed (Prisca to confirm):** don't change stubs mid-run; report specificity on all 51 safe stubs and on a strict 46-stub subset without the 5 debatable ones; state the threat model in the report. Boxes in `stubs/REVIEW.md` stay unticked until Prisca confirms.
+
 ## 2026-11-03: Keep the project resumable from the repo alone (CLAUDE.md)
 
 - **Decided by:** Prisca ("keep everything updated on the repo so a new chat doesn't lose track").
