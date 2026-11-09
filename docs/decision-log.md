@@ -15,6 +15,12 @@ Template for new entries:
 
 ---
 
+## 2026-11-09: Parts 2–3 results checked; two decisions opened
+
+- **Results** (Eileen, Kaggle, Nov 8; recomputed independently, all match): 0 vulnerable programs called SAFE in any variant; false alarms on safe code change significantly only in mf8 (13% → 25%, exact McNemar p = 0.004). Write-up: [analysis/2026-11-09-transformations.md](../analysis/2026-11-09-transformations.md). Eileen's branch merged into `main`.
+- **Found while checking:** 24 of mf8's 38 false alarms blame the `downloads` decoy (`path.basename('..')` returns `'..'`; the route is still safe). Apps with that decoy: 29% false alarms; without: 4%. So the size effect is confounded with this decoy. The decoy was written by Claude on Nov 3 and verified safe, but its code smell was not anticipated.
+- **Open (Prisca):** (1) finish the single run (Eileen suggests skipping or 1 repeat; Claude: skip, since each transformation already appears in 46–50/51 vulnerable stubs in the stacked runs, 0 misses); (2) fix the decoy and re-run the multi-file apps.
+
 ## 2026-11-05: Prompt freeze, and first-pass review of Prisca's 26 stub pairs
 
 - **Decided by:** Prisca.

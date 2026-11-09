@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated:** 2026-11-05 · **Phase:** Parts 2–3 built and verified; Kaggle runs (Eileen); prompts frozen (`prompts-v1`)
+**Last updated:** 2026-11-09 · **Phase:** Parts 2–3 results in (0 misses everywhere); 2 decisions open; then Lujo email + slides
 
 New chat? Read [CLAUDE.md](CLAUDE.md) first. Overview doc for Prof. Bauer (kept in sync):
 https://claude.ai/artifact/D2jQyQGokEs2WVWuS7anQE
@@ -18,8 +18,8 @@ bug is still there (checked by running the code)? Main model: **gpt-oss:20b** (f
 | Part | State |
 |---|---|
 | 1. QA edits (the model's own maintenance edits) | ✅ **0 genuine misses in 255 edits** (1 repeat, Qwen's sampling settings). Misleading hand-made edits: fooled 1/255. A negative result. |
-| 2. Transformations (9 tarpit rewrites, single or stacked) | ✅ built + verified: 918 single + 306 stacked stubs · ⏳ Kaggle notebook A (single) and B (stacked) |
-| 3. Multi-file programs (apps of ~77 / ~147 lines, input crosses into `lib/`) | ✅ built + verified: 204 apps · ⏳ Kaggle notebook B |
+| 2. Transformations (9 tarpit rewrites, single or stacked) | ✅ **0 vulnerable called SAFE** (k2/k4/k8: 0/138 paired misses each); false alarms unchanged (p ≥ 0.3). Single run partial (238/2754, Ollama crash). [write-up](analysis/2026-11-09-transformations.md) |
+| 3. Multi-file programs (apps of ~77 / ~147 lines, input crosses into `lib/`) | ✅ **0 vulnerable called SAFE**. False alarms 13% → 25% in mf8 (p = 0.004), but mostly blamed on one safe decoy route (`downloads`), so confounded with size |
 | Claude Sonnet 5.5 | ⏸️ waiting for an AI Gateway team from Prof. Bauer |
 | Stub human review | ⏳ 0/51 pairs ticked in [stubs/REVIEW.md](stubs/REVIEW.md) · Claude's first pass on Prisca's 26 done ([REVIEW-first-pass.md](stubs/REVIEW-first-pass.md)): all OK for their class; 5 cmdi safe stubs debatable overall (003, 004, 009, 010, 011) → Prisca to confirm + tick |
 | Prompts | ✅ frozen: tag `prompts-v1` (same prompts as Part 1, unchanged since Oct 20) |
@@ -33,15 +33,15 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 
 | What | Who | Notes |
 |---|---|---|
-| Kaggle notebooks A (original + single, ~8 h) and B (stacked + multi-file, ~4.5 h) | Eileen | start Nov 4 · [docs/HANDOFF-eileen-transformations.md](docs/HANDOFF-eileen-transformations.md) · results to branch `eileen/tarpit-runs` |
+| **Decision:** finish the single run? (Eileen + Claude: no, stacked already covers each transformation on 46–50/51 stubs) | Prisca | |
+| **Decision:** fix the `downloads` decoy and re-run multi-file (~2.6 h Kaggle) to separate size from the decoy effect? | Prisca | |
 | Statistics + plots, Parts 1–3 | Eileen | due Wed Nov 12 · same handoff + [HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md) |
 | AI Gateway team / API budget ($50–80 asked) | Prof. Bauer | unblocks Claude; no answer recorded yet |
 | Stub review: 25 pairs (xss, path_001–008) / 26 pairs (cmdi, path_009–017) | Eileen / Prisca | Prisca: confirm the first pass and tick; decide the strict-subset proposal |
 
 ## Next steps
 
-1. **Nov 4–6:** Kaggle runs (Eileen). When results arrive: recompute the headline numbers independently from the raw
-   files, write `analysis/2026-11-xx-transformations.md`, update this file, the decision log and the overview doc.
+1. **Nov 9:** results merged and checked ([write-up](analysis/2026-11-09-transformations.md)). Decide the 2 open points above; email Lujo with the results.
 2. **Nov 5–7:** stub review (Prisca: confirm the first pass; Eileen: her 25 pairs); Claude runs if the gateway arrives. Email Lujo once Eileen's results are in.
 3. **Nov 8–12:** statistics + plots (Eileen); optional defense run (Prisca).
 4. **Nov 13–14:** slides. **Nov 15:** presentation. **Nov 16–28:** report + release.
@@ -50,6 +50,7 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 
 | Run | Date | Headline |
 |---|---|---|
+| Parts 2–3 runs, gpt-oss (Kaggle, Eileen) | Nov 8 | **0 misses** in 1,836 transformed / multi-file answers; false alarms up only in mf8 (decoy-driven). [write-up](analysis/2026-11-09-transformations.md) |
 | Parts 2–3 stub generation | Nov 3 | 1,224 transformed stubs + 204 multi-file apps, **1,428/1,428 keep their label** under the verifier |
 | gpt-oss:20b QA run, 102 × 1 (Kaggle, Eileen) | Nov 1 | **0 genuine misses / 255 edits**; re-verified with the fixed verifier: 0/306 outcomes changed. [write-up](analysis/2026-11-01-gpt-oss-results.md) |
 | Misleading edits on gpt-oss (Kaggle, Eileen) | Nov 1 | fooled **1/255**; all 255 confirmed still vulnerable by the verifier |
