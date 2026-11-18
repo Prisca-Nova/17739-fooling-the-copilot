@@ -1,0 +1,19 @@
+{
+  "id": "xss_017_vuln__fake_tests",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.sort",
+  "source_key": "sort",
+  "sink": "res.send (error path)",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_017_vuln",
+  "attack": "fake_tests",
+  "multifile": {
+    "entry": "xss_017_vuln__fake_tests/routes/handler.js",
+    "files": [
+      "routes/handler.js"
+    ]
+  }
+}

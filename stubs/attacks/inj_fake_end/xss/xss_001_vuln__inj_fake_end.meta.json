@@ -1,0 +1,13 @@
+{
+  "id": "xss_001_vuln__inj_fake_end",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.name",
+  "source_key": "name",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_001_vuln",
+  "attack": "inj_fake_end"
+}

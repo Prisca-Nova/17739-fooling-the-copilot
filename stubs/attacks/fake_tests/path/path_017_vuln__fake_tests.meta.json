@@ -1,0 +1,19 @@
+{
+  "id": "path_017_vuln__fake_tests",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.file",
+  "source_key": "file",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_017_vuln",
+  "attack": "fake_tests",
+  "multifile": {
+    "entry": "path_017_vuln__fake_tests/routes/handler.js",
+    "files": [
+      "routes/handler.js"
+    ]
+  }
+}

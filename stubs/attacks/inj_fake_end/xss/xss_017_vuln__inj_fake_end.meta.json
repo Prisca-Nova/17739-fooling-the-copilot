@@ -1,0 +1,13 @@
+{
+  "id": "xss_017_vuln__inj_fake_end",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.sort",
+  "source_key": "sort",
+  "sink": "res.send (error path)",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_017_vuln",
+  "attack": "inj_fake_end"
+}

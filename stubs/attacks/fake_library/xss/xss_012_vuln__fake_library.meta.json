@@ -1,0 +1,23 @@
+{
+  "id": "xss_012_vuln__fake_library",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "body.bio",
+  "source_key": "bio",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_012_vuln",
+  "attack": "fake_library",
+  "multifile": {
+    "entry": "xss_012_vuln__fake_library/routes/handler.js",
+    "files": [
+      "routes/handler.js",
+      "lib/security.js"
+    ],
+    "shown": [
+      "routes/handler.js"
+    ]
+  }
+}

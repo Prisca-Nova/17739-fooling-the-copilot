@@ -5,7 +5,8 @@
 # The upload must include stubs/transformed/ (it is committed; regenerate with transforms/tarpit.js if missing).
 import glob, os, re, pathlib, subprocess, time
 
-PARTS = ["original", "single"]   # notebook B: ["stacked", "multifile"]
+#PARTS = ["original", "single"]   # notebook B: ["stacked", "multifile"]
+PARTS = ["multifile"]
 STUBS = {"original": "stubs/js", "single": "stubs/transformed/single", "stacked": "stubs/transformed/stacked",
          "multifile": "stubs/multifile"}
 
