@@ -1,10 +1,10 @@
-# Final report: outline (draft, 2026-11-18)
+# Final report: outline (2026-11-18)
 
 Due **Nov 28, 2026** with code and data. Owners: Prisca (P), Eileen (E). Markers: **[re-run]** = depends on the
 fixed-decoy multi-file re-run; **[Lujo]** = depends on Prof. Bauer's answer about the framing.
 
-**Open format questions (ask Lujo / check the course page):** page limit, template (ACM / IEEE / free), whether an
-appendix is allowed. The proposal followed a numbered-sections layout; this outline does too.
+**Format:** **IEEE** (decided by Prisca, 2026-11-18): IEEEtran conference style, two columns. Still open: page limit
+and whether an appendix is allowed. Section split below confirmed by Prisca (2026-11-18).
 
 ## Working title and one-sentence claim
 
