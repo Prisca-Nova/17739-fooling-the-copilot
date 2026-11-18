@@ -15,6 +15,13 @@ Template for new entries:
 
 ---
 
+## 2026-11-18 (night): OpenAI pilot run: gpt-6-luna
+
+- **Decided by:** Prisca. First choice was gpt-4o (cheap, well known), changed after reading OpenAI's price list: gpt-4o is marked deprecated and costs $2.50 / $10 per 1M tokens, while the newest-generation gpt-6-luna costs $0.10 / $0.50. Larger models (gpt-6.2-astra $8 / $40) are left for the AI Gateway request.
+- **Key handling:** the key was never pasted into the chat or the repo: Prisca saved it to a file in her user folder; the run read it into that one process's environment. The first key had expired (401, $0 spent); she created a new one.
+- **Result** ([write-up](../analysis/2026-11-18-openai-pilot.md), cost **$0.05**, 306 calls, 1 repeat): 51/51 vulnerable caught; specificity 65% (gpt-oss 86%); **fake code-block end 0/51** (gpt-oss 62%); **unseen helper 26/51 = 51%** (gpt-oss 56%); instruction comment 0/51 (gpt-oss 7%).
+- **What it changes:** prompt injection doesn't transfer to this commercial model; trusting the name of unseen code does. That is the concrete case for AI Gateway access: test which effects hold for frontier models.
+
 ## 2026-11-18 (late): Defense check + injection in another file (Eileen runs); OpenAI pilot on Prisca's key
 
 - **Decided by:** Prisca and Eileen (call, Nov 18). Eileen runs the two experiments; Prisca asked for the code to be ready to run.

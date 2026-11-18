@@ -36,7 +36,7 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 |---|---|---|
 | **Decide the framing** (see decision log, Nov 18 evening), then update and send the email to Prof. Bauer | Prisca | the drafted email predates the attack results |
 | **Defense check + injection in another file** (one notebook, ~3.5 h, ready to run) | Eileen | [handoff](docs/HANDOFF-eileen-defense.md) · results to `eileen/defense-runs` |
-| **OpenAI pilot** (306 calls, hard cap ~$8 of the ~$10 credit) | Prisca | choose the model, then `analysis/openai/pilot.py` (estimate first) |
+| AI Gateway request, with the pilot as evidence (see the write-up) | Prisca → Prof. Bauer | email / meeting this week |
 | Statistics + plots (were due Nov 12; not on GitHub yet) | Eileen | |
 | Statistics + plots, Parts 1–3 | Eileen | due Wed Nov 12 · same handoff + [HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md) |
 | AI Gateway team / API budget ($50–80 asked) | Prof. Bauer | unblocks Claude; no answer recorded yet |
@@ -55,6 +55,7 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 
 | Run | Date | Headline |
 |---|---|---|
+| OpenAI pilot, gpt-6-luna (1 repeat, $0.05) | Nov 18 | fake code-block end **0/51** (gpt-oss 62%); unseen helper **51%** (gpt-oss 56%); comment 0/51; specificity 65%. [write-up](analysis/2026-11-18-openai-pilot.md) |
 | Attacks, gpt-oss (Kaggle, Eileen) | Nov 17 | fake end of the code block 62% SAFE, unseen helper 56%; code arguments and pressure 0–1%. [write-up](analysis/2026-11-17-attack-results.md) |
 | Multi-file re-run, decoy fixed (Eileen) | Nov 18 | false alarms 25% → 10% in mf8: the decoy, not size; 1 miss (1/138) |
 | Parts 2–3 runs, gpt-oss (Kaggle, Eileen) | Nov 8 | **0 misses** in 1,836 transformed / multi-file answers; false alarms up only in mf8 (decoy-driven). [write-up](analysis/2026-11-09-transformations.md) |

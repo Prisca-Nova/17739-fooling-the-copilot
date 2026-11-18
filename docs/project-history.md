@@ -220,6 +220,17 @@ alarms."*
 - **Checked and merged** into `main` (every number recomputed). The framing needs updating before the email to Prof.
   Bauer is sent (decision log, Nov 18 evening).
 
+## 12. A first commercial model: what transfers (Nov 18)
+
+- **Why:** Prof. Bauer offered AI Gateway access only for substantial results; a cheap pilot on Prisca's own OpenAI
+  credit tests whether the findings hold beyond gpt-oss. We picked the newest, cheapest model (gpt-6-luna) over the
+  deprecated gpt-4o after reading the price list; the whole pilot cost $0.05.
+- **Result:** gpt-6-luna **ignores the prompt-injection attacks** (fake code-block end 0/51, comment 0/51, vs. 62% and 7%
+  for gpt-oss) but **trusts unseen helpers just as much** (51% vs. 56%). It also misses nothing and over-flags safe code
+  more (65% specificity).
+- **What it means:** the robustness to code changes holds for both models; the injection weakness was model-specific;
+  trusting reassuring names of code it can't see is shared. That makes a focused case for testing frontier models.
+
 ## Still open (as of Nov 18)
 
 - The framing in light of the attack results (Prisca), then Prof. Bauer's view.
