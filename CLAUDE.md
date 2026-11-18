@@ -7,6 +7,7 @@ Repo: `Prisca-Nova/17739-fooling-the-copilot` (private). Final presentation **No
 ## Read these first, in this order
 
 1. [STATUS.md](STATUS.md): where the project is right now, who is waiting on what.
+   [docs/project-history.md](docs/project-history.md): the story from the proposal to now, with what drove each decision.
 2. [docs/decision-log.md](docs/decision-log.md): every decision with its reason, newest first. The 2026-11-03 entry is the current direction.
 3. [docs/methodology.md](docs/methodology.md): design details for the report.
 4. `docs/HANDOFF-eileen-*.md`: what Eileen has been asked to do (the newest is `HANDOFF-eileen-transformations.md`).

@@ -15,6 +15,14 @@ Template for new entries:
 
 ---
 
+## 2026-11-18: Keep the project and reframe it; report in IEEE format
+
+- **Decided by:** Prisca, after Eileen suggested changing the project because the expected misses never appeared. To be confirmed with Prof. Bauer (email drafted Nov 18).
+- **Options considered:** (1) switch to a new project; (2) keep the project and reframe it around what we found.
+- **Choice and why:** (2). 10 days to the report is not enough for a new dataset, tooling, runs and analysis; Prof. Bauer agreed this direction on Nov 2 and suggested Parts 2–3; the results are a coherent, verified finding: 0 misses in ~1,300 judgments of still-vulnerable code, while harmless but suspicious-looking code raises false alarms. The pending decoy re-run tests exactly that.
+- **New framing:** "LLM vulnerability detection is robust to code changes that try to hide a bug, but harmless code that looks suspicious triggers false alarms."
+- **Report:** IEEE format; outline, owners and plan in [report/OUTLINE.md](../report/OUTLINE.md). The full project story with the reasons behind each decision: [project-history.md](project-history.md).
+
 ## 2026-11-18: Decoy fixed; multi-file apps regenerated for a re-run
 
 - **Decided by:** Prisca (Nov 9 decisions, confirmed via her email to Eileen): skip the rest of the single-transformation run; fix the `downloads` decoy and re-run the multi-file apps.

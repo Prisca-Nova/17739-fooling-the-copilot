@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-11-18 · **Phase:** multi-file re-run with the fixed decoy (Eileen); then final report (Nov 28)
 
-New chat? Read [CLAUDE.md](CLAUDE.md) first. Overview doc for Prof. Bauer (kept in sync):
+New chat? Read [CLAUDE.md](CLAUDE.md) first. **The whole project from the start, with the reason behind every decision: [docs/project-history.md](docs/project-history.md).** Overview doc for Prof. Bauer (kept in sync):
 https://claude.ai/artifact/D2jQyQGokEs2WVWuS7anQE
 
 | Deadline | Date | Days left |

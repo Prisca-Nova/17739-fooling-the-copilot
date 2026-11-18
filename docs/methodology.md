@@ -1,5 +1,7 @@
 # Methodology notes
 
+> How the project evolved and why each choice was made, in order: [project-history.md](project-history.md).
+
 Running notes for the report's methodology section. The dated history of each
 decision, with the alternatives considered, is in [decision-log.md](decision-log.md).
 
