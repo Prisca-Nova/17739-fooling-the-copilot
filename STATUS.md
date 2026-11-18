@@ -42,7 +42,7 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 ## Next steps
 
 1. **Nov 9:** results merged and checked ([write-up](analysis/2026-11-09-transformations.md)). Decided: skip the rest of the single run; fix the decoy and re-run multi-file.
-1. **Nov 18:** decoy fix pushed (old apps tagged `multifile-v1`). When Eileen's re-run lands: check it, compare with the Nov 8 run, update the write-up, email Lujo.
+1. **Nov 18:** report outline drafted: [report/OUTLINE.md](report/OUTLINE.md) (sections, owners, figures, plan to Nov 28). Decoy fix pushed (old apps tagged `multifile-v1`). When Eileen's re-run lands: check it, compare with the Nov 8 run, update the write-up, email Lujo.
 2. **Nov 5–7:** stub review (Prisca: confirm the first pass; Eileen: her 25 pairs); Claude runs if the gateway arrives. Email Lujo once Eileen's results are in.
 3. **Nov 8–12:** statistics + plots (Eileen); optional defense run (Prisca).
 4. **Nov 13–14:** slides. **Nov 15:** presentation. **Nov 16–28:** report + release.
