@@ -73,6 +73,8 @@ class Runner:
             cfg.provider, cfg.model, max_tokens=cfg.max_tokens, temperature=cfg.temperature,
             seed=cfg.seed, top_p=cfg.top_p, top_k=cfg.top_k, repeat_penalty=cfg.repeat_penalty,
             ollama_url=cfg.ollama_url, anthropic_effort=cfg.anthropic_effort,
+            openai_reasoning_effort=cfg.openai_reasoning_effort, budget_usd=cfg.budget_usd,
+            price_input_per_mtok=cfg.price_input_per_mtok, price_output_per_mtok=cfg.price_output_per_mtok,
         )
         self.review = review
 

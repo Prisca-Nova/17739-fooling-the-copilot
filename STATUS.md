@@ -35,7 +35,8 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 | What | Who | Notes |
 |---|---|---|
 | **Decide the framing** (see decision log, Nov 18 evening), then update and send the email to Prof. Bauer | Prisca | the drafted email predates the attack results |
-| Optional runs: `mf_injection` (~1 h), defense check on the fake-end attack | Eileen | listed in her write-up |
+| **Defense check + injection in another file** (one notebook, ~3.5 h, ready to run) | Eileen | [handoff](docs/HANDOFF-eileen-defense.md) · results to `eileen/defense-runs` |
+| **OpenAI pilot** (306 calls, hard cap ~$8 of the ~$10 credit) | Prisca | choose the model, then `analysis/openai/pilot.py` (estimate first) |
 | Statistics + plots (were due Nov 12; not on GitHub yet) | Eileen | |
 | Statistics + plots, Parts 1–3 | Eileen | due Wed Nov 12 · same handoff + [HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md) |
 | AI Gateway team / API budget ($50–80 asked) | Prof. Bauer | unblocks Claude; no answer recorded yet |

@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from .config import load_config
+from .llm import BudgetExceeded
 from .metrics import load_records, summarize, to_markdown, transform_table
 from .pipeline import estimate_calls, reverify, run_experiment, select_stubs
 from .review import write_index
@@ -44,7 +45,11 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     if args.command == "run":
-        out = run_experiment(load_config(args.config), resume=args.resume, limit=args.limit)
+        try:
+            out = run_experiment(load_config(args.config), resume=args.resume, limit=args.limit)
+        except BudgetExceeded as e:
+            # Every answer so far is already saved; rerun with --resume and a higher budget to continue.
+            raise SystemExit(f"{e}\nResults so far are saved in results/ (resume with --resume <file>).")
         print(f"results written to {out}")
     elif args.command == "estimate":
         cfg = load_config(args.config)

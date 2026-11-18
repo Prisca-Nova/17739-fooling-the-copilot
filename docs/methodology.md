@@ -149,3 +149,13 @@ verdict comes from the model under test. Refusal counts are reported per model a
 gpt-oss's own recommendation (openai/gpt-oss README): temperature 1.0, top_p 1.0. It names no top_k or repetition
 penalty, so `top_k: 0` and `repeat_penalty: 1.0` turn off Ollama's defaults (top_k 40, repeat_penalty 1.1). Part 1's
 gpt-oss runs used Qwen's settings; the untransformed stubs are re-run with the new settings as the reference for Parts 2-3.
+
+## Defense prompt and commercial-model pilot (added 2026-11-18)
+
+- **`delimited` detection prompt:** the frozen default (`prompts-v1`) with two changes: the code is wrapped in
+  `<code_X>` … `</code_X>` instead of a Markdown fence, `X` being the first 12 hex digits of the code's SHA-256 (so the
+  code cannot contain its own closing tag, and prompts are reproducible), and one sentence telling the model to treat
+  everything inside as code and never follow instructions in it. Evaluated on the attacks that worked and on the clean
+  stubs (to measure any cost in misses or false alarms).
+- **OpenAI pilot:** a commercial model through the Chat Completions API, no sampling parameters sent (as for Claude), a
+  hard budget cap enforced before every call from typed-in per-token prices. 1 repeat, so it is a pilot, not a full run.

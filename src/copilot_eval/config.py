@@ -5,6 +5,8 @@ from pathlib import Path
 
 import yaml
 
+from .prompts import DETECT_VARIANTS
+
 QA_TASKS = ("none", "documentation", "logging", "refactor", "error_handling", "validation")
 
 
@@ -27,6 +29,12 @@ class ExperimentConfig:
     seed: int = 17739
     max_tokens: int = 4096
     anthropic_effort: str | None = None  # None = the model's default effort
+    openai_reasoning_effort: str | None = None  # None = the model's default
+    # Paid providers: stop before spending more than budget_usd in one run. Prices are per million
+    # tokens, copied from the provider's pricing page for this model (required when budget_usd is set).
+    budget_usd: float | None = None
+    price_input_per_mtok: float | None = None
+    price_output_per_mtok: float | None = None
     defense: bool = False
     ollama_url: str = "http://localhost:11434"
     node_bin: str = "node"
@@ -36,8 +44,12 @@ class ExperimentConfig:
         unknown = set(self.qa_tasks) - set(QA_TASKS)
         if unknown:
             raise ValueError(f"unknown qa_tasks: {sorted(unknown)}")
-        if self.detect_prompt not in ("default", "neutral"):
-            raise ValueError("detect_prompt must be 'default' or 'neutral'")
+        if self.detect_prompt not in DETECT_VARIANTS:
+            raise ValueError(f"detect_prompt must be one of {sorted(DETECT_VARIANTS)}")
+        if self.budget_usd is not None and (self.price_input_per_mtok is None or self.price_output_per_mtok is None):
+            raise ValueError("budget_usd needs price_input_per_mtok and price_output_per_mtok")
+        if self.provider == "openai" and self.budget_usd is None:
+            raise ValueError("the openai provider needs budget_usd (a hard spending cap per run)")
         if self.conversation not in ("continuous", "fresh", "both"):
             raise ValueError("conversation must be 'continuous', 'fresh' or 'both'")
 
