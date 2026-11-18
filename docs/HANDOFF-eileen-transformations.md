@@ -88,6 +88,23 @@ python -m copilot_eval tarpit-metrics analysis/runs/<your file>.jsonl
 python -m copilot_eval tarpit-metrics analysis/runs/<your file>.jsonl --base analysis/runs/<notebook A's original-stubs file>.jsonl
 ```
 
+## Task 4: multi-file re-run with the fixed decoy (Nov 18)
+
+Why: in 24 of mf8's 38 false alarms the model blamed the `downloads` decoy route (`path.basename('..')` returns `'..'`).
+That decoy now also rejects names starting with `.`; nothing else changed in the apps. Details: decision log, 2026-11-18.
+
+1. `git checkout main && git pull`: you should see commit "Fix downloads decoy ..." and `transforms/decoys/downloads.js`
+   containing `name.startsWith('.')`.
+2. `git archive --format=zip -o ftc-main.zip main`, upload as a new dataset version, attach it to a new notebook.
+3. Paste [analysis/kaggle/tarpit_run.py](../analysis/kaggle/tarpit_run.py) into one cell and set line 8 to
+   `PARTS = ["multifile"]`.
+4. Check the log: `1428/1428 stubs match their labels`, then `204 stubs, at most 612 model calls`. ~2.6 h.
+5. Push the `.jsonl` + `.config.json` to `eileen/tarpit-runs` with a short `analysis/runs/notebook-c-notes.md`
+   (run time, errors, unparsed answers), and tell Prisca.
+
+Quick look: `python analysis/scripts/tarpit_decoy_check.py analysis/runs` reads the Nov 8 file; for the new one,
+`python -m copilot_eval tarpit-metrics analysis/runs/<new file>.jsonl --base analysis/runs/20261108-115958_ollama_gpt-oss-20b.jsonl`.
+
 ## Task 3: statistics and plots (by Wed Nov 12)
 
 The earlier list in [HANDOFF-eileen-review-analysis.md](HANDOFF-eileen-review-analysis.md#task-3-statistics-and-plots-by-wed-nov-12)

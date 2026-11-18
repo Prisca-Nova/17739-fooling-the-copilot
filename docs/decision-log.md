@@ -15,6 +15,14 @@ Template for new entries:
 
 ---
 
+## 2026-11-18: Decoy fixed; multi-file apps regenerated for a re-run
+
+- **Decided by:** Prisca (Nov 9 decisions, confirmed via her email to Eileen): skip the rest of the single-transformation run; fix the `downloads` decoy and re-run the multi-file apps.
+- **Fix:** `transforms/decoys/downloads.js` now also rejects names starting with `.` (covers `.`, `..` and dotfiles). One line; verified safe for all 3 classes.
+- **Regenerated** `stubs/multifile/d3` and `d8`: the diff is that one line in 237 files (the decoy, its 118 app copies, 118 bundles); same apps, decoys, route order and ids; **204/204 verified**; `tests/test_transforms.py` passes.
+- **Traceability:** the apps as run on Nov 8 are tagged `multifile-v1`. Results from the re-run are compared with `20261108-161547_*` by stub id + repeat.
+- **What the re-run answers:** whether mf8's false-alarm rise (13% → 25%) is about size or about that one decoy.
+
 ## 2026-11-09: Parts 2–3 results checked; two decisions opened
 
 - **Results** (Eileen, Kaggle, Nov 8; recomputed independently, all match): 0 vulnerable programs called SAFE in any variant; false alarms on safe code change significantly only in mf8 (13% → 25%, exact McNemar p = 0.004). Write-up: [analysis/2026-11-09-transformations.md](../analysis/2026-11-09-transformations.md). Eileen's branch merged into `main`.

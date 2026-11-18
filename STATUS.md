@@ -1,14 +1,14 @@
 # Project Status
 
-**Last updated:** 2026-11-09 · **Phase:** Parts 2–3 results in (0 misses everywhere); 2 decisions open; then Lujo email + slides
+**Last updated:** 2026-11-18 · **Phase:** multi-file re-run with the fixed decoy (Eileen); then final report (Nov 28)
 
 New chat? Read [CLAUDE.md](CLAUDE.md) first. Overview doc for Prof. Bauer (kept in sync):
 https://claude.ai/artifact/D2jQyQGokEs2WVWuS7anQE
 
 | Deadline | Date | Days left |
 |---|---|---|
-| Final presentation | Nov 15 | 12 |
-| Final report, code, data | Nov 28 | 25 |
+| Final presentation | Nov 15 | (past) |
+| Final report, code, data | Nov 28 | 10 |
 
 ## Where the project stands
 
@@ -33,15 +33,16 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 
 | What | Who | Notes |
 |---|---|---|
-| **Decision:** finish the single run? (Eileen + Claude: no, stacked already covers each transformation on 46–50/51 stubs) | Prisca | |
-| **Decision:** fix the `downloads` decoy and re-run multi-file (~2.6 h Kaggle) to separate size from the decoy effect? | Prisca | |
+| **Multi-file re-run with the fixed `downloads` decoy** (~2.6 h Kaggle, `PARTS = ["multifile"]`) | Eileen | fix pushed Nov 18 · [handoff, Task 4](docs/HANDOFF-eileen-transformations.md#task-4-multi-file-re-run-with-the-fixed-decoy-nov-18) |
+| Statistics + plots (were due Nov 12; not on GitHub yet) | Eileen | |
 | Statistics + plots, Parts 1–3 | Eileen | due Wed Nov 12 · same handoff + [HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md) |
 | AI Gateway team / API budget ($50–80 asked) | Prof. Bauer | unblocks Claude; no answer recorded yet |
 | Stub review: 25 pairs (xss, path_001–008) / 26 pairs (cmdi, path_009–017) | Eileen / Prisca | Prisca: confirm the first pass and tick; decide the strict-subset proposal |
 
 ## Next steps
 
-1. **Nov 9:** results merged and checked ([write-up](analysis/2026-11-09-transformations.md)). Decide the 2 open points above; email Lujo with the results.
+1. **Nov 9:** results merged and checked ([write-up](analysis/2026-11-09-transformations.md)). Decided: skip the rest of the single run; fix the decoy and re-run multi-file.
+1. **Nov 18:** decoy fix pushed (old apps tagged `multifile-v1`). When Eileen's re-run lands: check it, compare with the Nov 8 run, update the write-up, email Lujo.
 2. **Nov 5–7:** stub review (Prisca: confirm the first pass; Eileen: her 25 pairs); Claude runs if the gateway arrives. Email Lujo once Eileen's results are in.
 3. **Nov 8–12:** statistics + plots (Eileen); optional defense run (Prisca).
 4. **Nov 13–14:** slides. **Nov 15:** presentation. **Nov 16–28:** report + release.
