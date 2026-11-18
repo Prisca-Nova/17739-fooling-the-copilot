@@ -23,11 +23,12 @@ while the bug is still there? The test set is 102 hand-written stubs (17 vulnera
 injection, path traversal). Every program the model judges is also **run by our verifier** (`verifier/run_stub.js`,
 Node `vm` with mocked sinks), so we know whether the bug really is still there. Three parts:
 
-| Part | The change to the code | State (Nov 3) |
+| Part | The change to the code | State (Nov 18) |
 |---|---|---|
 | 1. QA edits | The model's own maintenance edits (docs, logging, refactor, error handling, validation) | Done: gpt-oss:20b 0 genuine misses in 255 edits. A negative result |
-| 2. Transformations | 9 semantics-preserving "tarpit" transformations (from Rui Wang's list, after Al Kassar et al., NDSS 2022), single or stacked | Built and verified (`transforms/tarpit.js`, `stubs/transformed/`); Kaggle run pending |
-| 3. Multi-file programs | Each stub becomes a small Express-style app: the input crosses into a `lib/` helper, plus 3 or 8 safe decoy routes | Built and verified (`transforms/multifile.js`, `stubs/multifile/`); Kaggle run pending |
+| 2. Transformations | 9 semantics-preserving "tarpit" transformations (from Rui Wang's list, after Al Kassar et al., NDSS 2022), single or stacked | Done: 0 misses (stacked 2/4/8, 3 repeats); single run partial |
+| 3. Multi-file programs | Each stub becomes a small Express-style app: the input crosses into a `lib/` helper, plus 3 or 8 safe decoy routes | Done: 1 miss in 1/138 (re-run with the decoy fixed, Nov 18) |
+| 4. Deliberate attacks | Bug-preserving prompt injection, pushback, fake tests, unseen helpers (Eileen) | Done: fake code-block end 62% SAFE, unseen helper 56%, others 0–9% |
 
 The main free model is **gpt-oss:20b** (via Ollama on Kaggle GPUs). Claude Sonnet 5.5 is blocked until Prof. Bauer
 gets us an AI Gateway team.

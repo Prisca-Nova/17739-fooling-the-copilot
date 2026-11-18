@@ -8,6 +8,8 @@ and whether an appendix is allowed. Section split below confirmed by Prisca (202
 
 ## Working title and one-sentence claim
 
+> **Nov 18 (evening):** the attack results (RQ4) change the story; the title and claim below are under review (decision log).
+
 **Fooling the Copilot? LLM vulnerability detection is robust to code changes that hide a bug, but not to code that looks suspicious** [Lujo]
 
 Claim: across ~1,300 judgments of still-vulnerable code (the model's own QA edits, semantics-preserving
@@ -47,6 +49,7 @@ results (0 misses; false alarms rise with suspicious code) → takeaway.
 - RQ1: Do the model's own QA edits make it miss a bug it caught? (Part 1)
 - RQ2: Do semantics-preserving tarpit transformations, alone or stacked, make it miss? (Part 2)
 - RQ3: Does a larger, multi-file program make it miss, and what happens to false alarms? (Part 3)
+- RQ4: If natural changes don't work, what deliberate, bug-preserving attacks do? (Part 4: injection, pushback, fake tests, unseen helpers)
 
 ## 4. Dataset and verifier (~1 page) — P
 
@@ -88,6 +91,9 @@ results (0 misses; false alarms rise with suspicious code) → takeaway.
 - **6.4 RQ3, multi-file:** 0 misses. False alarms 13% → 25% in mf8 (p = 0.004); 24/38 blame the `downloads` decoy;
   with vs. without it 29% vs 4%. Re-run with the fixed decoy: [re-run] → either "one code smell causes the false
   alarms" or "size does". Figure 4: false-alarm rate by variant (original, k2–k8, mf3, mf8, mf8-fixed), Wilson CIs.
+- **Update Nov 18:** decoy re-run: mf8 false alarms 25% → 10% (the decoy, not size); 1 miss (1/138, `xss_017`).
+- **6.5 RQ4, deliberate attacks:** fake code-block end 62% SAFE, unseen helper 56%, authority pushback 9%, instruction
+  comment 7%, others 0–1%. Source: `analysis/2026-11-17-attack-results.md`. Figure 5: SAFE rate by attack, Wilson CIs. — E
 - Headline bound: 0 misses → 95% upper bound per condition (e.g. 0/138 → about 2.7%).
 
 ## 7. Discussion (~0.75 page) — both

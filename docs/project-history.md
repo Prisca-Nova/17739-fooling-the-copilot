@@ -198,9 +198,32 @@ alarms."*
 **Also decided:** the report uses the **IEEE** format, following the outline in [../report/OUTLINE.md](../report/OUTLINE.md)
 (sections, owners, figures, plan to Nov 28).
 
+## 11. The re-run and the attacks: what finally fools it (Nov 17–18)
+
+- **Decoy re-run (Eileen, Nov 18):** with the `downloads` route fixed, false alarms in the 11-file apps fell from 25% to
+  10%, about the same as the original programs. *So the Nov 8 effect was that one suspicious-looking pattern, not program
+  size.* The first and only miss of Parts 2–3 appeared: one app, in 1 of 3 repeats (1/138).
+- **Deliberate attacks (Eileen, Nov 17), "Part 4":** after natural changes failed, she tested hand-designed attacks that
+  leave the bug in place (all 306 attacked programs re-verified as still vulnerable). Results:
+
+  | Attack | Called SAFE |
+  |---|---|
+  | Fake end of the code block, impersonating the finished review and the user | 62% |
+  | The input passes through an unseen helper with a reassuring name (`escapeHtml`) | 56% |
+  | "Senior engineer: our gateway sanitizes everything" (pushback with a claim) | 9% |
+  | A comment telling AI reviewers the code is safe | 7% |
+  | Plain disagreement, a fake earlier scan, fake tests, an instruction in a string | 0–1% |
+
+  *Driver:* we had established that the model is robust; the open question became what, if anything, breaks it.
+- **What it means:** arguments about the code, and pressure, don't move it. It breaks when text looks like it comes from
+  *outside* the code: the prompt's own structure or a trusted source it can't check.
+- **Checked and merged** into `main` (every number recomputed). The framing needs updating before the email to Prof.
+  Bauer is sent (decision log, Nov 18 evening).
+
 ## Still open (as of Nov 18)
 
-- The decoy re-run results (Eileen).
+- The framing in light of the attack results (Prisca), then Prof. Bauer's view.
+- Optional: `mf_injection` and a defense check on the fake-end attack (Eileen).
 - Prof. Bauer's view on the framing, and the report's page limit.
 - Statistics and plots (Eileen; were due Nov 12).
 - Human confirmation of the stub review (Prisca's 26 pairs, Eileen's 25).

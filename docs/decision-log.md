@@ -15,6 +15,15 @@ Template for new entries:
 
 ---
 
+## 2026-11-18 (evening): Decoy re-run and attack experiments checked and merged; framing to update
+
+- **Multi-file re-run** (Eileen): with the decoy fixed, mf8 false alarms fall from 25% to 10% (with the decoy route: 29% → 10%). **The Nov 8 rise was the decoy, not program size.** First miss in Parts 2–3: `xss_017_vuln__mf8` in 1 of 3 repeats (1/138 paired). Write-up updated: [analysis/2026-11-09-transformations.md](../analysis/2026-11-09-transformations.md).
+- **Attack experiments ("Part 4"; Eileen, Nov 17):** deliberate, bug-preserving attacks on the 51 vulnerable stubs, 3 repeats. A fake end of the code block that impersonates the review/user: **62% SAFE**; an unseen helper with a reassuring name: **56%**; an instruction comment: 7%; authority pushback: 9%; plain pressure, fake prior scan, fake tests, instruction in a string: 0–1%. Write-up: [analysis/2026-11-17-attack-results.md](../analysis/2026-11-17-attack-results.md).
+- **Checked:** shared code untouched; 306/306 attacked stubs still vulnerable under the verifier; every number recomputed and matching. Both branches merged into `main`.
+- **Scope note:** like the Nov 1 misleading edits, these are hand-designed attacks, which the proposal said we would not do for the main experiment. They are reported as a separate part that asks what *does* fool the model, after the natural changes didn't.
+- **Framing (proposed, Prisca to decide; then confirm with Prof. Bauer):** the earlier "suspicious code causes false alarms" no longer holds as a size effect. New candidate: *"Changing the code never fooled gpt-oss, by accident or on purpose. Text that impersonates the prompt or a trusted source did."* The Nov 18 email draft to Prof. Bauer predates these results and needs updating before it is sent.
+- **Not run yet (Eileen's list):** `mf_injection` (instruction comment in another file of the app, ~1 h) and a defense check (the fake-end stubs with a prompt whose code delimiter a comment can't close). The defense check also answers the proposal's defense stretch goal.
+
 ## 2026-11-18: Keep the project and reframe it; report in IEEE format
 
 - **Decided by:** Prisca, after Eileen suggested changing the project because the expected misses never appeared. To be confirmed with Prof. Bauer (email drafted Nov 18).

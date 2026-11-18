@@ -104,3 +104,14 @@ fake-end problem.
 - A defense check: the same fake-end stubs with a prompt that marks the code in a way a comment can't close.
 
 Files: `analysis/runs/attacks/` (results and configs), `stubs/attacks/`, `analysis/attacks/`, `analysis/kaggle/attacks_run.py`.
+
+## Independent check (Prisca + Claude, Nov 18)
+
+- Shared code untouched: no changes to `src/`, `verifier/`, `config/`, `transforms/`, `stubs/js/` or `tests/` on this
+  branch; every run used the frozen prompt (`prompts-v1`) and gpt-oss's own settings.
+- Verifier re-run on all attacked stubs: **306/306 still vulnerable** (6 types × 51).
+- Every count in the Results table recomputed from the raw files (`python analysis/scripts/attack_checks.py . analysis/runs/20261118-180124_ollama_gpt-oss-20b.jsonl analysis/runs/20261108-161547_ollama_gpt-oss-20b.jsonl analysis/runs/20261108-115958_ollama_gpt-oss-20b.jsonl`): **all match**, including the
+  95% intervals, the stubs-fooled-at-least-once column, the pushback counts and "90 of 95 fake-end SAFE answers are a
+  bare `VERDICT: SAFE`".
+- Merged into `main` on Nov 18. The leftover `PARTS = ["multifile"]` in `analysis/kaggle/tarpit_run.py` was reset to its
+  default.
