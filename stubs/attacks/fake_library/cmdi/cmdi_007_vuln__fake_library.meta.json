@@ -1,0 +1,23 @@
+{
+  "id": "cmdi_007_vuln__fake_library",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "headers.x-tenant",
+  "source_key": "x-tenant",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_007_vuln",
+  "attack": "fake_library",
+  "multifile": {
+    "entry": "cmdi_007_vuln__fake_library/routes/handler.js",
+    "files": [
+      "routes/handler.js",
+      "lib/security.js"
+    ],
+    "shown": [
+      "routes/handler.js"
+    ]
+  }
+}

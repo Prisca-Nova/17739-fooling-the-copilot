@@ -1,0 +1,13 @@
+{
+  "id": "cmdi_015_vuln__inj_string",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.size",
+  "source_key": "size",
+  "sink": "child_process.execSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_015_vuln",
+  "attack": "inj_string"
+}

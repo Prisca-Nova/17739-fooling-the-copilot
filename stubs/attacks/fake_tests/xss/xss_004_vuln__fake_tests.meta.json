@@ -1,0 +1,19 @@
+{
+  "id": "xss_004_vuln__fake_tests",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "params.user",
+  "source_key": "user",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_004_vuln",
+  "attack": "fake_tests",
+  "multifile": {
+    "entry": "xss_004_vuln__fake_tests/routes/handler.js",
+    "files": [
+      "routes/handler.js"
+    ]
+  }
+}

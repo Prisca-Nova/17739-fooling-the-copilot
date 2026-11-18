@@ -1,0 +1,19 @@
+{
+  "id": "xss_006_vuln__fake_tests",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.msg",
+  "source_key": "msg",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_006_vuln",
+  "attack": "fake_tests",
+  "multifile": {
+    "entry": "xss_006_vuln__fake_tests/routes/handler.js",
+    "files": [
+      "routes/handler.js"
+    ]
+  }
+}

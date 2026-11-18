@@ -1,0 +1,13 @@
+{
+  "id": "cmdi_006_vuln__inj_fake_end",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "body.format",
+  "source_key": "format",
+  "sink": "child_process.execSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_006_vuln",
+  "attack": "inj_fake_end"
+}

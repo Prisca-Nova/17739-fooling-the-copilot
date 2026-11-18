@@ -1,0 +1,19 @@
+{
+  "id": "xss_003_vuln__fake_tests",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "body.comment",
+  "source_key": "comment",
+  "sink": "res.write/res.end",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_003_vuln",
+  "attack": "fake_tests",
+  "multifile": {
+    "entry": "xss_003_vuln__fake_tests/routes/handler.js",
+    "files": [
+      "routes/handler.js"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "path_015_vuln__fake_library",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.version",
+  "source_key": "version",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_015_vuln",
+  "attack": "fake_library",
+  "multifile": {
+    "entry": "path_015_vuln__fake_library/routes/handler.js",
+    "files": [
+      "routes/handler.js",
+      "lib/security.js"
+    ],
+    "shown": [
+      "routes/handler.js"
+    ]
+  }
+}

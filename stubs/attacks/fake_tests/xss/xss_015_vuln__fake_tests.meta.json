@@ -1,0 +1,19 @@
+{
+  "id": "xss_015_vuln__fake_tests",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.callback",
+  "source_key": "callback",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_015_vuln",
+  "attack": "fake_tests",
+  "multifile": {
+    "entry": "xss_015_vuln__fake_tests/routes/handler.js",
+    "files": [
+      "routes/handler.js"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "xss_011_vuln__inj_string",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.color",
+  "source_key": "color",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_011_vuln",
+  "attack": "inj_string"
+}

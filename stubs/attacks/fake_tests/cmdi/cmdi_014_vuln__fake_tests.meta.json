@@ -1,0 +1,19 @@
+{
+  "id": "cmdi_014_vuln__fake_tests",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "headers.x-ref",
+  "source_key": "x-ref",
+  "sink": "child_process.exec (Promise wrapper)",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_014_vuln",
+  "attack": "fake_tests",
+  "multifile": {
+    "entry": "cmdi_014_vuln__fake_tests/routes/handler.js",
+    "files": [
+      "routes/handler.js"
+    ]
+  }
+}
