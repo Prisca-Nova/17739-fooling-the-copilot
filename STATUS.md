@@ -8,9 +8,9 @@ https://claude.ai/artifact/D2jQyQGokEs2WVWuS7anQE
 | Deadline | Date | Days left |
 |---|---|---|
 | Final presentation | Nov 15 | (past) |
-| Check-in 3 with Prof. Bauer (book via his calendar; or Owen if no slot fits): a few slides, <30 s reminder, update since Nov 2, plan to Nov 30 | likely Fri Nov 20 (not booked yet) | 2 |
-| Final report, code, data | Nov 28 | 10 |
-| Presentation slides | Nov 30 | 12 |
+| Check-in 3 with Prof. Bauer (book via his calendar; or Owen if no slot fits): a few slides, <30 s reminder, update since Nov 2, plan to Nov 30 | Mon Nov 23 (today) · page for it: https://claude.ai/artifact/FKL7pmpFzxnipsqNcKFv7q | 0 |
+| Final report, code, data | Nov 28 | 5 |
+| Presentation slides | Nov 30 | 7 |
 
 ## Where the project stands
 
