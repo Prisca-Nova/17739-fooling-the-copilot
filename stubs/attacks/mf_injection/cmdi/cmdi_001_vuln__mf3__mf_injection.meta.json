@@ -1,0 +1,31 @@
+{
+  "id": "cmdi_001_vuln__mf3__mf_injection",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.file",
+  "source_key": "file",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_001_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_001_vuln__mf3__mf_injection/routes/lines-uploaded-report.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/lines-uploaded-report.js",
+      "routes/profile.js",
+      "routes/settings.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "settings",
+      "stats",
+      "profile"
+    ],
+    "lines": 80
+  },
+  "attack": "mf_injection"
+}

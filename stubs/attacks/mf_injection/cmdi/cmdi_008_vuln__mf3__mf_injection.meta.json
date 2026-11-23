@@ -1,0 +1,31 @@
+{
+  "id": "cmdi_008_vuln__mf3__mf_injection",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.n",
+  "source_key": "n",
+  "sink": "child_process.execSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_008_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_008_vuln__mf3__mf_injection/routes/n-lines-application.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/n-lines-application.js",
+      "routes/products.js"
+    ],
+    "decoys": [
+      "health",
+      "feedback",
+      "products"
+    ],
+    "lines": 70
+  },
+  "attack": "mf_injection"
+}

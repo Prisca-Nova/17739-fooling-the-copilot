@@ -1,0 +1,31 @@
+{
+  "id": "cmdi_010_vuln__mf3__mf_injection",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.domain",
+  "source_key": "domain",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_010_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_010_vuln__mf3__mf_injection/routes/dns-records-domain.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/dns-records-domain.js",
+      "routes/downloads.js",
+      "routes/settings.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "stats",
+      "settings",
+      "downloads"
+    ],
+    "lines": 82
+  },
+  "attack": "mf_injection"
+}

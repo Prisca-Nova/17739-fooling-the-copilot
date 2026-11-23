@@ -1,0 +1,31 @@
+{
+  "id": "path_013_vuln__mf3__mf_injection",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "params.file",
+  "source_key": "file",
+  "sink": "fs.createReadStream",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_013_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_013_vuln__mf3__mf_injection/routes/shared-file-share.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/search.js",
+      "routes/settings.js",
+      "routes/shared-file-share.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "stats",
+      "settings",
+      "search"
+    ],
+    "lines": 76
+  },
+  "attack": "mf_injection"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "path_004_vuln__mf3__mf_injection",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "body.attachment",
+  "source_key": "attachment",
+  "sink": "fs.createReadStream",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_004_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_004_vuln__mf3__mf_injection/routes/attachment.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/attachment.js",
+      "routes/feedback.js",
+      "routes/health.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "health",
+      "feedback",
+      "version"
+    ],
+    "lines": 68
+  },
+  "attack": "mf_injection"
+}

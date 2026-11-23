@@ -1,0 +1,35 @@
+# Transformation experiment (2026-11-03): baseline verdicts only, on stubs rewritten by
+# semantics-preserving tarpit transformations (transforms/tarpit.js, docs/decision-log.md).
+# Run three times with a different stubs_dir (the Kaggle notebook does this):
+#   stubs/js                      untransformed reference, same settings   (102 stubs)
+#   stubs/transformed/single      9 transformations, one at a time         (918 stubs)
+#   stubs/transformed/stacked     2, 4 or 8 transformations combined       (306 stubs)
+#   stubs/multifile               multi-file apps, 3 or 8 decoy routes     (204 stubs, transforms/multifile.js)
+
+provider: ollama
+model: gpt-oss:20b          # main free model since 2026-11-02
+
+stubs_dir: stubs/attacks/mf_injection
+results_dir: results
+
+n_repeats: 3
+qa_tasks: []                # baseline only: the transformation is the "edit"
+conversation: fresh
+qa_on_safe_stubs: false
+
+# Sampling: gpt-oss's own recommendation (github.com/openai/gpt-oss README, checked 2026-11-03):
+# temperature 1.0, top_p 1.0. It names no top_k or repetition penalty; 0 and 1.0 switch them off
+# so Ollama's defaults (top_k 40, repeat_penalty 1.1) are not applied silently.
+temperature: 1.0
+top_p: 1.0
+top_k: 0
+repeat_penalty: 1.0
+seed: 17739                 # repeat r uses seed + r
+max_tokens: 4096
+
+defense: false
+
+ollama_url: http://localhost:11434
+node_bin: node
+review_dir: review
+detect_prompt: default
