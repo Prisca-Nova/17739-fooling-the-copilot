@@ -243,7 +243,7 @@ alarms."*
 
 ## Still open (as of Nov 24)
 
-- Prof. Bauer's feedback from check-in 3 (Nov 23) and whether AI Gateway access comes through.
+- Check-in 3 (Nov 23, with the TA Owen): judged "progressing well"; one slide-order note. AI Gateway access still not settled.
 - Prof. Bauer's view on the framing, and the report's page limit.
 - Statistics and plots (Eileen; were due Nov 12).
 - Human confirmation of the stub review (Prisca's 26 pairs, Eileen's 25).

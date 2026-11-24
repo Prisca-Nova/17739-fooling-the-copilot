@@ -37,13 +37,14 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 
 | What | Who | Notes |
 |---|---|---|
-| Outcome of check-in 3 (Nov 23): AI Gateway answer, feedback on the framing | Prisca | not recorded yet |
+| AI Gateway access for a frontier-model run | Prof. Bauer | not raised in Owen's summary; still open |
 | Statistics + plots for Parts 1–4, pilot and defense (figure list in [report/OUTLINE.md](report/OUTLINE.md)) | Eileen | not on GitHub yet |
 | Stub review: 25 pairs (xss, path_001–008) / 26 pairs (cmdi, path_009–017) | Eileen / Prisca | Prisca: confirm the first pass and tick |
 
 ## Next steps
 
-1. **Nov 24:** defense run checked and merged ([write-up](analysis/2026-11-24-defense-results.md)); record check-in 3's outcome.
+1. **Nov 23:** check-in 3 held with Owen (TA), who wrote to Prof. Bauer that the project is "progressing well and close to being ready for the presentation". His one slide note: show the example attack before the results bar chart (swap slides 7 and 8). Deck: `checkin-fooling-the-copilot.pptx` (repo folder, git-ignored like all decks).
+1. **Nov 24:** defense run checked and merged ([write-up](analysis/2026-11-24-defense-results.md)).
 2. **Nov 24–27:** stats + plots (Eileen); write the report (IEEE) per [report/OUTLINE.md](report/OUTLINE.md), then swap and review; frontier-model run only if the gateway arrives in time.
 3. **Nov 28:** report, code, data. **Nov 30:** presentation slides.
 

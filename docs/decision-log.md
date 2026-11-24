@@ -15,6 +15,12 @@ Template for new entries:
 
 ---
 
+## 2026-11-23: Check-in 3 (with Owen, TA)
+
+- **Held with:** Owen (Prof. Bauer's TA), Prisca and Eileen. Owen's summary to Prof. Bauer: earlier methods gave unexpected results, but "a couple of approaches" now make LLMs fail to detect vulnerabilities; the project is "progressing well and close to being ready for the presentation next week".
+- **Feedback:** show the example attacks before the results bar chart (swap slides 7 and 8). Carry this into the final slides (Nov 30).
+- **Not settled:** AI Gateway access; Owen's email doesn't mention it.
+
 ## 2026-11-24: Defense run checked and merged
 
 - **Decided by:** Prisca (merge after the independent check). Eileen ran `analysis/kaggle/defense_run.py` on Nov 23 (918/918 answers, ~2 h 50 min).
