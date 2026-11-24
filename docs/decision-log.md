@@ -15,6 +15,14 @@ Template for new entries:
 
 ---
 
+## 2026-11-24: Defense run checked and merged
+
+- **Decided by:** Prisca (merge after the independent check). Eileen ran `analysis/kaggle/defense_run.py` on Nov 23 (918/918 answers, ~2 h 50 min).
+- **Check:** `analysis/scripts/defense_checks.py` reproduces every number in her notes; the 51 `mf_injection` apps are identical to the generator's output and all 51 still vulnerable under the verifier.
+- **Result** ([write-up](../analysis/2026-11-24-defense-results.md)): the `delimited` prompt cuts the fake-end attack 62% -> 3% (paired 90 fixed / 1 newly fooled, p < 1e-25), leaves the unseen helper at 54% (p = 0.76), comment 7% -> 3% (p = 0.30); on clean programs 2/149 misses vs 0/148 and false alarms 14% vs 13% (both n.s.). The instruction comment moved into `app.js` fooled it 0/149.
+- **What it changes:** prompt injection is fixable with a standard defense; trusting unseen code is not, and it also holds for gpt-6-luna. That becomes the report's central finding.
+- **Notebook fix kept:** Eileen's `sys.path` lines (the kernel didn't see the editable install) added to `defense_run.py` on main.
+
 ## 2026-11-18 (night): OpenAI pilot run: gpt-6-luna
 
 - **Decided by:** Prisca. First choice was gpt-4o (cheap, well known), changed after reading OpenAI's price list: gpt-4o is marked deprecated and costs $2.50 / $10 per 1M tokens, while the newest-generation gpt-6-luna costs $0.10 / $0.50. Larger models (gpt-6.2-astra $8 / $40) are left for the AI Gateway request.

@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated:** 2026-11-18 (evening) · **Phase:** all runs in and checked; decide the framing; write the report (Nov 28)
+**Last updated:** 2026-11-24 · **Phase:** all runs in and checked (defense run merged Nov 24); write the report (Nov 28) and slides (Nov 30)
 
 New chat? Read [CLAUDE.md](CLAUDE.md) first. **The whole project from the start, with the reason behind every decision: [docs/project-history.md](docs/project-history.md).** Overview doc for Prof. Bauer (kept in sync):
 https://claude.ai/artifact/D2jQyQGokEs2WVWuS7anQE
@@ -26,7 +26,8 @@ bug is still there (checked by running the code)? Main model: **gpt-oss:20b** (f
 | Claude Sonnet 5.5 | ⏸️ waiting for an AI Gateway team from Prof. Bauer |
 | Stub human review | ⏳ 0/51 pairs ticked in [stubs/REVIEW.md](stubs/REVIEW.md) · Claude's first pass on Prisca's 26 done ([REVIEW-first-pass.md](stubs/REVIEW-first-pass.md)): all OK for their class; 5 cmdi safe stubs debatable overall (003, 004, 009, 010, 011) → Prisca to confirm + tick |
 | Prompts | ✅ frozen: tag `prompts-v1` (same prompts as Part 1, unchanged since Oct 20) |
-| Defense prompt (stretch) | ⏸️ implemented, not run |
+| Defense prompt + injection in another file (Eileen, Nov 23) | ✅ `delimited` prompt: fake end **62% → 3%** (p < 10⁻²⁵), unseen helper 56% → 54% (no effect), comment 7% → 3% (n.s.); clean programs: misses 0 → 2/149, false alarms 13% → 14% (n.s.). Comment moved into `app.js`: **0/149**. [write-up](analysis/2026-11-24-defense-results.md) · checked, merged |
+| Commercial pilot, gpt-6-luna (Nov 18) | ✅ injections 0/51; unseen helper 51%. [write-up](analysis/2026-11-18-openai-pilot.md) |
 
 **Why the new direction (Nov 3):** QA edits didn't fool gpt-oss, so at the Nov 2 check-in Prof. Bauer suggested
 semantics-preserving transformations and larger multi-file programs, and introduced Rui Wang (transformation list).
@@ -36,27 +37,21 @@ Details: the 2026-11-03 entry in [docs/decision-log.md](docs/decision-log.md) an
 
 | What | Who | Notes |
 |---|---|---|
-| **Decide the framing** (see decision log, Nov 18 evening), then update and send the email to Prof. Bauer | Prisca | the drafted email predates the attack results |
-| **Defense check + injection in another file** (one notebook, ~3.5 h, ready to run) | Eileen | [handoff](docs/HANDOFF-eileen-defense.md) · results to `eileen/defense-runs` |
-| AI Gateway request, with the pilot as evidence (see the write-up) | Prisca → Prof. Bauer | email / meeting this week |
-| Statistics + plots (were due Nov 12; not on GitHub yet) | Eileen | |
-| Statistics + plots, Parts 1–3 | Eileen | due Wed Nov 12 · same handoff + [HANDOFF-eileen-review-analysis.md](docs/HANDOFF-eileen-review-analysis.md) |
-| AI Gateway team / API budget ($50–80 asked) | Prof. Bauer | unblocks Claude; no answer recorded yet |
-| Stub review: 25 pairs (xss, path_001–008) / 26 pairs (cmdi, path_009–017) | Eileen / Prisca | Prisca: confirm the first pass and tick; decide the strict-subset proposal |
+| Outcome of check-in 3 (Nov 23): AI Gateway answer, feedback on the framing | Prisca | not recorded yet |
+| Statistics + plots for Parts 1–4, pilot and defense (figure list in [report/OUTLINE.md](report/OUTLINE.md)) | Eileen | not on GitHub yet |
+| Stub review: 25 pairs (xss, path_001–008) / 26 pairs (cmdi, path_009–017) | Eileen / Prisca | Prisca: confirm the first pass and tick |
 
 ## Next steps
 
-1. **Nov 9:** results merged and checked ([write-up](analysis/2026-11-09-transformations.md)). Decided: skip the rest of the single run; fix the decoy and re-run multi-file.
-1. **Nov 18 (evening):** decoy re-run and attack experiments checked and merged; framing to decide.
-1. **Nov 18:** report outline drafted: [report/OUTLINE.md](report/OUTLINE.md) (sections, owners, figures, plan to Nov 28). Decoy fix pushed (old apps tagged `multifile-v1`). When Eileen's re-run lands: check it, compare with the Nov 8 run, update the write-up, email Lujo.
-2. **Nov 5–7:** stub review (Prisca: confirm the first pass; Eileen: her 25 pairs); Claude runs if the gateway arrives. Email Lujo once Eileen's results are in.
-3. **Nov 8–12:** statistics + plots (Eileen); optional defense run (Prisca).
-4. **Nov 13–14:** slides. **Nov 15:** presentation. **Nov 16–28:** report + release.
+1. **Nov 24:** defense run checked and merged ([write-up](analysis/2026-11-24-defense-results.md)); record check-in 3's outcome.
+2. **Nov 24–27:** stats + plots (Eileen); write the report (IEEE) per [report/OUTLINE.md](report/OUTLINE.md), then swap and review; frontier-model run only if the gateway arrives in time.
+3. **Nov 28:** report, code, data. **Nov 30:** presentation slides.
 
 ## Results so far
 
 | Run | Date | Headline |
 |---|---|---|
+| Defense prompt + injection in `app.js`, gpt-oss (Kaggle, Eileen) | Nov 23 | fake end 62% → **3%**; unseen helper 56% → 54%; comment in `app.js` 0/149; no measurable cost on clean programs. [write-up](analysis/2026-11-24-defense-results.md) |
 | OpenAI pilot, gpt-6-luna (1 repeat, $0.05) | Nov 18 | fake code-block end **0/51** (gpt-oss 62%); unseen helper **51%** (gpt-oss 56%); comment 0/51; specificity 65%. [write-up](analysis/2026-11-18-openai-pilot.md) |
 | Attacks, gpt-oss (Kaggle, Eileen) | Nov 17 | fake end of the code block 62% SAFE, unseen helper 56%; code arguments and pressure 0–1%. [write-up](analysis/2026-11-17-attack-results.md) |
 | Multi-file re-run, decoy fixed (Eileen) | Nov 18 | false alarms 25% → 10% in mf8: the decoy, not size; 1 miss (1/138) |

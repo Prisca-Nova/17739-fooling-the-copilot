@@ -35,6 +35,10 @@ print("project found at:", src)
 !cp -r {src} /kaggle/working/project
 %cd /kaggle/working/project
 !pip install -q -e ".[dev]"
+# Eileen's fix (Nov 23): the running kernel doesn't see a fresh editable install, so add src/ by hand.
+import sys
+sys.path.insert(0, "/kaggle/working/project/src")
+os.environ["PYTHONPATH"] = "/kaggle/working/project/src"
 # The upload must have the defense prompt (added Nov 18); stop now if it's an older zip.
 from copilot_eval import prompts
 assert "delimited" in prompts.DETECT_VARIANTS, "Old upload: git pull and zip main again."

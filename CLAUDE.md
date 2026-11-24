@@ -28,7 +28,7 @@ Node `vm` with mocked sinks), so we know whether the bug really is still there. 
 | 1. QA edits | The model's own maintenance edits (docs, logging, refactor, error handling, validation) | Done: gpt-oss:20b 0 genuine misses in 255 edits. A negative result |
 | 2. Transformations | 9 semantics-preserving "tarpit" transformations (from Rui Wang's list, after Al Kassar et al., NDSS 2022), single or stacked | Done: 0 misses (stacked 2/4/8, 3 repeats); single run partial |
 | 3. Multi-file programs | Each stub becomes a small Express-style app: the input crosses into a `lib/` helper, plus 3 or 8 safe decoy routes | Done: 1 miss in 1/138 (re-run with the decoy fixed, Nov 18) |
-| 4. Deliberate attacks | Bug-preserving prompt injection, pushback, fake tests, unseen helpers (Eileen) | Done: fake code-block end 62% SAFE, unseen helper 56%, others 0–9% |
+| 4. Deliberate attacks | Bug-preserving prompt injection, pushback, fake tests, unseen helpers (Eileen) | Done: fake code-block end 62% SAFE, unseen helper 56%, others 0–9%. Defense prompt (Nov 23): fake end -> 3%, unseen helper unchanged (54%). gpt-6-luna pilot: injections 0/51, unseen helper 51% |
 
 The main free model is **gpt-oss:20b** (via Ollama on Kaggle GPUs). Claude Sonnet 5.5 is blocked until Prof. Bauer
 gets us an AI Gateway team.
