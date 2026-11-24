@@ -1,0 +1,31 @@
+{
+  "id": "cmdi_015_vuln__mf3__mf_injection",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.size",
+  "source_key": "size",
+  "sink": "child_process.execSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_015_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_015_vuln__mf3__mf_injection/routes/thumbnail-uploaded-image.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/thumbnail-uploaded-image.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "products",
+      "version",
+      "orders"
+    ],
+    "lines": 69
+  },
+  "attack": "mf_injection"
+}

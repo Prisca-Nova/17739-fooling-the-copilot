@@ -1,0 +1,31 @@
+{
+  "id": "xss_006_vuln__mf3__mf_injection",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.msg",
+  "source_key": "msg",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_006_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_006_vuln__mf3__mf_injection/routes/flash-message-through.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/flash-message-through.js",
+      "routes/profile.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "profile",
+      "downloads",
+      "version"
+    ],
+    "lines": 81
+  },
+  "attack": "mf_injection"
+}

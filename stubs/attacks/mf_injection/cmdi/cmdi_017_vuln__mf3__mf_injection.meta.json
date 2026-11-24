@@ -1,0 +1,31 @@
+{
+  "id": "cmdi_017_vuln__mf3__mf_injection",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.pattern",
+  "source_key": "pattern",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_017_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_017_vuln__mf3__mf_injection/routes/log-lines-matching.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/feedback.js",
+      "routes/log-lines-matching.js",
+      "routes/orders.js",
+      "routes/products.js"
+    ],
+    "decoys": [
+      "feedback",
+      "products",
+      "orders"
+    ],
+    "lines": 75
+  },
+  "attack": "mf_injection"
+}

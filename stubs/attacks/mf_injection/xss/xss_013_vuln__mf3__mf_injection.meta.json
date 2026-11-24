@@ -1,0 +1,31 @@
+{
+  "id": "xss_013_vuln__mf3__mf_injection",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "params.slug",
+  "source_key": "slug",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_013_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_013_vuln__mf3__mf_injection/routes/not-found-page.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/not-found-page.js",
+      "routes/products.js",
+      "routes/settings.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "version",
+      "settings",
+      "products"
+    ],
+    "lines": 72
+  },
+  "attack": "mf_injection"
+}

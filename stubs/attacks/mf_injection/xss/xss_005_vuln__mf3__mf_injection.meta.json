@@ -1,0 +1,31 @@
+{
+  "id": "xss_005_vuln__mf3__mf_injection",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "headers.x-referrer-label",
+  "source_key": "x-referrer-label",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_005_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_005_vuln__mf3__mf_injection/routes/partner-site-visitor.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/partner-site-visitor.js",
+      "routes/products.js",
+      "routes/version.js"
+    ],
+    "decoys": [
+      "downloads",
+      "products",
+      "version"
+    ],
+    "lines": 73
+  },
+  "attack": "mf_injection"
+}

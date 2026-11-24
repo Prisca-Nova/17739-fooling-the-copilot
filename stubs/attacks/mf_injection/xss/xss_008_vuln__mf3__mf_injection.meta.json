@@ -1,0 +1,31 @@
+{
+  "id": "xss_008_vuln__mf3__mf_injection",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.page",
+  "source_key": "page",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_008_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_008_vuln__mf3__mf_injection/routes/number-pagination-bar.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/number-pagination-bar.js",
+      "routes/orders.js",
+      "routes/products.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "stats",
+      "products",
+      "orders"
+    ],
+    "lines": 69
+  },
+  "attack": "mf_injection"
+}

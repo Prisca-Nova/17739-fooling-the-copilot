@@ -1,0 +1,31 @@
+{
+  "id": "path_017_vuln__mf3__mf_injection",
+  "vuln_class": "path",
+  "label": "vulnerable",
+  "source": "query.file",
+  "source_key": "file",
+  "sink": "fs.readFileSync",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "path_017_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "path_017_vuln__mf3__mf_injection/routes/flag-file-json.js",
+    "files": [
+      "app.js",
+      "lib/files.js",
+      "routes/flag-file-json.js",
+      "routes/products.js",
+      "routes/search.js",
+      "routes/stats.js"
+    ],
+    "decoys": [
+      "stats",
+      "search",
+      "products"
+    ],
+    "lines": 80
+  },
+  "attack": "mf_injection"
+}

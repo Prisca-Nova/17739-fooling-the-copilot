@@ -1,0 +1,31 @@
+{
+  "id": "xss_002_vuln__mf3__mf_injection",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "query.q",
+  "source_key": "q",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_002_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_002_vuln__mf3__mf_injection/routes/term-above-empty.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/term-above-empty.js"
+    ],
+    "decoys": [
+      "products",
+      "profile",
+      "downloads"
+    ],
+    "lines": 79
+  },
+  "attack": "mf_injection"
+}

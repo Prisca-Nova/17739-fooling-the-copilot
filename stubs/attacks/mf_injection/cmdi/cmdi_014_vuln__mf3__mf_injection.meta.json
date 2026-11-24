@@ -1,0 +1,31 @@
+{
+  "id": "cmdi_014_vuln__mf3__mf_injection",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "headers.x-ref",
+  "source_key": "x-ref",
+  "sink": "child_process.exec (Promise wrapper)",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_014_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_014_vuln__mf3__mf_injection/routes/hook-checks-out.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/health.js",
+      "routes/hook-checks-out.js",
+      "routes/products.js",
+      "routes/profile.js"
+    ],
+    "decoys": [
+      "profile",
+      "products",
+      "health"
+    ],
+    "lines": 78
+  },
+  "attack": "mf_injection"
+}

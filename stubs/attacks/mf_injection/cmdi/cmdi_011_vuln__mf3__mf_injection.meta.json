@@ -1,0 +1,31 @@
+{
+  "id": "cmdi_011_vuln__mf3__mf_injection",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "query.url",
+  "source_key": "url",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_011_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_011_vuln__mf3__mf_injection/routes/link-post-reachable.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/link-post-reachable.js",
+      "routes/products.js",
+      "routes/profile.js",
+      "routes/settings.js"
+    ],
+    "decoys": [
+      "settings",
+      "profile",
+      "products"
+    ],
+    "lines": 82
+  },
+  "attack": "mf_injection"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "cmdi_013_vuln__mf3__mf_injection",
+  "vuln_class": "cmdi",
+  "label": "vulnerable",
+  "source": "params.pid",
+  "source_key": "pid",
+  "sink": "child_process.exec",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "cmdi_013_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "cmdi_013_vuln__mf3__mf_injection/routes/worker-process-still.js",
+    "files": [
+      "app.js",
+      "lib/commands.js",
+      "routes/feedback.js",
+      "routes/profile.js",
+      "routes/version.js",
+      "routes/worker-process-still.js"
+    ],
+    "decoys": [
+      "feedback",
+      "version",
+      "profile"
+    ],
+    "lines": 75
+  },
+  "attack": "mf_injection"
+}

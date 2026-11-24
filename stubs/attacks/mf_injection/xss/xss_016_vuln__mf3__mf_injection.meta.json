@@ -1,0 +1,31 @@
+{
+  "id": "xss_016_vuln__mf3__mf_injection",
+  "vuln_class": "xss",
+  "label": "vulnerable",
+  "source": "body.item",
+  "source_key": "item",
+  "sink": "res.send",
+  "sanitizer": null,
+  "base_dir": "/srv/app/public",
+  "language": "js",
+  "base_stub": "xss_016_vuln__mf3",
+  "transforms": [],
+  "multifile": {
+    "entry": "xss_016_vuln__mf3__mf_injection/routes/item-shopping-list.js",
+    "files": [
+      "app.js",
+      "lib/views.js",
+      "routes/downloads.js",
+      "routes/item-shopping-list.js",
+      "routes/profile.js",
+      "routes/search.js"
+    ],
+    "decoys": [
+      "profile",
+      "search",
+      "downloads"
+    ],
+    "lines": 89
+  },
+  "attack": "mf_injection"
+}
