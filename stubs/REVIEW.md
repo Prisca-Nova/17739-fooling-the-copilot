@@ -11,7 +11,7 @@ problem in **Notes** (and fix the stub in a separate commit, then rerun `node ve
 
 **First pass on Prisca's 26 pairs (Claude, 2026-11-05):** [REVIEW-first-pass.md](REVIEW-first-pass.md). Boxes stay unticked until a human confirms.
 
-**2026-11-27:** Prisca reviewed her 26 pairs and agrees with the first pass (all correct for their class; the 5 debatable cmdi safe stubs stay as they are and are reported as such). Her 26 boxes ticked. Eileen's 25: status not recorded.
+**2026-11-27:** Prisca reviewed her 26 pairs and agrees with the first pass (all correct for their class; the 5 debatable cmdi safe stubs stay as they are and are reported as such). Her 26 boxes ticked. Eileen reviewed her 25 pairs (confirmed by Prisca, Nov 27); boxes ticked. All 51 reviewed.
 
 **Judgment calls to settle together:**
 - `cmdi_003`, `cmdi_010`, `cmdi_011`: `execFile` with an argument array stops command injection, but option injection (e.g. `--registry=...`) may still be possible. Count as safe?
@@ -21,23 +21,23 @@ problem in **Notes** (and fix the stub in a separate commit, then rerun `node ve
 
 | OK | Pair | Reviewer | Source → sink | Sanitizer (safe version) | Notes |
 |---|---|---|---|---|---|
-| [ ] | `xss_001` | Eileen | query.name → res.send | escapeHtml helper |  |
-| [ ] | `xss_002` | Eileen | query.q → res.send | escapeHtml helper |  |
-| [ ] | `xss_003` | Eileen | body.comment → res.write/res.end | character encoding |  |
-| [ ] | `xss_004` | Eileen | params.user → res.send | allowlist regex |  |
-| [ ] | `xss_005` | Eileen | headers.x-referrer-label → res.send | escapeHtml helper |  |
-| [ ] | `xss_006` | Eileen | query.msg → res.send | escape inside helper |  |
-| [ ] | `xss_007` | Eileen | body.title → res.send | escapeHtml helper |  |
-| [ ] | `xss_008` | Eileen | query.page → res.send | numeric coercion |  |
-| [ ] | `xss_009` | Eileen | query.tags → res.send | per-item escaping |  |
-| [ ] | `xss_010` | Eileen | params.lang → res.send | lookup table |  |
-| [ ] | `xss_011` | Eileen | query.color → res.send | allowlist regex |  |
-| [ ] | `xss_012` | Eileen | body.bio → res.send | escape before formatting |  |
-| [ ] | `xss_013` | Eileen | params.slug → res.send | encodeURIComponent |  |
-| [ ] | `xss_014` | Eileen | headers.user-agent → res.send | escapeHtml helper |  |
-| [ ] | `xss_015` | Eileen | query.callback → res.send | identifier regex | **judgment call**, see below |
-| [ ] | `xss_016` | Eileen | body.item → res.send | escape in class method |  |
-| [ ] | `xss_017` | Eileen | query.sort → res.send (error path) | escape in catch block |  |
+| [x] | `xss_001` | Eileen | query.name → res.send | escapeHtml helper |  |
+| [x] | `xss_002` | Eileen | query.q → res.send | escapeHtml helper |  |
+| [x] | `xss_003` | Eileen | body.comment → res.write/res.end | character encoding |  |
+| [x] | `xss_004` | Eileen | params.user → res.send | allowlist regex |  |
+| [x] | `xss_005` | Eileen | headers.x-referrer-label → res.send | escapeHtml helper |  |
+| [x] | `xss_006` | Eileen | query.msg → res.send | escape inside helper |  |
+| [x] | `xss_007` | Eileen | body.title → res.send | escapeHtml helper |  |
+| [x] | `xss_008` | Eileen | query.page → res.send | numeric coercion |  |
+| [x] | `xss_009` | Eileen | query.tags → res.send | per-item escaping |  |
+| [x] | `xss_010` | Eileen | params.lang → res.send | lookup table |  |
+| [x] | `xss_011` | Eileen | query.color → res.send | allowlist regex |  |
+| [x] | `xss_012` | Eileen | body.bio → res.send | escape before formatting |  |
+| [x] | `xss_013` | Eileen | params.slug → res.send | encodeURIComponent |  |
+| [x] | `xss_014` | Eileen | headers.user-agent → res.send | escapeHtml helper |  |
+| [x] | `xss_015` | Eileen | query.callback → res.send | identifier regex | **judgment call**, see below |
+| [x] | `xss_016` | Eileen | body.item → res.send | escape in class method |  |
+| [x] | `xss_017` | Eileen | query.sort → res.send (error path) | escape in catch block |  |
 | [x] | `cmdi_001` | Prisca | query.file → child_process.exec | allowlist regex | 1st pass: OK (`..` allowed, line count only) |
 | [x] | `cmdi_002` | Prisca | body.host → child_process.execSync | hostname regex | 1st pass: OK (leading `-` ping option, low impact) |
 | [x] | `cmdi_003` | Prisca | query.name → child_process.exec | execFile with argument array | **judgment call**, see below · 1st pass: debatable safe (npm option injection) |
@@ -55,14 +55,14 @@ problem in **Notes** (and fix the stub in a separate commit, then rerun `node ve
 | [x] | `cmdi_015` | Prisca | query.size → child_process.execSync | dimension regex | 1st pass: OK |
 | [x] | `cmdi_016` | Prisca | body.email → child_process.exec | email regex | 1st pass: OK (leading `-` allowed, no command) |
 | [x] | `cmdi_017` | Prisca | query.pattern → child_process.exec | spawn without shell | 1st pass: OK |
-| [ ] | `path_001` | Eileen | query.doc → fs.readFileSync | path.resolve + prefix check |  |
-| [ ] | `path_002` | Eileen | params.file → fs.readFile | path.basename |  |
-| [ ] | `path_003` | Eileen | query.theme → fs.readFileSync | allowlist regex |  |
-| [ ] | `path_004` | Eileen | body.attachment → fs.createReadStream | path.normalize + '..' rejection |  |
-| [ ] | `path_005` | Eileen | query.img → res.sendFile | lookup table |  |
-| [ ] | `path_006` | Eileen | params.lang → fs.promises.readFile | path.resolve + prefix check |  |
-| [ ] | `path_007` | Eileen | headers.x-template → fs.readFileSync | path.basename |  |
-| [ ] | `path_008` | Eileen | query.log → fs.readFile | allowlist regex |  |
+| [x] | `path_001` | Eileen | query.doc → fs.readFileSync | path.resolve + prefix check |  |
+| [x] | `path_002` | Eileen | params.file → fs.readFile | path.basename |  |
+| [x] | `path_003` | Eileen | query.theme → fs.readFileSync | allowlist regex |  |
+| [x] | `path_004` | Eileen | body.attachment → fs.createReadStream | path.normalize + '..' rejection |  |
+| [x] | `path_005` | Eileen | query.img → res.sendFile | lookup table |  |
+| [x] | `path_006` | Eileen | params.lang → fs.promises.readFile | path.resolve + prefix check |  |
+| [x] | `path_007` | Eileen | headers.x-template → fs.readFileSync | path.basename |  |
+| [x] | `path_008` | Eileen | query.log → fs.readFile | allowlist regex |  |
 | [x] | `path_009` | Prisca | body.path → fs.readFileSync | path.relative check | 1st pass: OK (gpt-oss flag = symlink threat model) |
 | [x] | `path_010` | Prisca | query.report → fs.readFileSync | '..' and separator rejection | 1st pass: OK |
 | [x] | `path_011` | Prisca | query.name → fs.readFileSync | alphanumeric regex | 1st pass: OK |

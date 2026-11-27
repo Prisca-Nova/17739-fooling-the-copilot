@@ -11,11 +11,11 @@ defense: an escaping helper, an allowlist, a regular expression, \texttt{execFil
 \texttt{path.basename} or prefix check, and so on (12--14 distinct defenses per class). Comments are kept
 neutral and never mention security, so the text does not leak the label. Every stub's label is confirmed by the verifier
 (below). We also wrote a review checklist for each pair: the vulnerable version is exploitable, the safe version
-is safe beyond our test payloads, the two differ only by the defense, and nothing hints at the label. One author
-reviewed 26 of the 51 pairs by hand, after a tool-assisted first pass: all 26 are correct for their class, but
-five command-injection safe stubs are debatable (for example, \texttt{execFile} with an argument array stops shell
-injection but may still allow argument injection). We kept them unchanged, since all runs use them, and discuss them
-in Section~\ref{sec:limitations}. \todo{status of the other 25 pairs (Eileen's review)}
+is safe beyond our test payloads, the two differ only by the defense, and nothing hints at the label. Each
+author reviewed half of the 51 pairs by hand against this checklist, one of them after a tool-assisted first pass.
+All pairs are correct for their class, but five command-injection safe stubs are debatable (for example,
+\texttt{execFile} with an argument array stops shell injection but may still allow argument injection). We kept them
+unchanged, since all runs use them, and discuss them in Section~\ref{sec:limitations}.
 
 \begin{table}[t]
 \centering
