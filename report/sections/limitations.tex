@@ -10,7 +10,8 @@ much remains open.
 \textbf{Programs.} The stubs are small JavaScript handlers with a single source-to-sink flow, in three vulnerability
 classes. Even the multi-file apps have at most 11 files and about 150 lines. Real code is larger, uses frameworks and
 dependencies, and contains other classes of bugs. Some safe stubs are safe only for their own class: a few command
-handlers still allow, for example, argument injection, which a model may reasonably flag.
+handlers still allow, for example, argument injection, which a model may reasonably flag. The labels rest on the verifier and a partial review: a
+complete manual review of all 51 pairs was not finished.
 
 \textbf{Protocol.} Part 1 ran with one repeat and with sampling settings recommended for Qwen rather than gpt-oss;
 Parts 2--4 use gpt-oss's own settings and three repeats. The run with each transformation applied alone stopped after

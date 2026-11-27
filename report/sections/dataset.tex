@@ -9,8 +9,12 @@ Each stub is an Express-style CommonJS module of about ten lines (median 10) tha
 body, route parameters or headers and passes it to a sink. The two programs in a pair are identical except for the
 defense: an escaping helper, an allowlist, a regular expression, \texttt{execFile} with an argument array, a
 \texttt{path.basename} or prefix check, and so on (12--14 distinct defenses per class). Comments are kept
-neutral and never mention security, so the text does not leak the label. Every pair was reviewed by hand
-\todo{state the final review status}.
+neutral and never mention security, so the text does not leak the label. Every stub's label is confirmed by the verifier
+(below). We also wrote a review checklist for each pair: the vulnerable version is exploitable, the safe version
+is safe beyond our test payloads, the two differ only by the defense, and nothing hints at the label. A first,
+tool-assisted pass over 26 of the 51 pairs found all of them correct for their class, but flagged five
+command-injection safe stubs as debatable (for example, \texttt{execFile} with an argument array stops shell
+injection but may still allow argument injection). A complete manual review of all pairs was not finished (Section~\ref{sec:limitations}).
 
 \begin{table}[t]
 \centering
