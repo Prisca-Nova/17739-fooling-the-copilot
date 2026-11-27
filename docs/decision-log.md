@@ -15,6 +15,12 @@ Template for new entries:
 
 ---
 
+## 2026-11-27: No AI Gateway run; report in LaTeX, Prisca's sections drafted
+
+- **Decided by:** Prisca. No frontier-model run: AI Gateway access never came, and the report is due Nov 28. Frontier models become future work and a stated limitation; the gpt-6-luna pilot is the only commercial result.
+- **Report:** IEEEtran LaTeX in `report/` (compiled on Overleaf; no LaTeX install locally), one file per section so Eileen can drop in hers. Claude drafted only Prisca's sections (abstract, 1, 3, 4, 5.2-5.4, 9, Fig. 1, Table 1, listings); Eileen's (2, 5.1, 6) and the shared ones (7, 8) are placeholders with the checked numbers and outline notes in comments. References: the proposal's nine, with author initials as printed there (no names filled in from memory).
+- **Framing used:** natural changes almost never fool gpt-oss (1 SAFE in 916 still-vulnerable judgments, Parts 1-3); prompt injection does but is fixable and model-specific; trusting unseen helpers survives the defense and transfers to gpt-6-luna. RQ5 (defense + transfer) added to the outline's RQ1-RQ4.
+
 ## 2026-11-23: Check-in 3 (with Owen, TA)
 
 - **Held with:** Owen (Prof. Bauer's TA), Prisca and Eileen. Owen's summary to Prof. Bauer: earlier methods gave unexpected results, but "a couple of approaches" now make LLMs fail to detect vulnerabilities; the project is "progressing well and close to being ready for the presentation next week".

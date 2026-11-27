@@ -1,0 +1,17 @@
+% Owner: Prisca.
+\section{Conclusion and Future Work}
+
+We asked whether a change that keeps a vulnerability in place can make an LLM reviewer call it safe. With an
+execution-based verifier as ground truth, the answer for natural changes is almost always no. gpt-oss:20b saw through
+its own maintenance edits, through up to eight stacked testability-tarpit transformations, and through multi-file
+programs in which the input crosses into a helper (1 miss in 916 still-vulnerable judgments). Deliberate attacks
+succeed, and they fall into two kinds. Prompt injection that fakes the end of the code block fooled the open model
+62\% of the time, but a delimited prompt removed it and a commercial model ignored it. Routing the input through an
+unseen helper with a sanitizer-like name fooled both models about half the time and survived the defense. For
+practitioners, this means a reviewer's verdict is only as good as the code it was shown: a \safe{} verdict on code
+that calls helpers the model has not seen should not count as a security check.
+
+Future work: test the unseen-helper effect on frontier models and with the helper's code supplied, to separate a
+reasonable assumption from misplaced trust; give the reviewer tools to fetch the code it depends on; extend the
+benchmark beyond small JavaScript handlers to real projects and other vulnerability classes; and study defenses
+against the false alarms that suspicious-looking safe code causes, which were the more frequent error in our runs.

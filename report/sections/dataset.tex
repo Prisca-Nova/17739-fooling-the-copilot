@@ -1,0 +1,49 @@
+% Owner: Prisca. Sources: stubs/README.md, stubs/js/*/*.meta.json, docs/methodology.md, verifier/run_stub.js.
+\section{Dataset and Verifier}
+\label{sec:dataset}
+
+\subsection{Stubs}
+The test set has 102 hand-written JavaScript request handlers (``stubs''): 17 vulnerable/safe pairs for each of
+three classes, cross-site scripting (XSS), command injection (CMDi) and path traversal (Table~\ref{tab:dataset}).
+Each stub is an Express-style CommonJS module of about ten lines (median 10) that reads one input from the query,
+body, route parameters or headers and passes it to a sink. The two programs in a pair are identical except for the
+defense: an escaping helper, an allowlist, a regular expression, \texttt{execFile} with an argument array, a
+\texttt{path.basename} or prefix check, and so on (12--14 distinct defenses per class). Comments are kept
+neutral and never mention security, so the text does not leak the label. Every pair was reviewed by hand
+\todo{state the final review status}.
+
+\begin{table}[t]
+\centering
+\caption{The 102 stubs. Every class has 17 vulnerable/safe pairs.}
+\label{tab:dataset}
+\footnotesize
+\begin{tabular}{@{}p{0.75cm}p{3.6cm}p{3.6cm}@{}}
+\toprule
+Class & Sinks (stubs) & Example defenses in the safe twin \\
+\midrule
+XSS  & \texttt{res.send} (32), \texttt{res.write}/\texttt{end} (2) & HTML escaping, allowlist, numeric coercion \\
+CMDi & \texttt{exec} (22), \texttt{execSync} (10), \texttt{spawn} with shell (2) & regex allowlist, \texttt{execFile}, quoting \\
+Path & \texttt{readFileSync} (18), \texttt{readFile} (10), streams/\texttt{sendFile} (6) & \texttt{basename}, resolve + prefix check \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Execution-based verifier}
+The verifier (\texttt{verifier/run\_stub.js}) loads a program in a Node.js \texttt{vm} context in which
+\texttt{child\_process}, \texttt{fs} and the response object are replaced by recording mocks. It calls the handler
+with an attack payload placed in all four input locations and checks the arguments that reach the sink:
+\begin{itemize}
+\item \textbf{XSS:} the response contains the raw \texttt{<script>} payload.
+\item \textbf{CMDi:} with any of three payloads (plain, single-quote breakout, double-quote breakout), the injected
+      \texttt{echo} follows an \emph{unquoted} shell separator. The check follows shell quoting, and the mocks reject
+      argument types that real Node.js rejects.
+\item \textbf{Path traversal:} the resolved path escapes the handler's base directory.
+\end{itemize}
+A program that crashes is reported as unverifiable, never as safe. All 102 stubs match their labels.
+
+The verifier is what makes the results trustworthy, and it needed care. Reading the first QA edits by hand
+revealed two verifier false negatives: a logging edit that wrapped the input in unescaped quotes, and a refactor
+that called \texttt{spawn} with an invalid argument (which throws in Node.js). Both had been counted as fixes. After
+we added the quote-breakout payloads and the argument checks, we re-verified all stored edits without new model
+calls; none of the 306 outcomes of the main QA run changed. Every generated variant in Parts 2--4 is also run
+through the verifier, and all keep their label.

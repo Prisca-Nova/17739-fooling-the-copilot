@@ -1,0 +1,12 @@
+% Owner: Eileen. Replace with your text (keep the \subsection and the label).
+% Outline (section 5): model comparison (only gpt-oss:20b recognizes safe code: 32/36 vs <=14/36 on the 24-stub
+% sample; Qwen2.5-Coder 7B specificity 6%); frozen prompt (tag prompts-v1); sampling per publisher (gpt-oss:
+% temperature 1.0, top_p 1.0, top_k off, repeat penalty off), 3 repeats, seed 17739 + repeat (Part 1: Qwen's
+% settings, 1 repeat); Part 1 pipeline (baseline -> QA edit -> re-evaluation in the same and a fresh conversation ->
+% verifier; outcomes held / genuine miss / incidental fix / fixed-but-flagged; misleading edits as an upper-bound
+% probe); Part 4 attacks (fake end of the code block, unseen helper, instruction comment, instruction in a string,
+% fake prior verdict, fake tests, pushback with pressure / authority, comment moved into app.js); metrics (miss rate,
+% paired misses, false-alarm rate, 95% Wilson intervals, exact McNemar paired by program and repeat).
+\subsection{Models, Prompts and Evaluation Protocol}
+\label{sec:protocol}
+\todo{Eileen: models, prompts and sampling, Part 1 pipeline, Part 4 attacks, metrics.}

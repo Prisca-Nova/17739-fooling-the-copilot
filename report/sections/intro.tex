@@ -1,0 +1,38 @@
+% Owner: Prisca (Eileen reviews).
+\section{Introduction}
+
+LLM-based assistants now review pull requests, explain code and suggest fixes, and developers increasingly
+treat their verdict on a piece of code as a security check. Code, however, keeps changing: it is refactored,
+documented, logged, split into modules, and sometimes edited by people who would prefer a vulnerability to go
+unnoticed. A reviewer that correctly flags a bug today but calls the same bug safe after a routine change gives a
+false sense of security that is worse than no review at all.
+
+Prior work on adversarial examples for models of code perturbs programs, for example by renaming identifiers or
+inserting dead code, to flip the output of \emph{fine-tuned} vulnerability detectors, typically with white-box or
+query access to the model~\cite{yefet2019adversarial,yang2022natural,na2023dip,du2025statement}. We ask a
+different question: do \emph{ordinary} changes, of the kind code undergoes anyway, make a general-purpose LLM miss a
+bug it caught before? And if they do not, what does?
+
+A central difficulty is ground truth. After an edit, a bug may have been silently fixed, in which case a \safe{}
+verdict is correct. We therefore never assume the bug survived: every program the model judges is also executed
+by our verifier with attack inputs.
+
+We study four kinds of bug-preserving change, in increasing order of intent: (1) the model's own quality-assurance
+(QA) edits to the code; (2) semantics-preserving ``testability tarpit'' transformations that were designed to defeat
+program-analysis tools~\cite{alkassar2022tarpits}; (3) embedding the vulnerable handler in a larger, multi-file
+application; and (4) deliberate attacks: prompt injection, social pressure, fake test results and unseen helper
+functions. We then test a standard prompt-level defense and repeat the key conditions on a commercial model.
+
+\textbf{Contributions.}
+\begin{itemize}
+\item An execution-verified benchmark of 102 vulnerable/safe JavaScript handlers, plus 1,428 transformed and
+      multi-file variants, each checked by the verifier to keep its label.
+\item A measurement of four kinds of bug-preserving change on gpt-oss:20b. Natural changes almost never fool it
+      (1 \safe{} verdict in 916 still-vulnerable judgments across Parts 1--3), while two deliberate attacks fool it
+      more than half the time.
+\item Evidence that the two successful attacks differ in kind. The fake end of the code block is a prompt
+      injection: a delimited prompt removes it, and a commercial model ignores it. The unseen helper with a
+      reassuring name survives the defense and transfers to the commercial model.
+\item An open-source harness, verifier, generators and all raw model outputs.
+      \todo{repository link, if it will be public}
+\end{itemize}

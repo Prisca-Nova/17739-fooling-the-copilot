@@ -1,0 +1,16 @@
+% Owner: Prisca. Numbers: analysis/*.md (all recomputed from the raw run files).
+\begin{abstract}
+Large language models are increasingly used as code reviewers, and the code they review keeps changing. We ask
+whether a change that leaves a vulnerability in place can make a model that correctly flagged it call the code
+safe. We build 102 small JavaScript web handlers (17 vulnerable/safe pairs each for cross-site scripting, command
+injection and path traversal) and an execution-based verifier that runs every program with attack inputs, so we
+always know whether the bug is still there. On gpt-oss:20b, the only free model we tested that reliably recognizes
+safe code, we apply four kinds of bug-preserving change. The model's own maintenance edits, nine
+semantics-preserving ``testability tarpit'' transformations stacked up to eight deep, and larger multi-file
+programs almost never fool it (0 of 162, 0 of 455 and 1 of 299 still-vulnerable programs called safe).
+Deliberate attacks do: a comment that fakes the end of the code block gets a \safe{} verdict 62\% of the time, and
+routing the input through an unseen helper with a sanitizer-like name 56\%. A delimited prompt reduces the first
+attack to 3\% at no measurable cost, but leaves the second unchanged (54\%). A pilot on a commercial model
+(gpt-6-luna) ignores the prompt injections entirely, yet still trusts the unseen helper 51\% of the time. Trusting
+the name of code the model cannot see is the most robust failure we found.
+\end{abstract}

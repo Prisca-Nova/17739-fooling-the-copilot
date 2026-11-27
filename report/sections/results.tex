@@ -1,0 +1,16 @@
+% Owner: Eileen (stats, figures); Prisca checks numbers against analysis/*.md.
+% Checked headline numbers (gpt-oss:20b unless stated):
+%  Part 1: 0 misses in 162 bug-preserving QA edits (255 edits); misleading edits 1/255 (analysis/2026-11-01-gpt-oss-results.md)
+%  Part 2: stacked k2/k4/k8: 0/455 vulnerable answers SAFE, 0/138 paired per depth; false alarms unchanged (p >= 0.3);
+%          single run partial, 0/117 (analysis/2026-11-09-transformations.md)
+%  Part 3: Nov 8: 0 misses, false alarms 13% -> 25% in 11-file apps, mostly blaming the downloads decoy;
+%          Nov 18 re-run with the fixed decoy: 1/299 SAFE (xss_017, 1 repeat), false alarms back to 10%
+%  Part 4: fake end 95/152 (62%), unseen helper 85/151 (56%), authority pushback 9%, instruction comment 7%,
+%          others 0-1% (analysis/2026-11-17-attack-results.md); comment moved into app.js: 0/149
+%  Defense: fake end 62% -> 3% (5/151, p < 1e-25), unseen helper 56% -> 54% (p = 0.76), comment 7% -> 3% (p = 0.30);
+%          clean programs: misses 0/148 -> 2/149, false alarms 13% -> 14% (analysis/2026-11-24-defense-results.md)
+%  gpt-6-luna pilot (1 repeat): 51/51 vulnerable flagged, specificity 33/51 (65%), fake end 0/51, comment 0/51,
+%          unseen helper 26/51 (51%) (analysis/2026-11-18-openai-pilot.md)
+\section{Results}
+\label{sec:results}
+\todo{Eileen: results and figures.}

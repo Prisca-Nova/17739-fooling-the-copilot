@@ -1,0 +1,28 @@
+% Owner: Prisca.
+\section{Threat Model and Research Questions}
+\label{sec:threat}
+
+\textbf{Setting.} An LLM reviews a JavaScript web handler and answers whether it is vulnerable, ending with a
+verdict line (\vuln{} or \safe{}). Between two reviews the code changes while the vulnerability stays. The change
+may be made by the model itself (a maintenance edit), by a tool or developer (a refactoring, a split into
+modules), or by an adversary who wants the bug to pass review. The adversary can edit the code under review,
+including comments, strings and imports, and in the pushback setting can reply to the model in the conversation.
+It cannot change the reviewer's system prompt and has no access to the model's weights or scores.
+
+\textbf{What counts as a miss.} A \emph{miss} is a \safe{} verdict on a program that our verifier confirms is
+still exploitable. A program is \emph{safe} if the sink of its vulnerability class cannot be abused: no injected
+shell command, no file read outside the base directory, no unescaped input in HTML output. Other weaknesses
+(for example server-side request forgery or argument injection) are out of scope for the label
+(Section~\ref{sec:limitations}).
+
+\textbf{Research questions.}
+\begin{itemize}
+\item[\textbf{RQ1}] Do the model's own QA edits (documentation, logging, refactoring, error handling, input
+      validation) make it miss a bug it caught? (Part 1)
+\item[\textbf{RQ2}] Do semantics-preserving tarpit transformations, alone or stacked, make it miss? (Part 2)
+\item[\textbf{RQ3}] Does embedding the bug in a larger, multi-file program make it miss, and what happens to false
+      alarms on safe programs? (Part 3)
+\item[\textbf{RQ4}] Which deliberate, bug-preserving attacks do make it miss? (Part 4)
+\item[\textbf{RQ5}] Does a standard prompt-level defense stop those attacks, and do they transfer to a commercial
+      model?
+\end{itemize}

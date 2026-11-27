@@ -1,0 +1,113 @@
+% 5.1 owner: Eileen (protocol). 5.2-5.4 owner: Prisca.
+\section{Method}
+\label{sec:method}
+
+Every experiment follows the same pipeline (Figure~\ref{fig:pipeline}). The model first judges the original
+program, then judges a changed version in which the verifier confirms the vulnerability is still present, so a
+\safe{} verdict on it is a genuine miss.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\scriptsize, node distance=0.35cm,
+  box/.style={draw, rounded corners=2pt, align=center, minimum height=0.9cm, text width=1.45cm},
+  arr/.style={-{Stealth[length=1.6mm]}}]
+\node[box] (b) {\textbf{1. Baseline}\\ model judges the original};
+\node[box, right=of b] (c) {\textbf{2. Change}\\ QA edit, tarpit, app, or attack};
+\node[box, right=of c] (r) {\textbf{3. Re-judge}\\ same question, changed code};
+\node[box, right=of r, draw=red!70!black, thick] (v) {\textbf{4. Verify}\\ run it with attack inputs};
+\draw[arr] (b) -- (c); \draw[arr] (c) -- (r); \draw[arr] (r) -- (v);
+\end{tikzpicture}
+\caption{Evaluation pipeline. Step 4 executes every changed program, so we never assume the bug survived the change.}
+\label{fig:pipeline}
+\end{figure}
+
+\input{sections/method_protocol}   % Eileen: models, prompts, sampling, Part 1, Part 4 attacks, metrics
+
+\subsection{Part 2: Testability tarpit transformations}
+\label{sec:tarpits}
+Al Kassar et al.\ identified code patterns, ``testability tarpits'', that make static and dynamic security testing
+tools miss vulnerabilities in web applications~\cite{alkassar2022tarpits}. Rui Wang (CMU) shared a list of 80
+JavaScript transformations that introduce such patterns. We re-implemented the nine he ranked most natural, by
+how common they are in real code and how small a change they make: \emph{arrow-function},
+\emph{computed-properties}, \emph{nested-function}, \emph{nullish-coalescing}, \emph{object-create},
+\emph{simple-array}, \emph{ternary}, \emph{try-catch} and \emph{weakref}.
+
+Our generator (\texttt{transforms/tarpit.js}) parses each stub with \texttt{acorn} and rewrites only the expression
+that reaches the sink. For example, the ternary transformation turns \texttt{exec(cmd)} into
+\texttt{var \_x\_0 = 5; exec(\_x\_0 > 9 ? 'safe' : cmd)}, which always runs the original command. Edits are
+spliced into the original text, so comments and formatting are kept. Helper statements are inserted just before
+the statement that holds the sink, and expression bodies are first wrapped in braces, so nothing runs earlier or
+more often than before. The sink is chosen with the verifier: it is the first sink call whose argument, when
+replaced by a constant, removes the taint. The safe twin is rewritten at the same position. We generate each
+transformation alone (918 variants) and random stacks of 2, 4 or 8 distinct transformations (seed 17739; 306
+variants). Figure~\ref{lst:tarpit} shows a stack of four.
+
+\begin{figure}[t]
+\begin{lstlisting}[language=Java]
+const name = req.query.name;
+const _o_0 = { ['b' + 'ar']: 'npm view ' + name + ' version' };
+function _F_1() { function _D_2(arg) { return arg; } _F_1._D_2 = _D_2; }
+_F_1();
+const _msg_3 = _F_1._D_2(_o_0.bar);
+const _func_4 = () => { return _msg_3; };
+const _c_5 = new WeakRef([_func_4()]);
+child_process.exec(_c_5.deref()[0], (err, stdout) => { ... });
+\end{lstlisting}
+\caption{A command-injection stub after four stacked transformations (computed-properties, nested-function,
+arrow-function, weakref). The original sink call was
+\texttt{child\_process.exec('npm view ' + name + ' version', ...)}; the verifier confirms the injection still works.}
+\label{lst:tarpit}
+\end{figure}
+
+\subsection{Part 3: Multi-file programs}
+\label{sec:multifile}
+Our stubs are much smaller than real code. To test whether size and indirection matter, \texttt{transforms/multifile.js}
+turns each stub into a small Express-style application: an \texttt{app.js} that registers the routes in shuffled
+order, the stub's handler as one route, and 3 or 8 additional ``decoy'' routes drawn from ten hand-written ones.
+The expression that reaches the sink is moved into a helper in \texttt{lib/}, so the tainted input crosses a file
+boundary (Figure~\ref{fig:app}). The decoys are verified safe for all three classes, and several use sinks safely
+(an \texttt{execFile} with fixed arguments, escaped HTML, \texttt{path.basename}), so the presence of a sink alone
+does not reveal the bug. Vulnerable and safe twins get the same decoys in the same order. The model sees all files
+in one prompt, each preceded by a \texttt{// File:} header. The applications have a median of 77 lines (6 files) or
+147 lines (11 files), against about 10 for the stubs. The verifier follows the application's local
+\texttt{require}s inside the same sandbox, so the cross-file flow is what gets checked.
+
+\begin{figure}[t]
+\begin{lstlisting}[language=Java]
+// File: routes/package-installed-version.js
+const { buildCommand } = require('../lib/commands');
+module.exports = function handler(req, res) {
+  const name = req.query.name;
+  child_process.exec(buildCommand(name), ...);
+};
+// File: lib/commands.js
+function buildCommand(name) {
+  return 'npm view ' + name + ' version';
+}
+\end{lstlisting}
+\caption{Part 3: the same stub inside a 6-file application (\texttt{app.js}, this route, \texttt{lib/commands.js} and
+three decoy routes: \texttt{health}, \texttt{stats}, \texttt{version}). The input reaches the shell through a helper
+in another file.}
+\label{fig:app}
+\end{figure}
+
+One decoy turned out to matter. In the first run on the 11-file applications, false alarms on safe programs rose,
+and most of the flagged answers blamed a \texttt{downloads} route that was safe but looked suspicious. We changed
+that decoy to reject hidden and missing files explicitly and re-ran the multi-file experiment. Both runs are
+reported in Section~\ref{sec:results}.
+
+\subsection{Defense prompt and commercial-model pilot}
+\label{sec:defense}
+\textbf{Defense.} The default prompt shows the code inside a Markdown code fence, which code can close with its own
+three backticks. The \emph{delimited} variant wraps the code in \texttt{<code\_X>}\,\dots\,\texttt{</code\_X>} tags,
+where \texttt{X} is the first 12 hexadecimal digits of the code's SHA-256 hash, so the code cannot contain its own
+closing tag and the prompt stays reproducible. It also adds one sentence telling the model to treat everything inside
+the tags as code and never follow instructions in it. We evaluate it on the three attacks that succeeded at least
+sometimes and on all 102 clean stubs, to measure any cost in misses or false alarms. Because the variant changes
+two things at once, we can say whether it helps but not which part does.
+
+\textbf{Commercial pilot.} To test whether our findings are specific to one open model, we ran gpt-6-luna, a low-cost current
+OpenAI model, through the Chat Completions API with the same frozen prompt, stubs and attack files.
+Following our rule of evaluating each model as deployed, we send no sampling parameters. The pilot covers the clean
+stubs, the three attacks that worked, and the fake-end attack with the defense prompt: 306 calls with one repeat, for
+US\$0.05 in total. A budget guard checks the worst-case cost before every call.

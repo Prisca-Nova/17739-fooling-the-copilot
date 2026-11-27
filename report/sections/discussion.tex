@@ -1,0 +1,11 @@
+% Owners: both. Notes from report/OUTLINE.md section 7 and the later results:
+% - Why natural changes don't fool it: small single-flow programs; gpt-oss follows the data flow; tarpits target
+%   static analysers, not a model that reads the code; QA edits often really fix the bug (verifier).
+% - Two kinds of successful attack: prompt injection (fake end) = fixable (delimited prompt) and model-specific
+%   (luna ignores it); unseen helper = neither. Luna states the assumption ("the helper's implementation is not
+%   shown"): reasonable assumption vs misplaced trust.
+% - Where an injection sits matters: next to the bug 7%, top of app.js 0/149.
+% - The more frequent error is false alarms on safe-but-suspicious code (the downloads decoy; luna 65% specificity).
+\section{Discussion}
+\label{sec:discussion}
+\todo{Both: discussion.}
