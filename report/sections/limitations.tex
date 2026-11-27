@@ -1,9 +1,24 @@
-% Owners: both. Notes (report/OUTLINE.md section 8, updated):
-% one main open model, plus a 1-repeat pilot on one commercial model (no frontier models: no AI Gateway access);
-% small programs even in Part 3; JavaScript only, 3 classes; Part 1 used 1 repeat and Qwen's sampling settings;
-% single-transformation run partial (238 answers); verifier = vm with mocks and fixed payloads; hand-made decoys can
-% carry unintended signals (downloads); some safe cmdi stubs are safe only for their class (e.g. argument injection);
-% the defense prompt changes two things at once; multi-file injection tested in 6-file apps only.
+% Owners: both (drafted Nov 27; Eileen to review).
 \section{Limitations}
 \label{sec:limitations}
-\todo{Both: limitations.}
+
+\textbf{Models.} Our main results come from one open model, gpt-oss:20b. The commercial results come from a pilot on
+one low-cost model (gpt-6-luna) with a single repeat; with 51 programs per condition, a 0/51 result only bounds the
+true rate below about 7\%. We could not test frontier commercial models, so whether they trust unseen helpers as
+much remains open.
+
+\textbf{Programs.} The stubs are small JavaScript handlers with a single source-to-sink flow, in three vulnerability
+classes. Even the multi-file apps have at most 11 files and about 150 lines. Real code is larger, uses frameworks and
+dependencies, and contains other classes of bugs. Some safe stubs are safe only for their own class: a few command
+handlers still allow, for example, argument injection, which a model may reasonably flag.
+
+\textbf{Protocol.} Part 1 ran with one repeat and with sampling settings recommended for Qwen rather than gpt-oss;
+Parts 2--4 use gpt-oss's own settings and three repeats. The run with each transformation applied alone stopped after
+238 of its answers (a crash of the model server), so single transformations are covered only partially; the stacked
+runs cover all of them. The defense prompt changes two things at once (the delimiters and an instruction), so we
+cannot say which part helps. The injection in another file was tested only in the 6-file apps.
+
+\textbf{Verifier.} The verifier runs code in a Node.js \texttt{vm} context with mocked sinks and a fixed set of
+payloads per class. It can misjudge unusual defenses, which is why we checked flips by hand, and it found and fixed
+two of its own false negatives during the project. The hand-written decoy routes can also carry signals we did not
+intend, as the \texttt{downloads} decoy showed.

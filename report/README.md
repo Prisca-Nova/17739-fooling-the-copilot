@@ -13,7 +13,7 @@ the entry point. No LaTeX install on Prisca's laptop.
 | `sections/method.tex` | 5 Method: Fig. 1 pipeline, 5.2 tarpits, 5.3 multi-file, 5.4 defense + pilot | Prisca | draft |
 | `sections/method_protocol.tex` | 5.1 Models, prompts, protocol, Part 1 and Part 4 method, metrics | Eileen | placeholder with notes |
 | `sections/results.tex` | 6 Results (figures) | Eileen | placeholder; checked numbers listed in its comments |
-| `sections/discussion.tex`, `limitations.tex` | 7, 8 | both | placeholders with notes |
+| `sections/discussion.tex`, `limitations.tex` | 7, 8 | both | drafted by Prisca (Claude), Eileen to review |
 | `sections/conclusion.tex` | 9 Conclusion | Prisca | draft |
 | `refs.bib` | references | | the proposal's 9, initials as printed there |
 

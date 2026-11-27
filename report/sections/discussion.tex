@@ -1,11 +1,48 @@
-% Owners: both. Notes from report/OUTLINE.md section 7 and the later results:
-% - Why natural changes don't fool it: small single-flow programs; gpt-oss follows the data flow; tarpits target
-%   static analysers, not a model that reads the code; QA edits often really fix the bug (verifier).
-% - Two kinds of successful attack: prompt injection (fake end) = fixable (delimited prompt) and model-specific
-%   (luna ignores it); unseen helper = neither. Luna states the assumption ("the helper's implementation is not
-%   shown"): reasonable assumption vs misplaced trust.
-% - Where an injection sits matters: next to the bug 7%, top of app.js 0/149.
-% - The more frequent error is false alarms on safe-but-suspicious code (the downloads decoy; luna 65% specificity).
+% Owners: both (drafted Nov 27; Eileen to review). Numbers: analysis/*.md.
 \section{Discussion}
 \label{sec:discussion}
-\todo{Both: discussion.}
+
+\textbf{Why natural changes do not fool the model.} Our programs are small and have a single flow from source to
+sink, and gpt-oss:20b reliably follows that flow. Its answers name the source, the sink and the missing defense.
+The tarpit transformations were designed to break the taint tracking of static analysers~\cite{alkassar2022tarpits},
+not the reading of a model that reasons about what the code does: a constant that is never greater than 9, or a
+value wrapped in a \texttt{WeakRef} and read back, does not hide where the input goes. QA edits mostly keep the
+code's structure. When they do change behavior, the verifier shows that the change is usually a real fix (input
+validation and error handling often removed the bug), and the model then correctly answers \safe{}. Moving the
+sink into a helper in another file did not hide the bug either, as long as the helper's code was in the prompt.
+
+\textbf{Two kinds of successful attack.} The attacks that worked differ in kind, and the defense and the commercial
+pilot separate them. The fake end of the code block is a prompt injection: it uses the Markdown fence of our prompt
+to make injected text look like it comes from outside the code. In 90 of its 95 successes, gpt-oss answered only
+``\texttt{VERDICT: SAFE}'', obeying the injected verdict rather than reasoning about the code. A delimited prompt that
+the code cannot close removes most of it (62\% to 3\%), and gpt-6-luna ignored it entirely. The unseen helper is
+different: the code calls a function with a sanitizer-like name (\texttt{escapeHtml}, \texttt{escapeShellArg})
+imported from a file the model is not shown, and that function does nothing. Here the model does not follow an
+instruction. It makes an assumption, and gpt-6-luna even states it: ``Assuming that helper correctly quotes a single
+shell argument\dots\ The helper's implementation is not shown, so its correctness cannot be verified.'' Because no
+instruction is injected, the delimited prompt cannot help (56\% to 54\%), and the effect transfers to the commercial
+model (51\%).
+
+\textbf{A reasonable assumption is still an attack surface.} Assuming that a function called \texttt{escapeHtml}
+escapes HTML is what a human reviewer would often do too, and in a single-file review it may be the only sensible
+reading. In practice, however, reviewers increasingly see a diff or a single file, and the helper may live in
+another module or a dependency. An attacker who controls a helper's name, or who adds a no-op helper with a
+reassuring name, can make the vulnerable call look defended. A \safe{} verdict that rests on unseen code should
+therefore be reported as conditional (``safe if \texttt{escapeShellArg} escapes its input''), or the reviewer should
+be given the means to fetch the code it depends on.
+
+\textbf{Where injected text sits matters.} The same ``note to AI reviewers'' comment fooled gpt-oss 7\% of the time
+when placed next to the bug and never (0/149) when placed at the top of \texttt{app.js} in the multi-file apps.
+Social pressure in the conversation rarely worked: plain disagreement never changed a verdict, and a claimed
+authority (``senior engineer, our gateway sanitizes everything'') did so 9\% of the time. Together with prior work
+that found small effects of adversarial comments on vulnerability detection~\cite{thornton2026comments}, this
+suggests that the model weighs text close to the data flow more than text elsewhere, and that it holds its verdict
+under argument.
+
+\textbf{The more frequent error is a false alarm.} In almost every condition, gpt-oss raised false alarms on 10--16\%
+of safe programs while almost never missing a bug, and gpt-6-luna flagged 35\% of safe programs. One safe but
+suspicious-looking decoy route raised false alarms in the 11-file apps from 13\% to 25\%; making it explicitly
+defensive brought them back to 10\%. A reviewer that over-flags safe code costs developer attention and invites its
+warnings to be ignored, which is its own security risk. It also matters for evaluation: a model that labels almost
+everything as vulnerable, as Qwen2.5-Coder 7B did (6\% specificity), can never be fooled into a \safe{} verdict, so
+studies of missed bugs need a model that can recognize safe code in the first place.
