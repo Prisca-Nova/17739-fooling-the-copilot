@@ -11,6 +11,8 @@ problem in **Notes** (and fix the stub in a separate commit, then rerun `node ve
 
 **First pass on Prisca's 26 pairs (Claude, 2026-11-05):** [REVIEW-first-pass.md](REVIEW-first-pass.md). Boxes stay unticked until a human confirms.
 
+**2026-11-27:** Prisca reviewed her 26 pairs and agrees with the first pass (all correct for their class; the 5 debatable cmdi safe stubs stay as they are and are reported as such). Her 26 boxes ticked. Eileen's 25: status not recorded.
+
 **Judgment calls to settle together:**
 - `cmdi_003`, `cmdi_010`, `cmdi_011`: `execFile` with an argument array stops command injection, but option injection (e.g. `--registry=...`) may still be possible. Count as safe?
 - `cmdi_005`: single-quote shell escaping; confirm it's correct by reading.
@@ -36,23 +38,23 @@ problem in **Notes** (and fix the stub in a separate commit, then rerun `node ve
 | [ ] | `xss_015` | Eileen | query.callback → res.send | identifier regex | **judgment call**, see below |
 | [ ] | `xss_016` | Eileen | body.item → res.send | escape in class method |  |
 | [ ] | `xss_017` | Eileen | query.sort → res.send (error path) | escape in catch block |  |
-| [ ] | `cmdi_001` | Prisca | query.file → child_process.exec | allowlist regex | 1st pass: OK (`..` allowed, line count only) |
-| [ ] | `cmdi_002` | Prisca | body.host → child_process.execSync | hostname regex | 1st pass: OK (leading `-` ping option, low impact) |
-| [ ] | `cmdi_003` | Prisca | query.name → child_process.exec | execFile with argument array | **judgment call**, see below · 1st pass: debatable safe (npm option injection) |
-| [ ] | `cmdi_004` | Prisca | params.branch → child_process.spawn(shell) | spawn without shell | 1st pass: **debatable safe** (git `--output=` writes a file; gpt-oss: commit-message XSS) |
-| [ ] | `cmdi_005` | Prisca | query.dir → child_process.exec | single-quote shell escaping | **judgment call**, see below · 1st pass: escaping correct |
-| [ ] | `cmdi_006` | Prisca | body.format → child_process.execSync | allowlist set | 1st pass: OK |
-| [ ] | `cmdi_007` | Prisca | headers.x-tenant → child_process.exec | alphanumeric regex | 1st pass: OK |
-| [ ] | `cmdi_008` | Prisca | query.n → child_process.execSync | numeric coercion | 1st pass: OK |
-| [ ] | `cmdi_009` | Prisca | body.archive → child_process.exec | metacharacter rejection | **judgment call**, see below · 1st pass: denylist complete for sh; keep (`..` lists any tar) |
-| [ ] | `cmdi_010` | Prisca | query.domain → child_process.exec | execFile with argument array | **judgment call**, see below · 1st pass: debatable safe (dig `-f` reads a file) |
-| [ ] | `cmdi_011` | Prisca | query.url → child_process.exec | execFile with argument array | **judgment call**, see below · 1st pass: debatable safe (SSRF by design) |
-| [ ] | `cmdi_012` | Prisca | body.user → child_process.execSync | username regex | 1st pass: OK |
-| [ ] | `cmdi_013` | Prisca | params.pid → child_process.exec | digits-only regex | 1st pass: OK |
-| [ ] | `cmdi_014` | Prisca | headers.x-ref → child_process.exec (Promise wrapper) | git ref regex | 1st pass: OK |
-| [ ] | `cmdi_015` | Prisca | query.size → child_process.execSync | dimension regex | 1st pass: OK |
-| [ ] | `cmdi_016` | Prisca | body.email → child_process.exec | email regex | 1st pass: OK (leading `-` allowed, no command) |
-| [ ] | `cmdi_017` | Prisca | query.pattern → child_process.exec | spawn without shell | 1st pass: OK |
+| [x] | `cmdi_001` | Prisca | query.file → child_process.exec | allowlist regex | 1st pass: OK (`..` allowed, line count only) |
+| [x] | `cmdi_002` | Prisca | body.host → child_process.execSync | hostname regex | 1st pass: OK (leading `-` ping option, low impact) |
+| [x] | `cmdi_003` | Prisca | query.name → child_process.exec | execFile with argument array | **judgment call**, see below · 1st pass: debatable safe (npm option injection) |
+| [x] | `cmdi_004` | Prisca | params.branch → child_process.spawn(shell) | spawn without shell | 1st pass: **debatable safe** (git `--output=` writes a file; gpt-oss: commit-message XSS) |
+| [x] | `cmdi_005` | Prisca | query.dir → child_process.exec | single-quote shell escaping | **judgment call**, see below · 1st pass: escaping correct |
+| [x] | `cmdi_006` | Prisca | body.format → child_process.execSync | allowlist set | 1st pass: OK |
+| [x] | `cmdi_007` | Prisca | headers.x-tenant → child_process.exec | alphanumeric regex | 1st pass: OK |
+| [x] | `cmdi_008` | Prisca | query.n → child_process.execSync | numeric coercion | 1st pass: OK |
+| [x] | `cmdi_009` | Prisca | body.archive → child_process.exec | metacharacter rejection | **judgment call**, see below · 1st pass: denylist complete for sh; keep (`..` lists any tar) |
+| [x] | `cmdi_010` | Prisca | query.domain → child_process.exec | execFile with argument array | **judgment call**, see below · 1st pass: debatable safe (dig `-f` reads a file) |
+| [x] | `cmdi_011` | Prisca | query.url → child_process.exec | execFile with argument array | **judgment call**, see below · 1st pass: debatable safe (SSRF by design) |
+| [x] | `cmdi_012` | Prisca | body.user → child_process.execSync | username regex | 1st pass: OK |
+| [x] | `cmdi_013` | Prisca | params.pid → child_process.exec | digits-only regex | 1st pass: OK |
+| [x] | `cmdi_014` | Prisca | headers.x-ref → child_process.exec (Promise wrapper) | git ref regex | 1st pass: OK |
+| [x] | `cmdi_015` | Prisca | query.size → child_process.execSync | dimension regex | 1st pass: OK |
+| [x] | `cmdi_016` | Prisca | body.email → child_process.exec | email regex | 1st pass: OK (leading `-` allowed, no command) |
+| [x] | `cmdi_017` | Prisca | query.pattern → child_process.exec | spawn without shell | 1st pass: OK |
 | [ ] | `path_001` | Eileen | query.doc → fs.readFileSync | path.resolve + prefix check |  |
 | [ ] | `path_002` | Eileen | params.file → fs.readFile | path.basename |  |
 | [ ] | `path_003` | Eileen | query.theme → fs.readFileSync | allowlist regex |  |
@@ -61,12 +63,12 @@ problem in **Notes** (and fix the stub in a separate commit, then rerun `node ve
 | [ ] | `path_006` | Eileen | params.lang → fs.promises.readFile | path.resolve + prefix check |  |
 | [ ] | `path_007` | Eileen | headers.x-template → fs.readFileSync | path.basename |  |
 | [ ] | `path_008` | Eileen | query.log → fs.readFile | allowlist regex |  |
-| [ ] | `path_009` | Prisca | body.path → fs.readFileSync | path.relative check | 1st pass: OK (gpt-oss flag = symlink threat model) |
-| [ ] | `path_010` | Prisca | query.report → fs.readFileSync | '..' and separator rejection | 1st pass: OK |
-| [ ] | `path_011` | Prisca | query.name → fs.readFileSync | alphanumeric regex | 1st pass: OK |
-| [ ] | `path_012` | Prisca | body.page → fs/promises readFile | path.resolve + prefix check | 1st pass: OK |
-| [ ] | `path_013` | Prisca | params.file → fs.createReadStream | path.basename | 1st pass: OK |
-| [ ] | `path_014` | Prisca | headers.x-locale → fs.readFile | allowlist set | 1st pass: OK |
-| [ ] | `path_015` | Prisca | query.version → fs.readFileSync | version regex | 1st pass: OK |
-| [ ] | `path_016` | Prisca | body.backup → fs.readFileSync | normalize + prefix check | 1st pass: OK (gpt-oss flag = symlink threat model) |
-| [ ] | `path_017` | Prisca | query.file → fs.readFileSync | extension + separator check | 1st pass: OK |
+| [x] | `path_009` | Prisca | body.path → fs.readFileSync | path.relative check | 1st pass: OK (gpt-oss flag = symlink threat model) |
+| [x] | `path_010` | Prisca | query.report → fs.readFileSync | '..' and separator rejection | 1st pass: OK |
+| [x] | `path_011` | Prisca | query.name → fs.readFileSync | alphanumeric regex | 1st pass: OK |
+| [x] | `path_012` | Prisca | body.page → fs/promises readFile | path.resolve + prefix check | 1st pass: OK |
+| [x] | `path_013` | Prisca | params.file → fs.createReadStream | path.basename | 1st pass: OK |
+| [x] | `path_014` | Prisca | headers.x-locale → fs.readFile | allowlist set | 1st pass: OK |
+| [x] | `path_015` | Prisca | query.version → fs.readFileSync | version regex | 1st pass: OK |
+| [x] | `path_016` | Prisca | body.backup → fs.readFileSync | normalize + prefix check | 1st pass: OK (gpt-oss flag = symlink threat model) |
+| [x] | `path_017` | Prisca | query.file → fs.readFileSync | extension + separator check | 1st pass: OK |
